@@ -8,8 +8,20 @@ Los elementos que se pueden usar en html se describen por medio de etiquetas (en
 
 Por ejemplo, hay diferentes etiquetas que pueden ponerse alrededor de un texto para decirle al navegador que ese contenido es un encabezado 
 ```html 
-<header>texto</header>
+<header>texto encabezado</header>
 ```
-un párrafo
 
-For example, there are different tag options to place around text to show whether it is a heading, a paragraph, or a list.
+un párrafo
+```html 
+<p>esto es un párrafo</p>
+```
+
+o una lista
+```html 
+<ul>
+  <li>primer elemento de la lista</li>
+  <li>segundo</li>
+  <li>tercero</li>
+</ul>
+```
+
