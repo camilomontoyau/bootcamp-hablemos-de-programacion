@@ -1,0 +1,4 @@
+{
+  "prettier.proseWrap": "never",
+  "prettier.disableLanguages": ["markdown"]
+}
