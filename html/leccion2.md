@@ -92,6 +92,23 @@ la etiqueta meta con la propiedad charset indica al navegador que grupo de cará
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
+La etiqueta meta con la propiedad `name="viewport"` le dice al navegador cómo debe controlar las dimensiones, tamaños y escalabilidad del contenido de nuestro documento
+
+La parte `width=device-width` en **content** le dice al navegador que debe configurar el ancho de la página al mismo ancho del dispositivo en donde la estamos visualizando (el cual dependerá de cada dispositivo).
+
+La parte `initial-scale=1.0` le dice al navegador cuál es el nivel de zoom que debe tener la página cuando se carga por primera vez.
+
+#### 4.3) meta http-equiv
+
+```html
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+```
+
+El atributo `http-equiv` provee un encabezado en la petición HTTP con información del contenido
+
+El valor `X-UA-Compatible` permitía a los creadores de páginas web en el pasado seleccionar en qué versión de  Internet Explorer la página se debía de mostrar.
+Todos sabemos que microsoft no quizo seguir estándares hasta hace poco, y en mi opinión personal esto es un hack que actualmente ya no es necesario usar, sin embargo el autocompletador de código html de visual studio code lo agrega siempre
+
 
 
 
