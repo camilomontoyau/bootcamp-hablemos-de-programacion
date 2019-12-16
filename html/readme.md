@@ -6,6 +6,10 @@ Usa una sintáxis especial o podríamos llamarla también notación, para darle 
 
 Los elementos que se pueden usar en html se describen por medio de etiquetas (en inglés tags) que rodean el contenido.
 
-Por ejemplo, hay diferentes etiquetas que pueden ponerse alrededor de un texto para decirle al navegador que ese contenido es un encabezado ```html <header>texto</header>```, un párrafo ()
+Por ejemplo, hay diferentes etiquetas que pueden ponerse alrededor de un texto para decirle al navegador que ese contenido es un encabezado 
+```html 
+<header>texto</header>
+```, 
+un párrafo
 
 For example, there are different tag options to place around text to show whether it is a heading, a paragraph, or a list.
