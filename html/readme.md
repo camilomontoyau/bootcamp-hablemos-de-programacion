@@ -46,3 +46,15 @@ El resultado debería ser el siguiente:
 
 ![resultado](ejemplo1.jpg)
 
+
+La parte de **H**iper **T**exto de html ha sido la misma desde su creación.
+
+Desde los inicios las páginas web normalmente han sido documentos de contenido estático que a su vez tienen referencias a otros documentos similares.
+
+Las referencias de un documento a otro se llaman enlaces (en inglés links), esos links son mostrados por el navegador para que el usuarios, al dar click en estos, pueda ir a otro documento html sin tener que buscarlos manualmente.
+
+La evolución de la web ha ido incrementando su complejidad, y para mantener estándares para que todos podamos comprenderla se creó hace algunos años el W3C, World Wide Web Consortium, este consorcio está conformado por un grupo de personas que mantienen la especificación que garantiza que una página web pueda mostrarse en un navegador.
+
+Dicha especificación ha tenido revisiones y adiciones, las cuales han llevado a que tengamos diferentes versiones de la especificación, actualmente usamos la versión 5 de dicha especificación y es lo que conocemos con la sigla HTML5.
+
+[Vamos a la lección número 2 de este tutorial >>>](leccion2.md)
