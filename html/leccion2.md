@@ -125,5 +125,5 @@ Esta etiqueta le dice al navegador qué texto debe mostrar en la barra de títul
 
 Tal cual lo que dice dentro de la etiqueta :point_up:
 
-
+[Vamos a la lección número 3 de este tutorial >>>](leccion3.md)
 
