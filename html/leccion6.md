@@ -32,6 +32,7 @@ Ahora abre el archivo ejemplo6.html en un navegador
 ¿Qué pasa con el contenido envuelto en 
 ```html
 <!-- -->
-``` ?
+``` 
+?
 
 [Vamos a la lección número 7 de este tutorial >>>](leccion7.md)
