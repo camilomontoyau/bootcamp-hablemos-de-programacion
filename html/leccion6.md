@@ -26,3 +26,12 @@ y copia y pega en dicho archivo el siguiente código:
 </body><!-- etiqueta de cierre del body -->
 </html><!-- etiqueta de cierre de html -->
 ```
+
+Ahora abre el archivo ejemplo6.html en un navegador
+
+¿Qué pasa con el contenido envuelto en 
+```html
+<!-- -->
+``` ?
+
+[Vamos a la lección número 7 de este tutorial >>>](leccion7.md)
