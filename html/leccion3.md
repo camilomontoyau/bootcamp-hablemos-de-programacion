@@ -23,7 +23,6 @@ dentro de ejemplo3.html pon el siguiente código:
   <h1>Bienvenidos a mi primera página</h1>
 </body>
 </html>
-
 ```
 
 así le has puesto un título a tu página
