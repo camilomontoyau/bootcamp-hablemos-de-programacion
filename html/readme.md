@@ -30,7 +30,7 @@ o una lista
  2) copiemos el siguiente código dentro de ese archivo
 
 ```html
-<h1>Esto es un header: Podría se por ejemplo, el título de la página</h1>
+<h1>Esto es un header: Podría ser por ejemplo, el título de la página</h1>
 
 <p>Esto es un párrafo. Acá podría ir cualquier información que quisiéramos comunicarle al visitante de nuestra página. El contenido del párrafo puede ser tan largo cómo queramos
 </p>
