@@ -12,7 +12,7 @@ y vamos a copiar el siguiente código en él:
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,5 +58,41 @@ html 4.01 frameset
 ```html
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 ```
+
+### 2) Luego creamos nuestro elemento padre de todo el documento con el tag html
+
+```html
+<html></html>
+```
+
+### 3) Luego creamos el elemento head
+
+```html
+<html><head></head></html>
+```
+
+El elemento head, es un elemento de metadata (datos acerca de los datos), este elemento no es visual, debe estar ubicado en el medio de las etiquetas `<html>` de apertura y `<body>` de apertura.
+Da información al navegador acerca de la estructura de nuestro documento web  
+
+### 4) etiquetas meta
+
+Cómo mencionamos anteriormente en que `<head>` entrega al navegador metada de la página, pues es normal que los elementos hijos de head hagan lo debido
+
+#### 4.1) meta charset
+
+```html
+<meta charset="UTF-8">
+```
+
+la etiqueta meta con la propiedad charset indica al navegador que grupo de carácteres (letras) vamos a usar en nuestro documento, en este caso usamos UTF-8, el cual es el grupo que contiene la mayoría de carácteres usados en los idiomas del hemisferio occidental de nuestro planeta
+
+#### 4.2) meta viewport y content
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+
+
+
 
 
