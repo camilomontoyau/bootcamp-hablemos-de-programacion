@@ -42,3 +42,7 @@ o una lista
 </ol>
 ```
 
+El resultado debería ser el siguiente:
+
+![resultado](ejemplo1.jpg)
+
