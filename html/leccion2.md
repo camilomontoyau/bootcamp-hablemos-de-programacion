@@ -107,9 +107,23 @@ La parte `initial-scale=1.0` le dice al navegador cuál es el nivel de zoom que 
 El atributo `http-equiv` provee un encabezado en la petición HTTP con información del contenido
 
 El valor `X-UA-Compatible` permitía a los creadores de páginas web en el pasado seleccionar en qué versión de  Internet Explorer la página se debía de mostrar.
-Todos sabemos que microsoft no quizo seguir estándares hasta hace poco, y en mi opinión personal esto es un hack que actualmente ya no es necesario usar, sin embargo el autocompletador de código html de visual studio code lo agrega siempre
+Todos sabemos que microsoft no quizo seguir estándares hasta hace poco, y en mi opinión personal esto es un hack que actualmente ya no es necesario usar, sin embargo el autocompletador de código html de visual studio code lo agrega siempre.
 
+### 5) etiqueta title
 
+```html
+<title>Document</title>
+```
+
+Esta etiqueta le dice al navegador qué texto debe mostrar en la barra de título de la pestaña.
+
+### 6) etiqueta body
+
+```html
+<body>Acá va el contenido de nuestra página</body>
+```
+
+Tal cual lo que dice dentro de la etiqueta :point_up:
 
 
 
