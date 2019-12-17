@@ -1,10 +1,17 @@
-# Lección 11: Pongamosles imágenes a nuestra página
+# Lección 11: Demos tamaño a la imagen
 
-La etiqueta `<img>` nos sirve para poner imágenes en nuestra página
+La etiquetas html tienen algo que se llama atributos o propiedades 
+La etiqueta `<img>` por ejemplo tiene el atributo/propiedad width con este podemos darle tamaño a las imágenes, en este caso estaríamos dandole a la eqitqueta el ancho (en inglés **width**) de la imagen
 
-En la página que llevamos hasta el momento, vamos a insertar una imagen desde nuestras redes sociales
+de la siguiente manera
 
-Creemos un archivo que se llame ejemplo11.html y peguemos el siguiente código
+```html
+<img width="100">
+```
+
+de este modo le estamos diciendo al navegador que muestre la imagen con un ancho de 100 píxeles y el alto de la imagen se modifica automáticamente para guardar las proporciones de la imagen
+
+Creemos un archivo que se llame ejemplo12.html y peguemos el siguiente código
 
 ```html
 <!DOCTYPE html>
@@ -26,7 +33,7 @@ Creemos un archivo que se llame ejemplo11.html y peguemos el siguiente código
   <p>Soy desarrollador de software, me gradué de ingeniería de sistemas hace algunos años, llevo trabajando como desarrollador desde el 2006, pero la primera vez que hice código, fue en 1999 cuando estaba en octavo grado, es decir hace 20 años que programo</p>
   </header>
 
-  <img src="https://scontent.feoh4-1.fna.fbcdn.net/v/t1.0-9/58599145_826727507691617_8858138235730132992_n.jpg?_nc_cat=105&_nc_ohc=bqQiPFMFa_EAQkX4b5OvM6f_brs0hRhdmLorXD1cVWLbdUB1VB-XEpMOQ&_nc_ht=scontent.feoh4-1.fna&oh=1c3f09ec0c524d21acc26c24e13fa359&oe=5E7C0F0F" />
+  <img width="100" src="https://scontent.feoh4-1.fna.fbcdn.net/v/t1.0-9/58599145_826727507691617_8858138235730132992_n.jpg?_nc_cat=105&_nc_ohc=bqQiPFMFa_EAQkX4b5OvM6f_brs0hRhdmLorXD1cVWLbdUB1VB-XEpMOQ&_nc_ht=scontent.feoh4-1.fna&oh=1c3f09ec0c524d21acc26c24e13fa359&oe=5E7C0F0F" />
   <header>
   <p>Camilo es una persona que trabaja en la industria del software</p>
 
@@ -55,4 +62,8 @@ Creemos un archivo que se llame ejemplo11.html y peguemos el siguiente código
 </body>
 </html>
 ```
-[Vamos a la lección número 12 de este tutorial >>>](leccion12.md)
+
+¿Notas algún cambio en la imagen?
+
+
+[Vamos a la lección número 13 de este tutorial >>>](leccion13.md)
