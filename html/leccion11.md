@@ -1,20 +1,10 @@
-# Lección 10: Etiqueta footer
+# Lección 11: Pongamosles imágenes a nuestra página
 
+La etiqueta `<img>` nos sirve para poner imágenes en nuestra página
 
-La etiqueta  `<footer>` define el pie de página (footer en inglés) para un documento.
+En la página que llevamos hasta el momento, vamos a insertar una imagen desde nuestras redes sociales
 
-Un elemento `<footer>` debería contener información acerca del documento que lo contiene.
-
-Un `<footer>` normalmente contiene:
-
-- Información acerca de l@s autores del contenido
-- información de copyright
-- información de contacto
-- sitemap (mapa del sitio)
-- "back to top" links
-- links a documentos relacionados
-
-copia y pega el siguiente código en un archivo nuevo con nombre leccion10.html
+Creemos un archivo que se llame ejemplo11.html y peguemos el siguiente código
 
 ```html
 <!DOCTYPE html>
@@ -36,6 +26,7 @@ copia y pega el siguiente código en un archivo nuevo con nombre leccion10.html
   <p>Soy desarrollador de software, me gradué de ingeniería de sistemas hace algunos años, llevo trabajando como desarrollador desde el 2006, pero la primera vez que hice código, fue en 1999 cuando estaba en octavo grado, es decir hace 20 años que programo</p>
   </header>
 
+  <img width="100" src="https://scontent.feoh4-1.fna.fbcdn.net/v/t1.0-9/58599145_826727507691617_8858138235730132992_n.jpg?_nc_cat=105&_nc_ohc=bqQiPFMFa_EAQkX4b5OvM6f_brs0hRhdmLorXD1cVWLbdUB1VB-XEpMOQ&_nc_ht=scontent.feoh4-1.fna&oh=1c3f09ec0c524d21acc26c24e13fa359&oe=5E7C0F0F" />
   <header>
   <p>Camilo es una persona que trabaja en la industria del software</p>
 
@@ -64,6 +55,4 @@ copia y pega el siguiente código en un archivo nuevo con nombre leccion10.html
 </body>
 </html>
 ```
-
-
-[Vamos a la lección número 11 de este tutorial >>>](leccion11.md)
+[Vamos a la lección número 12 de este tutorial >>>](leccion12.md)
