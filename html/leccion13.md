@@ -1,10 +1,11 @@
-# Lección 11: Pongamosle imágenes a nuestra página
+# Lección 13: Anchor 
 
-La etiqueta `<img>` nos sirve para poner imágenes en nuestra página
 
-En la página que llevamos hasta el momento, vamos a insertar una imagen desde nuestras redes sociales
+Las documentos html tienen una forma de enlazarse unos con otros, esos elementos html para enlazar se llaman **anchor** y se representan con el tag `<a>`
 
-Creemos un archivo que se llame ejemplo11.html y peguemos el siguiente código
+Vamos a enlazar tu página con el perfil de la red social del cuál tomaste tu foto
+
+copia y pega el siguiente código en un archivo que se llame ejemplo13.html
 
 ```html
 <!DOCTYPE html>
@@ -26,7 +27,9 @@ Creemos un archivo que se llame ejemplo11.html y peguemos el siguiente código
   <p>Soy desarrollador de software, me gradué de ingeniería de sistemas hace algunos años, llevo trabajando como desarrollador desde el 2006, pero la primera vez que hice código, fue en 1999 cuando estaba en octavo grado, es decir hace 20 años que programo</p>
   </header>
 
-  <img src="https://scontent.feoh4-1.fna.fbcdn.net/v/t1.0-9/58599145_826727507691617_8858138235730132992_n.jpg?_nc_cat=105&_nc_ohc=bqQiPFMFa_EAQkX4b5OvM6f_brs0hRhdmLorXD1cVWLbdUB1VB-XEpMOQ&_nc_ht=scontent.feoh4-1.fna&oh=1c3f09ec0c524d21acc26c24e13fa359&oe=5E7C0F0F" />
+  <a href="https://www.facebook.com/camilomontoyau">
+    <img width="100" src="https://scontent.feoh4-1.fna.fbcdn.net/v/t1.0-9/58599145_826727507691617_8858138235730132992_n.jpg?_nc_cat=105&_nc_ohc=bqQiPFMFa_EAQkX4b5OvM6f_brs0hRhdmLorXD1cVWLbdUB1VB-XEpMOQ&_nc_ht=scontent.feoh4-1.fna&oh=1c3f09ec0c524d21acc26c24e13fa359&oe=5E7C0F0F" />
+  </a>
   <header>
   <p>Camilo es una persona que trabaja en la industria del software</p>
 
@@ -55,4 +58,5 @@ Creemos un archivo que se llame ejemplo11.html y peguemos el siguiente código
 </body>
 </html>
 ```
-[Vamos a la lección número 12 de este tutorial >>>](leccion12.md)
+
+[Vamos a la lección número 14 de este tutorial >>>](leccion14.md)

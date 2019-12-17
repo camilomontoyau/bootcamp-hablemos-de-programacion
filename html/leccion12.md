@@ -1,4 +1,4 @@
-# Lección 11: Demos tamaño a la imagen
+# Lección 12: Demos tamaño a la imagen
 
 La etiquetas html tienen algo que se llama atributos o propiedades 
 La etiqueta `<img>` por ejemplo tiene el atributo/propiedad width con este podemos darle tamaño a las imágenes, en este caso estaríamos dandole a la eqitqueta el ancho (en inglés **width**) de la imagen
