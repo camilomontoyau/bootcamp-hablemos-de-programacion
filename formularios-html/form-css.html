@@ -9,14 +9,11 @@
   <style>
     input {
       width: 100%;
-      padding: 12px 20px 12px 40px;
+      padding: 12px 20px;
       margin: 8px 0;
       box-sizing: border-box;
       border: 1px solid white;
       border-radius: 4px;
-      background-image: url('searchicon.png');
-      background-repeat: no-repeat;
-      background-position: 10px;
     }
 
     input:focus {
@@ -38,6 +35,13 @@
       <input type="text" name="nombre" id="nombre" placeholder="pon tu nombre aquí" />
       <label for="nombre">Apellido</label>
       <input type="text" name="apellido" id="apellido" placeholder="pon tu apellido aquí" />
+      <label for="pais">País</label>
+      <select id="pais" name="pais">
+        <option>Colombia</option>
+        <option>Venezuela</option>
+        <option>México</option>
+        <option>Perú</option>
+      </select>
     </form>
   </div>
 </body>
