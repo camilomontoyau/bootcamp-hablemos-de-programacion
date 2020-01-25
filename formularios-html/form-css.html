@@ -16,11 +16,6 @@
       border-radius: 4px;
     }
 
-    input:focus {
-      background-color: lightblue;
-      border: 3px solid #555;
-    }
-
     select {
       width: 100%;
       border: none;
@@ -29,6 +24,22 @@
       box-sizing: border-box;
       height: 40px;
       margin: 8px 0;
+    }
+
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 12px 32px;
+      text-decoration: none;
+      margin: 4px 2px;
+      box-sizing: border-box;
+    }
+
+    input:focus,
+    select:focus {
+      background-color: lightblue;
+      border: 3px solid #555;
     }
 
     ::placeholder {
@@ -42,17 +53,18 @@
   <div>
     <form action="http://localhost:3000" method="POST">
       <label for="nombre">Nombre</label>
-      <input type="text" name="nombre" id="nombre" placeholder="pon tu nombre aquí" />
+      <input type="text" name="nombre" id="nombre" placeholder="pon tu nombre aquí" required />
       <label for="nombre">Apellido</label>
-      <input type="text" name="apellido" id="apellido" placeholder="pon tu apellido aquí" />
+      <input type="text" name="apellido" id="apellido" placeholder="pon tu apellido aquí" required />
       <label for="pais">País</label>
-      <select id="pais" name="pais">
+      <select id="pais" name="pais" required>
         <option selected disabled hidden>seleccione</option>
         <option>Colombia</option>
         <option>Venezuela</option>
         <option>México</option>
         <option>Perú</option>
       </select>
+      <button type="submit">Enviar</button>
     </form>
   </div>
 </body>
