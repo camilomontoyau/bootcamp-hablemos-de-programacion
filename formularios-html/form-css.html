@@ -7,23 +7,34 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Formulario con CSS</title>
   <style>
-    input {
-      width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
+    * {
       box-sizing: border-box;
-      border: 1px solid white;
+    }
+
+    body {
+      background-color: wheat;
+    }
+
+    input[type=text],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
       border-radius: 4px;
+      resize: vertical;
+      background-color: white;
+    }
+
+    label {
+      padding: 12px 12px 12px 0;
+      display: block;
+      color: black;
     }
 
     select {
-      width: 100%;
-      border: none;
-      border-radius: 4px;
-      background-color: #f1f1f1;
-      box-sizing: border-box;
       height: 40px;
-      margin: 8px 0;
+      margin-bottom: 6px;
     }
 
     button {
@@ -31,15 +42,28 @@
       border: none;
       color: white;
       padding: 12px 32px;
+      border-radius: 4px;
+      cursor: pointer;
       text-decoration: none;
-      margin: 4px 2px;
-      box-sizing: border-box;
+      margin: 10px 0;
+    }
+
+    button:hover {
+      background-color: #45a049;
     }
 
     input:focus,
     select:focus {
       background-color: lightblue;
       border: 3px solid #555;
+    }
+
+    .container {
+      border-radius: 4px;
+      background-color: #f2f2f2;
+      padding: 18px;
+      width: 500px;
+      margin: auto;
     }
 
     ::placeholder {
@@ -50,7 +74,7 @@
 
 <body>
   <h1>Formulario estilizado con css</h1>
-  <div>
+  <div class="container">
     <form action="http://localhost:3000" method="POST">
       <label for="nombre">Nombre</label>
       <input type="text" name="nombre" id="nombre" placeholder="pon tu nombre aquí" required />
