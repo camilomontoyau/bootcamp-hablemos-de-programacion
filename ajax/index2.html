@@ -78,10 +78,6 @@
       background-color:blue;
     }
 
-    button.ver {
-      background-color:orange;
-    }
-
     button[type=reset] {
       background-color: white;
       border: 1px solid black;
@@ -93,23 +89,6 @@
 <body>
   <h1>Formulario estilizado con css</h1>
   <div class="container">
-    <form>
-      <input type="hidden" name="indice" id="indice" />
-      <label for="nombre">Nombre</label>
-      <input type="text" name="nombre" id="nombre" placeholder="pon tu nombre aquí" required />
-      <label for="apellido">Apellido</label>
-      <input type="text" name="apellido" id="apellido" placeholder="pon tu apellido aquí" required />
-      <label for="pais">País</label>
-      <select id="pais" name="pais" required>
-        <option selected disabled hidden>seleccione</option>
-        <option>Colombia</option>
-        <option>Venezuela</option>
-        <option>México</option>
-        <option>Perú</option>
-      </select>
-      <button type="submit" id="boton">Crear</button>
-      <button type="reset" id="limpiar">limpiar</button>
-    </form>
     <table>
       <thead>
         <th>Nombre</th>
@@ -120,7 +99,7 @@
       <tbody id="body-usuarios"></tbody>
     </table>
   </div>
-  <script src="ejemplo-fetch.js"></script>
+  <script src="cargar-usuario.js"></script>
 </body>
 
 </html>
