@@ -16,7 +16,7 @@ function render() {
         <td>${usuario.nombre ? usuario.nombre : 'vacio'}</td>
         <td>${usuario.apellido ? usuario.apellido : 'vacio'}</td>
         <td>${usuario.pais ? usuario.pais : 'vacio'}</td>
-        <td><a class="ver" href="/ajax/index2.html?indice=${indice}">ver</a></td>
+        <td><a class="ver" href="/ajax/index2.html?usuario=${indice}">ver</a></td>
         <td><button class="editar" data-indice=${indice}>Editar</button></td>
         <td><button class="eliminar" data-indice=${indice}>Eliminar</button></td>
       </tr>`
@@ -117,6 +117,7 @@ function refrescar() {
 
 function restaurarBoton () {
   boton.innerText = 'Crear';
+  indice.value= '';
   nombre.value = '';
   apellido.value = '';
   pais.value = ''
