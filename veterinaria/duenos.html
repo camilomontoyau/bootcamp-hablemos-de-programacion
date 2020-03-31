@@ -10,6 +10,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
     <link rel="stylesheet" href="/veterinaria/css/styles.css" >
 
     <title>Hello, world!</title>
@@ -49,57 +51,24 @@
         </nav>
         <!-- fin NAV -->
         <div class="actions-menu">
+            <h1>Dueños de Mascotas</h1>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                Nueva
+                Nuevo
             </button>
         </div>
         <table class="table table-stripped table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Identificación</th>
+                    <th scope="col">País</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-info">editar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-info">editar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry the Bird</td>
-                    <td>hola</td>
-                    <td>@twitter</td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-info">editar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
-                        </div>
-                    </td>
-                </tr>
+            <tbody id="lista-duenos">
+                
             </tbody>
         </table>
     </div>
@@ -113,33 +82,38 @@
               </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="form">
+                    <input type="hidden" id="indice" >
                     <div class="form-row">
                         <div class="col">
-                            <select class="form-control" id="exampleFormControlSelect1">
-                              <option>Tipo animal</option>
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
+                            <select class="form-control" id="pais">
+                              <option>País</option>
+                              <option>Colombia</option>
+                              <option>Perú</option>
+                              <option>Ecuador</option>
+                              <option>Bolivia</option>
+                              <option>Venezuela</option>
+                              <option>Chile</option>
                             </select>
-                        </div>
+                        </div>  
+                      <div class="col">
+                        <input type="text" id="identificacion" name="identificacion" class="form-control" placeholder="Identificación">
+                      </div>
                     </div>
                     <div class="form-row">
                       <div class="col">
-                        <input type="text" class="form-control" placeholder="First name">
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre">
                       </div>
                       <div class="col">
-                        <input type="text" class="form-control" placeholder="Last name">
+                        <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Apellido">
                       </div>
                     </div>
 
                   </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn-guardar">Crear</button>
             </div>
           </div>
         </div>
@@ -155,6 +129,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.13.0/js/v4-shims.js"></script>
+    <script src="/veterinaria/js/duenos.js"></script>
 </body>
 
 </html>
