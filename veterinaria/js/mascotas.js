@@ -29,12 +29,13 @@ function listarMascotas() {
       <td>
           <div class="btn-group" role="group" aria-label="Basic example">
               <button type="button" class="btn btn-info editar"><i class="fas fa-edit"></i></button>
-              <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+              <button type="button" class="btn btn-danger eliminar"><i class="far fa-trash-alt"></i></button>
           </div>
       </td>
     </tr>`).join("");
     listaMascotas.innerHTML = htmlMascotas;
-    Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index)=>botonEditar.onclick = editar(index))
+    Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index)=>botonEditar.onclick = editar(index));
+    Array.from(document.getElementsByClassName('eliminar')).forEach((botonEliminar, index)=>botonEliminar.onclick = eliminar(index));
 }
 
 function enviarDatos(evento) {
@@ -75,6 +76,13 @@ function resetModal() {
   tipo.value = '';
   indice.value = '';
   btnGuardar.innerHTML = 'Crear'
+}
+
+function eliminar(index) {
+  return function clickEnEliminar() {
+    mascotas = mascotas.filter((mascota, indiceMascota)=>indiceMascota !== index);
+    listarMascotas();
+  }
 }
 
 listarMascotas();
