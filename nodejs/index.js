@@ -5,11 +5,16 @@ const callbackDelServidor = (req, res) => {
   // 1. obtener url desde el objeto request // OK
   const urlActual = req.url;
   const urlParseada = url.parse(urlActual, true);
-  const ruta = urlParseada.pathname;
   
   // 2. obtener la ruta
+  const ruta = urlParseada.pathname;
+  
   // 3. enviar una respuesta dependiendo de la ruta
-  res.end('hola mundo en un server http');
+  if(ruta === '/ruta') {
+    res.end('hola estas en /ruta');
+  } else {
+    res.end('estas en una ruta que no conozco')
+  }
 };
 
 const server = http.createServer(callbackDelServidor);
