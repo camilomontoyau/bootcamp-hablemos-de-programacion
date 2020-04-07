@@ -6,4 +6,6 @@ const callbackDelServidor = (req, res) => {
 
 const server = http.createServer(callbackDelServidor);
 
-server.listen(5000);
+server.listen(5000, ()=>{
+  console.log('el servidor está escuchando peticione en http://localhost:5000/');
+});
