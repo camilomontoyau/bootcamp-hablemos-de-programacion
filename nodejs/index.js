@@ -63,7 +63,7 @@ const callbackDelServidor = (req, res) => {
         res.end(respuesta);
       })
     }
-    
+    // respuestas según la ruta
   });
 };
 
@@ -82,5 +82,5 @@ const enrutador = {
 const server = http.createServer(callbackDelServidor);
 
 server.listen(5000, ()=>{
-  console.log('el servidor está escuchando peticione en http://localhost:5000/');
+  console.log('el servidor está escuchando peticiones en http://localhost:5000/');
 });
