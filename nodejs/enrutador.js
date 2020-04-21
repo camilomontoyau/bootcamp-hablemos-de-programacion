@@ -31,6 +31,22 @@ module.exports = {
       }
       callback(400, { mensaje: "indice no enviado" });
     },
+    delete: (data, callback) => {
+      if (typeof data.indice !== "undefined") {
+        if (global.recursos.mascotas[data.indice]) {
+          global.recursos.mascotas = global.recursos.mascotas.filter(
+            (_mascota, indice) => indice != data.indice
+          );
+          return callback(204, {
+            mensaje: `elemento con indice ${data.indice} eliminado`,
+          });
+        }
+        return callback(404, {
+          mensaje: `mascota con indice ${data.indice} no encontrada`,
+        });
+      }
+      callback(400, { mensaje: "indice no enviado" });
+    },
   },
   noEncontrado: (data, callback) => {
     callback(404, { mensaje: "no encontrado" });
