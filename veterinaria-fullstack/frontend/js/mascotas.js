@@ -103,7 +103,7 @@ function eliminar(index) {
 listarMascotas();
 
 function solicitarMascotas() {
-  fetch("http://localhost:5000/mascotas", { mode: "cors" })
+  fetch("http://localhost:5000/mascotas")
     .then((respuesta) => {
       if (respuesta.ok) {
         return respuesta.json();
