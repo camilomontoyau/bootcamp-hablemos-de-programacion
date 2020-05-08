@@ -17,16 +17,15 @@ module.exports = (req, res) => {
   const metodo = req.method.toLowerCase();
 
   //3.1.1 dar permisos de CORS escribiendo los headers
-  res.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
-  res.setHeader(
-    "Access-Control-Request-Methods",
-    "OPTIONS,GET,PUT,DELETE,POST"
-  );
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
-
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "OPTIONS, GET, PUT, DELETE, POST"
+  );
   //3.1.2 dar respuesta inmediata cuando el método sea options
   if (metodo === "options") {
-    res.writeHead(200);
+    res.writeHead(204);
     res.end();
     return;
   }
