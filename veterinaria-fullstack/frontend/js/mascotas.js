@@ -5,12 +5,13 @@ const indice = document.getElementById("indice");
 const form = document.getElementById("form");
 const btnGuardar = document.getElementById("btn-guardar");
 const listaMascotas = document.getElementById("lista-mascotas");
+const url = "http://localhost:5000/mascotas";
 
 let mascotas = [];
 
 async function listarMascotas() {
   try {
-    const respuesta = await fetch("http://localhost:5000/mascotas");
+    const respuesta = await fetch(url);
     const mascotasDelServer = await respuesta.json();
     if (Array.isArray(mascotasDelServer) && mascotasDelServer.length > 0) {
       mascotas = mascotasDelServer;
@@ -43,24 +44,37 @@ async function listarMascotas() {
   }
 }
 
-function enviarDatos(evento) {
+async function enviarDatos(evento) {
   evento.preventDefault();
-  const datos = {
-    tipo: tipo.value,
-    nombre: nombre.value,
-    dueno: dueno.value,
-  };
-  const accion = btnGuardar.innerHTML;
-  switch (accion) {
-    case "Editar":
+  try {
+    const datos = {
+      tipo: tipo.value,
+      nombre: nombre.value,
+      dueno: dueno.value,
+    };
+    let method = "POST";
+    let urlEnvio = url;
+    const accion = btnGuardar.innerHTML;
+    if (accion === "Editar") {
+      method = "PUT";
       mascotas[indice.value] = datos;
-      break;
-    default:
-      mascotas.push(datos);
-      break;
+      urlEnvio = `${url}/${indice.value}`;
+    }
+    const respuesta = await fetch(urlEnvio, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datos),
+      mode: "cors",
+    });
+    if (respuesta.ok) {
+      listarMascotas();
+      resetModal();
+    }
+  } catch (error) {
+    throw error;
   }
-  listarMascotas();
-  resetModal();
 }
 
 function editar(index) {
