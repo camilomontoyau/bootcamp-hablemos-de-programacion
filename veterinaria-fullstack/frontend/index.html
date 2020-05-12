@@ -52,9 +52,17 @@
         <!-- fin NAV -->
         <div class="actions-menu">
             <h1>Mascotas</h1>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                Nueva
-            </button>
+            <div class="actions-menu-content">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Nueva
+                </button>
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <strong>Oops!</strong> Algo hicimos mal, por favor vuelve a intentarlo!.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
         </div>
         <table class="table table-stripped table-hover">
             <thead class="thead-dark">
