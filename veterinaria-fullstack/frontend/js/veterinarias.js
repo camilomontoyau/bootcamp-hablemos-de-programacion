@@ -1,4 +1,3 @@
-const tipo = document.getElementById("pais");
 const nombre = document.getElementById("nombre");
 const documento = document.getElementById("documento");
 const apellido = document.getElementById("apellido");
@@ -51,25 +50,37 @@ async function listarVeterinarias() {
   }
 }
 
-function enviarDatos(evento) {
+async function enviarDatos(evento) {
   evento.preventDefault();
-  const datos = {
-    nombre: nombre.value,
-    apellido: apellido.value,
-    pais: pais.value,
-    documento: documento.value,
-  };
-  const accion = btnGuardar.innerHTML;
-  switch (accion) {
-    case "Editar":
-      veterinarias[indice.value] = datos;
-      break;
-    default:
-      veterinarias.push(datos);
-      break;
+  try {
+    const datos = {
+      nombre: nombre.value,
+      apellido: apellido.value,
+      documento: documento.value,
+    };
+    const accion = btnGuardar.innerHTML;
+    let urlEnvio = url;
+    let method = "POST";
+    if (accion === "Editar") {
+      urlEnvio += `/${indice.value}`;
+      method = "PUT";
+    }
+    const respuesta = await fetch(urlEnvio, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datos),
+      mode: "cors",
+    });
+    if (respuesta.ok) {
+      listarVeterinarias();
+      resetModal();
+    }
+  } catch (error) {
+    console.log({ error });
+    $(".alert").show();
   }
-  listarVeterinarias();
-  resetModal();
 }
 
 function editar(index) {
@@ -80,7 +91,6 @@ function editar(index) {
     indice.value = index;
     nombre.value = veterinaria.nombre;
     apellido.value = veterinaria.apellido;
-    pais.value = veterinaria.pais;
     documento.value = veterinaria.documento;
   };
 }
@@ -89,7 +99,6 @@ function resetModal() {
   indice.value = "";
   nombre.value = "";
   apellido.value = "";
-  pais.value = "";
   documento.value = "";
   btnGuardar.innerHTML = "Crear";
 }
