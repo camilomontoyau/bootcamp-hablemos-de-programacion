@@ -104,11 +104,20 @@ function resetModal() {
 }
 
 function eliminar(index) {
-  return function clickEnEliminar() {
-    veterinarias = veterinarias.filter(
-      (veterinaria, indiceVeterinaria) => indiceVeterinaria !== index
-    );
-    listarVeterinarias();
+  const urlEnvio = `${url}/${index}`;
+  return async function clickEnEliminar() {
+    try {
+      const respuesta = await fetch(urlEnvio, {
+        method: "DELETE",
+        mode: "cors",
+      });
+      if (respuesta.ok) {
+        listarVeterinarias();
+      }
+    } catch (error) {
+      console.log({ error });
+      $(".alert").show();
+    }
   };
 }
 
