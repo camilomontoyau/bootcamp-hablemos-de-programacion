@@ -1,6 +1,6 @@
 const tipo = document.getElementById("pais");
 const nombre = document.getElementById("nombre");
-const identificacion = document.getElementById("identificacion");
+const documento = document.getElementById("documento");
 const apellido = document.getElementById("apellido");
 const indice = document.getElementById("indice");
 const form = document.getElementById("form");
@@ -57,7 +57,7 @@ function enviarDatos(evento) {
     nombre: nombre.value,
     apellido: apellido.value,
     pais: pais.value,
-    identificacion: identificacion.value,
+    documento: documento.value,
   };
   const accion = btnGuardar.innerHTML;
   switch (accion) {
@@ -81,7 +81,7 @@ function editar(index) {
     nombre.value = veterinaria.nombre;
     apellido.value = veterinaria.apellido;
     pais.value = veterinaria.pais;
-    identificacion.value = veterinaria.identificacion;
+    documento.value = veterinaria.documento;
   };
 }
 
@@ -90,7 +90,7 @@ function resetModal() {
   nombre.value = "";
   apellido.value = "";
   pais.value = "";
-  identificacion.value = "";
+  documento.value = "";
   btnGuardar.innerHTML = "Crear";
 }
 
