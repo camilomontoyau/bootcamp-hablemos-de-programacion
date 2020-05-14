@@ -12,7 +12,7 @@
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
-    <link rel="stylesheet" href="/veterinaria/css/styles.css" >
+    <link rel="stylesheet" href="./css/styles.css" >
 
     <title>Hello, world!</title>
 </head>
@@ -52,9 +52,17 @@
         <!-- fin NAV -->
         <div class="actions-menu">
             <h1>Dueños de Mascotas</h1>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                Nuevo
-            </button>
+            <div class="actions-menu-content">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Nuevo
+                </button>
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <strong>Oops!</strong> Algo hicimos mal, por favor vuelve a intentarlo!.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
         </div>
         <table class="table table-stripped table-hover">
             <thead class="thead-dark">
