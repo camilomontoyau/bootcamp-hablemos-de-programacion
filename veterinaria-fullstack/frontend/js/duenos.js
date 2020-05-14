@@ -46,7 +46,8 @@ async function listarDuenos() {
     <td colspan="5" class="lista-vacia">No hay dueñ@s</td>
   </tr>`;
   } catch (error) {
-    throw error;
+    console.log({ error });
+    $(".alert").show();
   }
 }
 
