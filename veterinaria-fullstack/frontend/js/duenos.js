@@ -1,33 +1,27 @@
-const tipo = document.getElementById('pais');
-const nombre = document.getElementById('nombre');
-const identificacion = document.getElementById('identificacion');
-const apellido = document.getElementById('apellido');
-const indice = document.getElementById('indice');
-const form = document.getElementById('form');
-const btnGuardar = document.getElementById('btn-guardar');
-const listaDuenos = document.getElementById('lista-duenos');
+const nombre = document.getElementById("nombre");
+const documento = document.getElementById("documento");
+const apellido = document.getElementById("apellido");
+const indice = document.getElementById("indice");
+const form = document.getElementById("form");
+const btnGuardar = document.getElementById("btn-guardar");
+const listaDuenos = document.getElementById("lista-duenos");
+const url = "http://localhost:5000/duenos";
 
-let duenos = [
-  {
-    nombre: "Naryie",
-    apellido: "Vasquez",
-    pais: "Colombia",
-    identificacion: "1234567890"
-  },
-  {
-    nombre: "Juan David",
-    apellido: "Marín",
-    pais: "Colombia",
-    identificacion: "1234567899"
-  }
-];
+let duenos = [];
 
-
-function listarDuenos() {
-  const htmlDuenos = duenos.map((dueno, index)=>`<tr>
+async function listarDuenos() {
+  try {
+    const respuesta = await fetch(url);
+    const duenosDelServer = await respuesta.json();
+    if (Array.isArray(duenosDelServer)) {
+      duenos = duenosDelServer;
+    }
+    if (duenos.length > 0) {
+      const htmlDuenos = duenos
+        .map(
+          (dueno, index) => `<tr>
       <th scope="row">${index}</th>
-      <td>${dueno.identificacion}</td>
-      <td>${dueno.pais}</td>
+      <td>${dueno.documento}</td>
       <td>${dueno.nombre}</td>
       <td>${dueno.apellido}</td>
       <td>
@@ -36,10 +30,24 @@ function listarDuenos() {
               <button type="button" class="btn btn-danger eliminar"><i class="far fa-trash-alt"></i></button>
           </div>
       </td>
-    </tr>`).join("");
-    listaDuenos.innerHTML = htmlDuenos;
-    Array.from(document.getElementsByClassName('editar')).forEach((botonEditar, index)=>botonEditar.onclick = editar(index));
-    Array.from(document.getElementsByClassName('eliminar')).forEach((botonEliminar, index)=>botonEliminar.onclick = eliminar(index));
+    </tr>`
+        )
+        .join("");
+      listaDuenos.innerHTML = htmlDuenos;
+      Array.from(document.getElementsByClassName("editar")).forEach(
+        (botonEditar, index) => (botonEditar.onclick = editar(index))
+      );
+      Array.from(document.getElementsByClassName("eliminar")).forEach(
+        (botonEliminar, index) => (botonEliminar.onclick = eliminar(index))
+      );
+      return;
+    }
+    listaDuenos.innerHTML = `<tr>
+    <td colspan="5" class="lista-vacia">No hay dueñ@s</td>
+  </tr>`;
+  } catch (error) {
+    throw error;
+  }
 }
 
 function enviarDatos(evento) {
@@ -48,11 +56,11 @@ function enviarDatos(evento) {
     nombre: nombre.value,
     apellido: apellido.value,
     pais: pais.value,
-    identificacion: identificacion.value
+    identificacion: identificacion.value,
   };
   const accion = btnGuardar.innerHTML;
-  switch(accion) {
-    case 'Editar':
+  switch (accion) {
+    case "Editar":
       duenos[indice.value] = datos;
       break;
     default:
@@ -65,31 +73,31 @@ function enviarDatos(evento) {
 
 function editar(index) {
   return function cuandoCliqueo() {
-    btnGuardar.innerHTML = 'Editar'
-    $('#exampleModalCenter').modal('toggle');
+    btnGuardar.innerHTML = "Editar";
+    $("#exampleModalCenter").modal("toggle");
     const dueno = duenos[index];
     indice.value = index;
     nombre.value = dueno.nombre;
     apellido.value = dueno.apellido;
     pais.value = dueno.pais;
     identificacion.value = dueno.identificacion;
-  }
+  };
 }
 
 function resetModal() {
-  indice.value = '';
-  nombre.value = '';
-  apellido.value = '';
-  pais.value = '';
-  identificacion.value = '';
-  btnGuardar.innerHTML = 'Crear'
+  indice.value = "";
+  nombre.value = "";
+  apellido.value = "";
+  pais.value = "";
+  identificacion.value = "";
+  btnGuardar.innerHTML = "Crear";
 }
 
 function eliminar(index) {
   return function clickEnEliminar() {
-    duenos = duenos.filter((dueno, indiceDueno)=>indiceDueno !== index);
+    duenos = duenos.filter((dueno, indiceDueno) => indiceDueno !== index);
     listarDuenos();
-  }
+  };
 }
 
 listarDuenos();
