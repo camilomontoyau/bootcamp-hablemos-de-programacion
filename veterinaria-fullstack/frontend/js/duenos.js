@@ -105,9 +105,20 @@ function resetModal() {
 }
 
 function eliminar(index) {
-  return function clickEnEliminar() {
-    duenos = duenos.filter((dueno, indiceDueno) => indiceDueno !== index);
-    listarDuenos();
+  const urlEnvio = `${url}/${index}`;
+  return async function clickEnEliminar() {
+    try {
+      const respuesta = await fetch(urlEnvio, {
+        method: "DELETE",
+        mode: "cors",
+      });
+      if (respuesta.ok) {
+        listarDuenos();
+      }
+    } catch (error) {
+      console.log({ error });
+      $(".alert").show();
+    }
   };
 }
 
