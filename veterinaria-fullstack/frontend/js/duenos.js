@@ -51,25 +51,37 @@ async function listarDuenos() {
   }
 }
 
-function enviarDatos(evento) {
+async function enviarDatos(evento) {
   evento.preventDefault();
-  const datos = {
-    nombre: nombre.value,
-    apellido: apellido.value,
-    pais: pais.value,
-    identificacion: identificacion.value,
-  };
-  const accion = btnGuardar.innerHTML;
-  switch (accion) {
-    case "Editar":
-      duenos[indice.value] = datos;
-      break;
-    default:
-      duenos.push(datos);
-      break;
+  try {
+    const datos = {
+      nombre: nombre.value,
+      apellido: apellido.value,
+      documento: documento.value,
+    };
+    const accion = btnGuardar.innerHTML;
+    let urlEnvio = url;
+    let method = "POST";
+    if (accion === "Editar") {
+      urlEnvio += `/${indice.value}`;
+      method = "PUT";
+    }
+    const respuesta = await fetch(urlEnvio, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datos),
+      mode: "cors",
+    });
+    if (respuesta.ok) {
+      listarDuenos();
+      resetModal();
+    }
+  } catch (error) {
+    console.log({ error });
+    $(".alert").show();
   }
-  listarDuenos();
-  resetModal();
 }
 
 function editar(index) {
@@ -80,8 +92,7 @@ function editar(index) {
     indice.value = index;
     nombre.value = dueno.nombre;
     apellido.value = dueno.apellido;
-    pais.value = dueno.pais;
-    identificacion.value = dueno.identificacion;
+    documento.value = dueno.documento;
   };
 }
 
@@ -89,8 +100,7 @@ function resetModal() {
   indice.value = "";
   nombre.value = "";
   apellido.value = "";
-  pais.value = "";
-  identificacion.value = "";
+  documento.value = "";
   btnGuardar.innerHTML = "Crear";
 }
 
