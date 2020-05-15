@@ -25,8 +25,9 @@ async function listarConsultas() {
           (consulta, indice) =>
             `<tr>
           <th scope="row">${indice}</th>
-          <td>${consulta.mascota}</td>
-          <td>${consulta.veterinaria}</td>
+          <td>${consulta.mascota.nombre}</td>
+          <td>${consulta.veterinaria.nombre} ${consulta.veterinaria.apellido}</td>
+          <td>${consulta.diagnostico}</td>
           <td>${consulta.fechaCreacion}</td>
           <td>${consulta.fechaEdicion}</td>
           
