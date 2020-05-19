@@ -43,8 +43,6 @@ async function listarConsultas() {
   }
 }
 
-listarConsultas();
-
 async function listarMascotas() {
   const entidad = "mascotas";
   try {
@@ -65,8 +63,6 @@ async function listarMascotas() {
     throw error;
   }
 }
-
-listarMascotas();
 
 async function listarVeterinarias() {
   const entidad = "veterinarias";
@@ -89,4 +85,6 @@ async function listarVeterinarias() {
   }
 }
 
+listarMascotas();
+listarConsultas();
 listarVeterinarias();
