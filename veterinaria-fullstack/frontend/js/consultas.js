@@ -3,8 +3,8 @@ const mascota = document.getElementById("mascota");
 const veterinaria = document.getElementById("veterinaria");
 const historia = document.getElementById("historia");
 const diagnostico = document.getElementById("diagnostico");
-const btnGuardar = document.getElementById("btn-guardar");
 const indice = document.getElementById("indice");
+const btnGuardar = document.getElementById("btn-guardar");
 
 let consultas = [];
 let mascotas = [];
@@ -104,6 +104,42 @@ function editar(index) {
     diagnostico.value = consulta.diagnostico;
   };
 }
+
+async function enviarDatos(evento) {
+  const entidad = "consultas";
+  evento.preventDefault();
+  try {
+    const datos = {
+      mascota: mascota.value,
+      veterinaria: veterinaria.value,
+      historia: historia.value,
+      diagnostico: diagnostico.value,
+    };
+    const accion = btnGuardar.innerHTML;
+    let urlEnvio = `${url}/${entidad}`;
+    let method = "POST";
+    if (accion === "Editar") {
+      urlEnvio += `/${indice.value}`;
+      method = "PUT";
+    }
+    const respuesta = await fetch(urlEnvio, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(datos),
+      mode: "cors",
+    });
+    if (respuesta.ok) {
+      listarConsultas();
+      //resetModal();
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+btnGuardar.onclick = enviarDatos;
 
 listarMascotas();
 listarConsultas();
