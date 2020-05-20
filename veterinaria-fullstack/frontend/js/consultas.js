@@ -5,6 +5,7 @@ const historia = document.getElementById("historia");
 const diagnostico = document.getElementById("diagnostico");
 const indice = document.getElementById("indice");
 const btnGuardar = document.getElementById("btn-guardar");
+const formulario = document.getElementById("formulario");
 
 let consultas = [];
 let mascotas = [];
@@ -115,28 +116,50 @@ async function enviarDatos(evento) {
       historia: historia.value,
       diagnostico: diagnostico.value,
     };
-    const accion = btnGuardar.innerHTML;
-    let urlEnvio = `${url}/${entidad}`;
-    let method = "POST";
-    if (accion === "Editar") {
-      urlEnvio += `/${indice.value}`;
-      method = "PUT";
+    if (validar(datos) === true) {
+      const accion = btnGuardar.innerHTML;
+      let urlEnvio = `${url}/${entidad}`;
+      let method = "POST";
+      if (accion === "Editar") {
+        urlEnvio += `/${indice.value}`;
+        method = "PUT";
+      }
+      const respuesta = await fetch(urlEnvio, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos),
+        mode: "cors",
+      });
+      if (respuesta.ok) {
+        listarConsultas();
+        resetModal();
+      }
+      return;
     }
-    const respuesta = await fetch(urlEnvio, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(datos),
-      mode: "cors",
-    });
-    if (respuesta.ok) {
-      listarConsultas();
-      //resetModal();
-    }
+    alert("formulario incompleto");
   } catch (error) {
     throw error;
   }
+}
+
+function resetModal() {
+  indice.value = "";
+  btnGuardar.innerHTML = "Crear";
+  mascota.value = "";
+  veterinaria.value = "";
+  historia.value = "";
+  diagnostico.value = "";
+  $("#exampleModalCenter").modal("toggle");
+}
+
+function validar(datos) {
+  if (typeof datos !== "object") return false;
+  for (let llave in datos) {
+    if (datos[llave].length === 0) return false;
+  }
+  return true;
 }
 
 btnGuardar.onclick = enviarDatos;
