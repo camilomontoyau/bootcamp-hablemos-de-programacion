@@ -47,7 +47,8 @@ async function listarConsultas() {
       );
     }
   } catch (error) {
-    throw error;
+    console.log({ error });
+    $(".alert").show();
   }
 }
 
@@ -68,7 +69,8 @@ async function listarMascotas() {
       });
     }
   } catch (error) {
-    throw error;
+    console.log({ error });
+    $(".alert").show();
   }
 }
 
@@ -89,7 +91,8 @@ async function listarVeterinarias() {
       });
     }
   } catch (error) {
-    throw error;
+    console.log({ error });
+    $(".alert").show();
   }
 }
 
@@ -140,7 +143,8 @@ async function enviarDatos(evento) {
     }
     alert("formulario incompleto");
   } catch (error) {
-    throw error;
+    console.log({ error });
+    $(".alert").show();
   }
 }
 
