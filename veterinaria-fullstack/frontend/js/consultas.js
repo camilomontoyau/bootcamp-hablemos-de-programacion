@@ -48,7 +48,7 @@ async function listarConsultas() {
     }
   } catch (error) {
     console.log({ error });
-    $(".alert").show();
+    $(".alert-danger").show();
   }
 }
 
@@ -70,7 +70,7 @@ async function listarMascotas() {
     }
   } catch (error) {
     console.log({ error });
-    $(".alert").show();
+    $(".alert-danger").show();
   }
 }
 
@@ -92,7 +92,7 @@ async function listarVeterinarias() {
     }
   } catch (error) {
     console.log({ error });
-    $(".alert").show();
+    $(".alert-danger").show();
   }
 }
 
@@ -139,12 +139,13 @@ async function enviarDatos(evento) {
         listarConsultas();
         resetModal();
       }
+      formulario.classList.add("was-validated");
       return;
     }
-    alert("formulario incompleto");
+    $(".alert-warning").show();
   } catch (error) {
     console.log({ error });
-    $(".alert").show();
+    $(".alert-danger").show();
   }
 }
 
@@ -160,10 +161,17 @@ function resetModal() {
 
 function validar(datos) {
   if (typeof datos !== "object") return false;
+  let respuesta = true;
   for (let llave in datos) {
-    if (datos[llave].length === 0) return false;
+    if (datos[llave].length === 0) {
+      document.getElementById(llave).classList.add("is-invalid");
+      respuesta = false;
+    } else {
+      document.getElementById(llave).classList.remove("is-invalid");
+      document.getElementById(llave).classList.add("is-valid");
+    }
   }
-  return true;
+  return respuesta;
 }
 
 btnGuardar.onclick = enviarDatos;
