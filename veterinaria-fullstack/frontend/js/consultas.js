@@ -35,7 +35,7 @@ async function listarConsultas() {
           
           <td>
               <div class="btn-group" role="group" aria-label="Basic example">
-                <button class="editar" type="button" class="btn btn-info">editar</button>
+                <button type="button" class="btn btn-info editar"><i class="fas fa-edit"></i></button>
               </div>
           </td>
         </tr>`
@@ -150,12 +150,15 @@ async function enviarDatos(evento) {
 }
 
 function resetModal() {
-  indice.value = "";
   btnGuardar.innerHTML = "Crear";
-  mascota.value = "";
-  veterinaria.value = "";
-  historia.value = "";
-  diagnostico.value = "";
+  [indice, mascota, veterinaria, historia, diagnostico].forEach(
+    (inputActual) => {
+      inputActual.value = "";
+      inputActual.classList.remove("is-invalid");
+      inputActual.classList.remove("is-valid");
+    }
+  );
+  $(".alert-warning").hide();
   $("#exampleModalCenter").modal("toggle");
 }
 
@@ -171,6 +174,7 @@ function validar(datos) {
       document.getElementById(llave).classList.add("is-valid");
     }
   }
+  if (respuesta === true) $(".alert-warning").hide();
   return respuesta;
 }
 
