@@ -16,14 +16,12 @@
 </head>
 <body>
   <div id="app"></div>
-  
+  <script src="https://unpkg.com/react@16.13.1/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>
   <script>
     const app = document.getElementById('app');
-    const button = document.createElement('button');
-    button.innerText = 'hola soy un boton';
-    button.className='bg-azul letra-blanca';
-    button.onclick = () => alert('click en el botón');
-    app.appendChild(button);
+    const button = React.createElement('button', {className: 'bg-azul letra-blanca'}, 'botón de react');
+    ReactDOM.render(button, app);
   </script>
 </body>
 </html>
