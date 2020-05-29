@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    .letra-azul {
-      color: blue;
+    .bg-azul {
+      background-color: blue;
+    }
+    
+    .letra-blanca {
+      color: #FFF;
     }
   </style>
 </head>
@@ -15,10 +19,11 @@
   
   <script>
     const app = document.getElementById('app');
-    const div = document.createElement('div');
-    div.innerText = 'hola soy un div';
-    div.className='letra-azul';
-    app.appendChild(div);
+    const button = document.createElement('button');
+    button.innerText = 'hola soy un boton';
+    button.className='bg-azul letra-blanca';
+    button.onclick = () => alert('click en el botón');
+    app.appendChild(button);
   </script>
 </body>
 </html>
