@@ -20,8 +20,9 @@
   <script src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>
   <script>
     const app = document.getElementById('app');
-    const button = React.createElement('button', {className: 'bg-azul letra-blanca'}, 'botón de react');
-    ReactDOM.render(button, app);
+    const button = React.createElement('button', {className: 'bg-azul letra-blanca', onClick:()=>{alert('hola desde react')}}, 'botón de react');
+    const divPrincipal = React.createElement('div', {}, button);
+    ReactDOM.render(divPrincipal, app);
   </script>
 </body>
 </html>
