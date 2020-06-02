@@ -18,11 +18,18 @@
   <div id="app"></div>
   <script src="https://unpkg.com/react@16.13.1/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>
-  <script>
+  <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  <script type="text/babel">
     const app = document.getElementById('app');
-    const button = React.createElement('button', {className: 'bg-azul letra-blanca', onClick:()=>{alert('hola desde react')}}, 'botón de react');
-    const divPrincipal = React.createElement('div', {}, button);
-    ReactDOM.render(divPrincipal, app);
+    const Button = ()=>(<button 
+                          className='bg-azul letra-blanca' 
+                          onClick={()=>{alert('hola desde react')}}
+                        >
+                          botón de react
+                        </button>
+                      );
+    const DivPrincipal = ()=>(<div><Button/></div>);
+    ReactDOM.render(<DivPrincipal/>, app);
   </script>
 </body>
 </html>
