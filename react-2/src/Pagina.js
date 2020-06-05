@@ -1,9 +1,11 @@
 import React from "react";
 import Nav from "./componentes/Nav";
+import Ejemplo from "./componentes/Ejemplo";
 
 function Mascotas() {
   return (
     <>
+      <Ejemplo />
       <div className="container">
         <Nav />
         <div className="actions-menu">
