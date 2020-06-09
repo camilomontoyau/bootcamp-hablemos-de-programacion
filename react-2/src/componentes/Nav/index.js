@@ -1,4 +1,5 @@
 import React from "react";
+import "./Nav.css";
 
 function Nav() {
   return (
@@ -6,7 +7,7 @@ function Nav() {
       <a className="navbar-brand" href="#">
         Veterinaria
       </a>
-      <button
+      {/* <button
         className="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -16,7 +17,7 @@ function Nav() {
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon"></span>
-      </button>
+      </button> */}
       <div className="collapse navbar-collapse" id="navbarColor03">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
