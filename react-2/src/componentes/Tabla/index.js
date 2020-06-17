@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Encabezado from "./Encabezado";
+import Fila from "./Fila";
 
 function Tabla() {
   const [mascotas, setMascotas] = useState([
@@ -20,22 +21,7 @@ function Tabla() {
       <Encabezado columnas={columnas} />
       <tbody id="lista-mascotas">
         {mascotas.map((mascota, index) => (
-          <tr>
-            <th scope="row">{index}</th>
-            <td>{mascota.tipo}</td>
-            <td>{mascota.nombre}</td>
-            <td>{mascota.dueno}</td>
-            <td>
-              <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-info editar">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-danger eliminar">
-                  <i class="far fa-trash-alt"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
+          <Fila index={index} mascota={mascota} />
         ))}
       </tbody>
     </table>
