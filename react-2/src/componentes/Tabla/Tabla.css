@@ -1,0 +1,10 @@
+.table {
+  width: 80%;
+  margin: 10%;
+  margin-bottom: 1rem;
+  color: #212529;
+}
+
+table {
+  border-collapse: collapse;
+}
