@@ -1,0 +1,16 @@
+.thead-dark th {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #454d55;
+}
+
+.table th {
+  padding: .75rem;
+  vertical-align: top;
+  border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+  vertical-align: bottom;
+  border-bottom: 2px solid #dee2e6;
+}

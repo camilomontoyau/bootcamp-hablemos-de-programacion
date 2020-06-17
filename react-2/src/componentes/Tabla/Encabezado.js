@@ -1,4 +1,5 @@
 import React from "react";
+import "./Encabezado.css";
 
 function Encabezado(props) {
   if (props.columnas.length === 0) return false;
