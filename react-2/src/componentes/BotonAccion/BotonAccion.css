@@ -23,3 +23,9 @@
   background-color: #17a2b8;
   border-color: #17a2b8;
 }
+
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
