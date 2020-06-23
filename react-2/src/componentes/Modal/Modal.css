@@ -3,9 +3,49 @@
   top: 0;
   left: 0;
   z-index: 1050;
-  display: none;
   width: 100%;
   height: 100%;
   overflow: hidden;
   outline: 0;
+}
+
+.modal-backdrop.show {
+  opacity: .5;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+}
+.fade {
+  transition: opacity .15s linear;
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: .5rem;
+  pointer-events: none;
+}
+
+.modal-dialog-centered {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: calc(100% - 1rem);
+}
+
+.modal-dialog-centered {
+  min-height: calc(100% - 3.5rem);
+}
+
+.modal-dialog {
+  max-width: 500px;
+  margin: 1.75rem auto;
 }
