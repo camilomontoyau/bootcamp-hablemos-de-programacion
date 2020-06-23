@@ -1,15 +1,14 @@
 import React from "react";
 import ModalHeader from "./ModalHeader";
 import Select from "../Select";
+import "./Modal.css";
 
 function Modal() {
   return (
     <div
-      className="modal fade"
+      className="modal"
       id="exampleModalCenter"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalCenterTitle"
+      tabIndex="-1"
       aria-hidden="true"
     >
       <div className="modal-dialog modal-dialog-centered" role="document">

@@ -8,7 +8,7 @@ class Pagina extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mostraModal: false,
+      mostraModal: true,
     };
   }
 
