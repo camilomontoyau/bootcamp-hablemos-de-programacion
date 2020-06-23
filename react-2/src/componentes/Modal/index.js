@@ -5,9 +5,9 @@ import "./Modal.css";
 
 function Modal() {
   return (
-    <div className="modal">
+    <div className="modal fade">
       <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+        <div className="">
           <ModalHeader />
           <div className="modal-body">
             <form id="form">
