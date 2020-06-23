@@ -22,7 +22,7 @@ function Nav() {
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
             <a className="nav-link" href="/index.html">
-              Mascotas<span class="sr-only">(current)</span>
+              Mascotas<span className="sr-only">(current)</span>
             </a>
           </li>
           <li className="nav-item">

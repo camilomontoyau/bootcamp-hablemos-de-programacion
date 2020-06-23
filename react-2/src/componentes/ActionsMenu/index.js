@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import "./ActionsMenu.css";
-import Alert from "../Alert";
 
 function ActionsMenu({ cambiarModal = () => {} }) {
   return (
@@ -16,7 +15,6 @@ function ActionsMenu({ cambiarModal = () => {} }) {
         >
           Nueva
         </button>
-        {/* <Alert /> */}
       </div>
     </div>
   );

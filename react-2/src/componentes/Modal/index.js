@@ -5,13 +5,8 @@ import "./Modal.css";
 
 function Modal() {
   return (
-    <div
-      className="modal"
-      id="exampleModalCenter"
-      tabIndex="-1"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog modal-dialog-centered" role="document">
+    <div className="modal">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <ModalHeader />
           <div className="modal-body">
