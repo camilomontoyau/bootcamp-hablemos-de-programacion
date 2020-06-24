@@ -72,6 +72,8 @@
 .form-row {
   padding: 20px 0px;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   flex-wrap: wrap;
   margin-right: -5px;
   margin-left: -5px;
@@ -86,4 +88,5 @@
 .form-row > .col {
   padding-right: 5px;
   padding-left: 5px;
+  margin-right: 10px;
 }
