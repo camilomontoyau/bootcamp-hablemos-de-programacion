@@ -1,13 +1,19 @@
 import React from "react";
 import "./ModalFooter.css";
 
-function ModalFooter() {
+function ModalFooter({ cambiarModal = () => {} }) {
   return (
     <div className="modal-footer">
-      <button type="button" className="btn btn-secondary" data-dismiss="modal">
+      <button
+        onClick={cambiarModal}
+        type="button"
+        className="btn btn-secondary"
+        data-dismiss="modal"
+      >
         Cerrar
       </button>
       <button
+        onClick={cambiarModal}
         type="button"
         className="btn btn-primary"
         data-dismiss="modal"
