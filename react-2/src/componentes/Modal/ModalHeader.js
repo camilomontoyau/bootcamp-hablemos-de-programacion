@@ -1,7 +1,7 @@
 import React from "react";
 import "./ModalHeader.css";
 
-function ModalHeader() {
+function ModalHeader({ cambiarModal = () => {} }) {
   return (
     <div className="modal-header">
       <h5 className="modal-title" id="exampleModalCenterTitle">
@@ -12,6 +12,7 @@ function ModalHeader() {
         className="close"
         data-dismiss="modal"
         aria-label="Close"
+        onClick={cambiarModal}
       >
         <span aria-hidden="true">&times;</span>
       </button>
