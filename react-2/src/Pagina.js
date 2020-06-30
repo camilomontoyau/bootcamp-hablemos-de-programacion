@@ -38,7 +38,7 @@ class Pagina extends Component {
         <div className="container">
           <Nav />
           <ActionsMenu cambiarModal={this.cambiarModal} titulo={titulo} />
-          <Tabla />
+          <Tabla entidades={this.state.entidades} />
           {this.state.mostraModal && <Modal cambiarModal={this.cambiarModal} />}
         </div>
       </>
