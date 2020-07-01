@@ -20,7 +20,11 @@ const duenos = [
   { valor: "Camilo", etiqueta: "Camilo" },
 ];
 
-function Modal({ cambiarModal = () => {} }) {
+function Modal({
+  cambiarModal = () => {},
+  manejarInput = () => {},
+  crearEntidad = () => {},
+}) {
   return (
     <>
       <div className="modal">
@@ -31,24 +35,42 @@ function Modal({ cambiarModal = () => {} }) {
               <form id="form">
                 <div className="form-row">
                   <div className="col">
-                    <Select options={tiposMascota} nombreCampo="Tipo animal" />
+                    <Select
+                      nombreCampo="tipo"
+                      options={tiposMascota}
+                      onChange={manejarInput}
+                      placeholder="Tipo Animal"
+                    />
                   </div>
                 </div>
                 <div className="form-row">
                   <div className="col">
-                    <Input tipo="text" nombreCampo="nombre" />
+                    <Input
+                      nombreCampo="nombre"
+                      tipo="text"
+                      onInput={manejarInput}
+                      placeholder="Nombre"
+                    />
                   </div>
                   <div className="col">
-                    <Select options={duenos} nombreCampo="dueño" />
+                    <Select
+                      options={duenos}
+                      nombreCampo="dueno"
+                      onChange={manejarInput}
+                      placeholder="Dueño"
+                    />
                   </div>
                 </div>
               </form>
             </div>
-            <ModalFooter cambiarModal={cambiarModal} />
+            <ModalFooter
+              cambiarModal={cambiarModal}
+              crearEntidad={crearEntidad}
+            />
           </div>
         </div>
       </div>
-      <div class="modal-backdrop fade show"></div>
+      <div className="modal-backdrop fade show"></div>
     </>
   );
 }

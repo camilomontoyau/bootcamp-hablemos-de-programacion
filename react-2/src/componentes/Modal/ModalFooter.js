@@ -1,7 +1,7 @@
 import React from "react";
 import "./ModalFooter.css";
 
-function ModalFooter({ cambiarModal = () => {} }) {
+function ModalFooter({ cambiarModal = () => {}, crearEntidad = () => {} }) {
   return (
     <div className="modal-footer">
       <button
@@ -13,7 +13,7 @@ function ModalFooter({ cambiarModal = () => {} }) {
         Cerrar
       </button>
       <button
-        onClick={cambiarModal}
+        onClick={crearEntidad}
         type="button"
         className="btn btn-primary"
         data-dismiss="modal"
