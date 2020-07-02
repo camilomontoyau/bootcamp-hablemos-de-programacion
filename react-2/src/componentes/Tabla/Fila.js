@@ -2,7 +2,7 @@ import React from "react";
 import BotonAccion from "../BotonAccion";
 import "./Fila.css";
 
-function Fila({ index, entidad }) {
+function Fila({ index, entidad, editarEntidad = () => {} }) {
   return (
     <tr>
       <th scope="row">{index}</th>
@@ -11,7 +11,7 @@ function Fila({ index, entidad }) {
       <td>{entidad.dueno}</td>
       <td>
         <div className="btn-group" role="group" aria-label="Basic example">
-          <BotonAccion tipo="editar" />
+          <BotonAccion tipo="editar" onClick={editarEntidad} index={index} />
           <BotonAccion tipo="eliminar" />
         </div>
       </td>

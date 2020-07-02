@@ -16,17 +16,18 @@ export const crearEditarEntidad = async ({
   method = "POST",
   idObjeto = null,
 }) => {
+  debugger;
   try {
     let url = null;
-    if (method === "PUT" && idObjeto) {
-      url += `${API_URL}/${entidad}/${idObjeto}`;
+    if (method === "PUT" && (idObjeto || idObjeto === 0)) {
+      url = `${API_URL}/${entidad}/${idObjeto}`;
     } else if (method === "POST") {
       url = `${API_URL}/${entidad}`;
     }
     if (!url) {
       throw new Error("No cumple criterios de envio");
     }
-    const respuesta = await fetch(`${API_URL}/${entidad}`, {
+    const respuesta = await fetch(url, {
       method,
       headers: {
         "Content-Type": "application/json",

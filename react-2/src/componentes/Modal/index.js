@@ -24,6 +24,7 @@ function Modal({
   cambiarModal = () => {},
   manejarInput = () => {},
   crearEntidad = () => {},
+  objeto = {},
 }) {
   return (
     <>
@@ -40,6 +41,7 @@ function Modal({
                       options={tiposMascota}
                       onChange={manejarInput}
                       placeholder="Tipo Animal"
+                      value={objeto.tipo}
                     />
                   </div>
                 </div>
@@ -50,6 +52,7 @@ function Modal({
                       tipo="text"
                       onInput={manejarInput}
                       placeholder="Nombre"
+                      value={objeto.nombre}
                     />
                   </div>
                   <div className="col">
@@ -58,6 +61,7 @@ function Modal({
                       nombreCampo="dueno"
                       onChange={manejarInput}
                       placeholder="Dueño"
+                      value={objeto.dueno}
                     />
                   </div>
                 </div>

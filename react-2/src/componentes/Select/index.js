@@ -6,6 +6,7 @@ function Select({
   nombreCampo = "vacio",
   onChange = () => {},
   placeholder,
+  value = "",
 }) {
   return (
     <select
@@ -13,6 +14,7 @@ function Select({
       className="form-control"
       onChange={onChange}
       name={nombreCampo}
+      defaultValue={value}
     >
       <option value="">Seleccione {placeholder}</option>
       {options.map(({ valor, etiqueta }, index) => (
