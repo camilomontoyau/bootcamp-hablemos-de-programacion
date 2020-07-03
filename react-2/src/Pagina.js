@@ -3,7 +3,7 @@ import Nav from "./componentes/Nav";
 import ActionsMenu from "./componentes/ActionsMenu";
 import Tabla from "./componentes/Tabla";
 import Modal from "./componentes/Modal";
-import { listarEntidad, crearEditarEntidad } from "./servicio";
+import { listarEntidad, crearEditarEntidad, eliminarEntidad } from "./servicio";
 
 class Pagina extends Component {
   constructor(props) {
@@ -51,6 +51,13 @@ class Pagina extends Component {
     });
   };
 
+  eliminarEntidad = async (_evento, index) => {
+    const { entidad } = this.props;
+    const respuesta = await eliminarEntidad({ entidad, idObjeto: index });
+    console.log({ respuesta });
+    this.listar();
+  };
+
   componentDidMount() {
     this.listar();
   }
@@ -68,6 +75,7 @@ class Pagina extends Component {
           <Tabla
             entidades={this.state.entidades}
             editarEntidad={this.editarEntidad}
+            eliminarEntidad={this.eliminarEntidad}
           />
           {this.state.mostraModal && (
             <Modal
