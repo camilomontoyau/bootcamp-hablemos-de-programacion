@@ -16,7 +16,6 @@ export const crearEditarEntidad = async ({
   method = "POST",
   idObjeto = null,
 }) => {
-  debugger;
   try {
     let url = null;
     if (method === "PUT" && (idObjeto || idObjeto === 0)) {
