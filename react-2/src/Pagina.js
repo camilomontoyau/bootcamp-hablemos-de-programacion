@@ -71,8 +71,8 @@ class Pagina extends Component {
 
   // el método render siempre debe ir de último
   render() {
-    const { titulo = "Página sin título" } = this.props;
-    const { columnas } = this.state;
+    const { titulo = "Página sin título", entidad } = this.props;
+    const { columnas, idObjeto } = this.state;
     console.log({ titulo, columnas });
     return (
       <>
@@ -88,7 +88,8 @@ class Pagina extends Component {
             cambiarModal={this.cambiarModal}
             manejarInput={this.manejarInput}
             crearEntidad={this.crearEntidad}
-            objeto={this.state.objeto}
+            entidad={entidad}
+            idObjeto={idObjeto}
           >
             {columnas.map((columna, index) => (
               <ComponenteCampo
