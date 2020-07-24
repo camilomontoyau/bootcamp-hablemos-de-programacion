@@ -2,8 +2,28 @@ import React, { Component } from "react";
 import ActionsMenu from "./componentes/ActionsMenu";
 import Tabla from "./componentes/Tabla";
 import Modal from "./componentes/Modal";
-import { listarEntidad, crearEditarEntidad, eliminarEntidad } from "./servicio";
+import {
+  listarEntidad,
+  crearEditarEntidad,
+  eliminarEntidad,
+  obtenerUno,
+} from "./servicio";
 import ComponenteCampo from "./componentes/ComponenteCampo";
+
+const opcionesIniciales = {
+  tipo: [
+    { valor: "Perro", etiqueta: "Perro" },
+    { valor: "Gato", etiqueta: "Gato" },
+    { valor: "Pájaro", etiqueta: "Pájaro" },
+    { valor: "Otro", etiqueta: "Otro" },
+  ],
+  diagnostico: [
+    { valor: "Prurito de piel (sarna)", etiqueta: "Prurito de piel (sarna)" },
+    { valor: "Moquillo", etiqueta: "Moquillo" },
+    { valor: "Trauma cefálico", etiqueta: "Trauma cefálico" },
+    { valor: "Parvovirosis", etiqueta: "Parvovirosis" },
+  ],
+};
 
 class Pagina extends Component {
   constructor(props) {
@@ -15,6 +35,7 @@ class Pagina extends Component {
       idObjeto: null,
       method: "POST",
       columnas: [],
+      options: opcionesIniciales,
     };
   }
 
@@ -49,9 +70,32 @@ class Pagina extends Component {
     this.listar();
   };
 
-  editarEntidad = (_evento, index) => {
-    const objeto = { ...this.state.entidades[index] };
-    this.setState({ objeto, idObjeto: index }, () => {
+  editarEntidad = async (_evento, index) => {
+    const { entidad } = this.props;
+    const { options } = this.state;
+    const objeto = await obtenerUno({ entidad, idObjeto: index });
+    const mascotasPromise = listarEntidad({ entidad: "mascotas" });
+    const veterinariasPromise = listarEntidad({ entidad: "veterinarias" });
+    const duenosPromise = listarEntidad({ entidad: "duenos" });
+    let [mascota, veterinaria, dueno] = await Promise.all([
+      mascotasPromise,
+      veterinariasPromise,
+      duenosPromise,
+    ]);
+    mascota = mascota.map((_mascota, index) => ({
+      valor: index.toString(),
+      etiqueta: `${_mascota.nombre} (${_mascota.tipo})`,
+    }));
+    veterinaria = veterinaria.map((_veterinaria, index) => ({
+      valor: index.toString(),
+      etiqueta: `${_veterinaria.nombre} ${_veterinaria.apellido}`,
+    }));
+    dueno = dueno.map((_dueno, index) => ({
+      valor: index.toString(),
+      etiqueta: `${_dueno.nombre} ${_dueno.apellido}`,
+    }));
+    const nuevasOpciones = { ...options, mascota, veterinaria, dueno };
+    this.setState({ objeto, idObjeto: index, options: nuevasOpciones }, () => {
       this.cambiarModal(null, "PUT");
     });
   };
@@ -72,13 +116,13 @@ class Pagina extends Component {
   // el método render siempre debe ir de último
   render() {
     const { titulo = "Página sin título", entidad } = this.props;
-    const { columnas, idObjeto } = this.state;
+    const { columnas, idObjeto, entidades, objeto, options } = this.state;
     console.log({ titulo, columnas });
     return (
       <>
         <ActionsMenu cambiarModal={this.cambiarModal} titulo={titulo} />
         <Tabla
-          entidades={this.state.entidades}
+          entidades={entidades}
           editarEntidad={this.editarEntidad}
           eliminarEntidad={this.eliminarEntidad}
           columnas={columnas}
@@ -95,8 +139,9 @@ class Pagina extends Component {
               <ComponenteCampo
                 key={index}
                 manejarInput={this.manejarInput}
-                objeto={this.state.objeto}
+                objeto={objeto}
                 nombreCampo={columna}
+                options={options}
               />
             ))}
           </Modal>
