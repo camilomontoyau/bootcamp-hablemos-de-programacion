@@ -58,3 +58,13 @@ export const eliminarEntidad = async ({
     console.log({ error });
   }
 };
+
+export const obtenerUno = async ({ entidad = "mascotas", idObjeto = null }) => {
+  try {
+    const respuesta = await fetch(`${API_URL}/${entidad}/${idObjeto}`);
+    const datos = await respuesta.json();
+    return datos;
+  } catch (error) {
+    console.log({ error });
+  }
+};
