@@ -19,13 +19,14 @@ app.all("/", (req, res) => {
   respuesta.headers = req.headers;
   respuesta.files = req.files;
   respuesta.file = req.file;
+  respuesta.ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
   console.log({ respuesta });
 
   const archivo = _get(req, "files.archivo", null);
 
   if (!!archivo) {
-    archivo.mv(`./files/${archivo.name}`, function(err) {
+    archivo.mv(`./files/${archivo.name}`, function (err) {
       if (err) {
         return res.status(500).send(err);
       }
