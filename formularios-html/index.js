@@ -19,7 +19,7 @@ app.all("/", (req, res) => {
   respuesta.headers = req.headers;
   respuesta.files = req.files;
   respuesta.file = req.file;
-  respuesta.ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  respuesta.ip = req.ip || req.ips;
 
   console.log({ respuesta });
 
