@@ -8,6 +8,7 @@ function ComponenteCampo({
   nombreCampo = "",
   options = {},
 }) {
+  console.log(options);
   switch (nombreCampo) {
     case "tipo":
     case "mascota":

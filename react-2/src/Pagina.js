@@ -23,6 +23,9 @@ const opcionesIniciales = {
     { valor: "Trauma cefálico", etiqueta: "Trauma cefálico" },
     { valor: "Parvovirosis", etiqueta: "Parvovirosis" },
   ],
+  mascota: [],
+  veterinaria: [],
+  dueno: [],
 };
 
 class Pagina extends Component {
@@ -39,8 +42,13 @@ class Pagina extends Component {
     };
   }
 
-  cambiarModal = (_evento, method = "POST") => {
-    this.setState({ mostraModal: !this.state.mostraModal, method });
+  cambiarModal = (_evento, method = "POST", newState = {}) => {
+    const _newState = {
+      mostraModal: !this.state.mostraModal,
+      method,
+      ...newState,
+    };
+    this.obtenerOpcionesBackend(_newState);
   };
 
   listar = async () => {
@@ -70,14 +78,12 @@ class Pagina extends Component {
     this.listar();
   };
 
-  editarEntidad = async (_evento, index) => {
-    const { entidad } = this.props;
+  obtenerOpcionesBackend = async (newState) => {
     const { options } = this.state;
-    const objeto = await obtenerUno({ entidad, idObjeto: index });
     const mascotasPromise = listarEntidad({ entidad: "mascotas" });
     const veterinariasPromise = listarEntidad({ entidad: "veterinarias" });
     const duenosPromise = listarEntidad({ entidad: "duenos" });
-    let [mascota, veterinaria, dueno] = await Promise.all([
+    let [mascota = [], veterinaria = [], dueno = []] = await Promise.all([
       mascotasPromise,
       veterinariasPromise,
       duenosPromise,
@@ -95,9 +101,15 @@ class Pagina extends Component {
       etiqueta: `${_dueno.nombre} ${_dueno.apellido}`,
     }));
     const nuevasOpciones = { ...options, mascota, veterinaria, dueno };
-    this.setState({ objeto, idObjeto: index, options: nuevasOpciones }, () => {
-      this.cambiarModal(null, "PUT");
-    });
+    console.log({ nuevasOpciones });
+    this.setState({ ...newState, options: nuevasOpciones });
+  };
+
+  editarEntidad = async (_evento, index) => {
+    const { entidad } = this.props;
+    const objeto = await obtenerUno({ entidad, idObjeto: index });
+    const newState = { objeto, idObjeto: index };
+    this.cambiarModal(null, "PUT", newState);
   };
 
   eliminarEntidad = async (_evento, index) => {
