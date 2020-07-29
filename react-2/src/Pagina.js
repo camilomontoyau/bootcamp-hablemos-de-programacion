@@ -44,9 +44,9 @@ class Pagina extends Component {
 
   cambiarModal = (_evento, method = "POST", newState = {}) => {
     const _newState = {
+      ...newState,
       mostraModal: !this.state.mostraModal,
       method,
-      ...newState,
     };
     this.obtenerOpcionesBackend(_newState);
   };
@@ -75,7 +75,6 @@ class Pagina extends Component {
     let { objeto, method, idObjeto } = this.state;
     await crearEditarEntidad({ entidad, objeto, method, idObjeto });
     this.cambiarModal();
-    this.listar();
   };
 
   obtenerOpcionesBackend = async (newState) => {
@@ -101,8 +100,9 @@ class Pagina extends Component {
       etiqueta: `${_dueno.nombre} ${_dueno.apellido}`,
     }));
     const nuevasOpciones = { ...options, mascota, veterinaria, dueno };
-    console.log({ nuevasOpciones });
-    this.setState({ ...newState, options: nuevasOpciones });
+    this.setState({ ...newState, options: nuevasOpciones }, () => {
+      this.listar();
+    });
   };
 
   editarEntidad = async (_evento, index) => {
@@ -115,7 +115,6 @@ class Pagina extends Component {
   eliminarEntidad = async (_evento, index) => {
     const { entidad } = this.props;
     const respuesta = await eliminarEntidad({ entidad, idObjeto: index });
-    console.log({ respuesta });
     this.listar();
   };
 
@@ -129,7 +128,6 @@ class Pagina extends Component {
   render() {
     const { titulo = "Página sin título", entidad } = this.props;
     const { columnas, idObjeto, entidades, objeto, options } = this.state;
-    console.log({ titulo, columnas });
     return (
       <>
         <ActionsMenu cambiarModal={this.cambiarModal} titulo={titulo} />
