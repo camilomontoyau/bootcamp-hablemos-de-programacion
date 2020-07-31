@@ -67,8 +67,6 @@ module.exports = (req, res) => {
       payload: buffer,
     };
 
-    console.log({ data });
-
     // 3.6 elegir el manejador dependiendo de la ruta y asignarle función que el enrutador tiene
     let handler;
     if (data.ruta && enrutador[data.ruta] && enrutador[data.ruta][metodo]) {
@@ -76,7 +74,6 @@ module.exports = (req, res) => {
     } else {
       handler = enrutador.noEncontrado;
     }
-    console.log("handler", handler);
 
     // 4. ejecutar handler (manejador) para enviar la respuesta
     if (typeof handler === "function") {

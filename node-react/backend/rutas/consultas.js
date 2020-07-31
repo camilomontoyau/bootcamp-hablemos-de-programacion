@@ -5,8 +5,8 @@ module.exports = function consultasHandler({
 }) {
   return {
     get: (data, callback) => {
+      console.log("handler consultas", { data });
       if (typeof data.indice !== "undefined") {
-        console.log("handler consultas", { data });
         if (consultas[data.indice]) {
           return callback(200, consultas[data.indice]);
         }

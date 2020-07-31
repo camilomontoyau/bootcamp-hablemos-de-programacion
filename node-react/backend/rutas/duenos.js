@@ -1,8 +1,8 @@
 module.exports = function duenosHandler(duenos) {
   return {
     get: (data, callback) => {
+      console.log("handler duenos", { data });
       if (typeof data.indice !== "undefined") {
-        console.log("handler duenos", { data });
         if (duenos[data.indice]) {
           return callback(200, duenos[data.indice]);
         }

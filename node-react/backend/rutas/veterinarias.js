@@ -1,8 +1,8 @@
 module.exports = function veterinariasHandler(veterinarias) {
   return {
     get: (data, callback) => {
+      console.log("handler veterinarias", { data });
       if (typeof data.indice !== "undefined") {
-        console.log("handler veterinarias", { data });
         if (veterinarias[data.indice]) {
           return callback(200, veterinarias[data.indice]);
         }
