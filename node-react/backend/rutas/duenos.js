@@ -10,6 +10,25 @@ module.exports = function duenosHandler(duenos) {
           mensaje: `dueno con indice ${data.indice} no encontradO`,
         });
       }
+      if (
+        data.query &&
+        (typeof data.query.nombre !== "undefined" ||
+          data.query.apellido !== "undefined" ||
+          data.query.documento !== "undefined")
+      ) {
+        const llavesQuery = Object.keys(data.query);
+
+        let respuestaDuenos = [...duenos];
+
+        for (const llave of llavesQuery) {
+          respuestaDuenos = respuestaDuenos.filter((_dueno) => {
+            const expresionRegular = new RegExp(data.query[llave], "ig");
+            const resultado = _dueno[llave].match(expresionRegular);
+            return resultado;
+          });
+        }
+        return callback(200, respuestaDuenos);
+      }
       callback(200, duenos);
     },
     post: (data, callback) => {
