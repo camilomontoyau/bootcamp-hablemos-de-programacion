@@ -65,7 +65,7 @@ a {
 nav.navbar .navbar-right {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 700px;
 }
 

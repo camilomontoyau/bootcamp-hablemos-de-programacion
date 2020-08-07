@@ -2,6 +2,7 @@
   display: flex;
   flex-flow: row;
   align-items: center;
+  margin-left: 100px;
 }
 
 .form-inline .form-control {
