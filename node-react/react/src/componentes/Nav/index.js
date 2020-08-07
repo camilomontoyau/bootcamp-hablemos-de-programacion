@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Search from "../Search";
 import "./Nav.css";
 
 function Nav() {
@@ -32,7 +31,6 @@ function Nav() {
             </Link>
           </li>
         </ul>
-        <Search />
       </div>
     </nav>
   );
