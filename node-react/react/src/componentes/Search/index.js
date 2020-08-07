@@ -1,7 +1,7 @@
 import React from "react";
 import "./Search.css";
 
-function Search(props) {
+function Search({ manejarSearchInput = () => {}, buscar = () => {} }) {
   return (
     <form className="form-inline">
       <input
@@ -9,8 +9,13 @@ function Search(props) {
         type="search"
         placeholder="Search"
         aria-label="Search"
+        onInput={manejarSearchInput}
       />
-      <button className="btn btn-outline-primary" type="submit">
+      <button
+        className="btn btn-outline-primary"
+        type="submit"
+        onClick={buscar}
+      >
         Search
       </button>
     </form>
