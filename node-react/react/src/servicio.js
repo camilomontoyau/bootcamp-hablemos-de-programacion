@@ -1,10 +1,18 @@
 const API_URL = "http://localhost:5000";
 
-export const listarEntidad = async ({ entidad = "mascotas", search = "" }) => {
+export const listarEntidad = async ({
+  entidad = "mascotas",
+  search = "",
+  columnas = [],
+}) => {
   try {
     let url = `${API_URL}/${entidad}`;
-    if (search.length > 0) {
-      url += `?nombre=${search}&tipo=${search}&dueno=${search}`;
+    if (search.length > 0 && columnas.length > 0) {
+      let queryString = "?";
+      for (let columna of columnas) {
+        queryString += `${columna}=${search}&`;
+      }
+      url += queryString;
     }
     const respuesta = await fetch(url);
     const datos = await respuesta.json();
