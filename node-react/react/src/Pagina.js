@@ -61,7 +61,7 @@ class Pagina extends Component {
     }
     const { entidad } = this.props;
     const { search, columnas } = this.state;
-    const entidades = await listarEntidad({ entidad, search, columnas });
+    const entidades = await listarEntidad({ entidad, search, columnas }); // TODO: agregar cambios para busqueda de consultas por mascota y veterinaria
     let _columnas = [];
     if (Array.isArray(entidades) && entidades.length > 0) {
       _columnas = Object.keys(entidades[0]) || [];
