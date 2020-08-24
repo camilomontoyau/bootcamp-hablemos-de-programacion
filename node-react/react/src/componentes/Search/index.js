@@ -1,7 +1,11 @@
 import React from "react";
 import "./Search.css";
 
-function Search({ manejarSearchInput = () => {}, buscar = () => {} }) {
+function Search({
+  manejarSearchInput = () => {},
+  buscar = () => {},
+  entidad = null,
+}) {
   return (
     <form className="form-inline">
       <input
