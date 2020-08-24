@@ -4,12 +4,30 @@ export const listarEntidad = async ({
   entidad = "mascotas",
   search = "",
   columnas = [],
+  veterinaria = "",
+  mascota = "",
 }) => {
   try {
     let url = `${API_URL}/${entidad}`;
-    if (search.length > 0 && columnas.length > 0) {
+    if (
+      (search.length > 0 && columnas.length > 0) ||
+      !!mascota ||
+      !!veterinaria
+    ) {
       let queryString = "?";
       for (let columna of columnas) {
+        if (entidad === "consultas" && columna === "veterinaria") {
+          if (veterinaria) {
+            queryString += `veterinaria=${veterinaria}&`;
+          }
+          continue;
+        }
+        if (entidad === "consultas" && columna === "mascota") {
+          if (!!mascota) {
+            queryString += `mascota=${mascota}&`;
+          }
+          continue;
+        }
         queryString += `${columna}=${search}&`;
       }
       url += queryString;
