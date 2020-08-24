@@ -1,10 +1,12 @@
 import React from "react";
+import Select from "../Select";
 import "./Search.css";
 
 function Search({
   manejarSearchInput = () => {},
   buscar = () => {},
   entidad = null,
+  options = {},
 }) {
   return (
     <form className="form-inline">
@@ -18,12 +20,18 @@ function Search({
       />
       {entidad === "consultas" && (
         <>
-          <select name="mascota">
-            <option value={undefined}>Mascota ...</option>
-          </select>
-          <select name="veterinaria">
-            <option value={undefined}>Veterinaria ...</option>
-          </select>
+          <Select
+            options={options.mascota ? options.mascota : []}
+            nombreCampo="mascota"
+            placeholder="mascota"
+            onChange={manejarSearchInput}
+          />
+          <Select
+            options={options.veterinaria ? options.veterinaria : []}
+            nombreCampo="veterinaria"
+            placeholder="veterinaria"
+            onChange={manejarSearchInput}
+          />
         </>
       )}
       <button
