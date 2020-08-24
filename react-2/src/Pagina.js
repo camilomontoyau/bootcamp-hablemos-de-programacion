@@ -133,7 +133,11 @@ class Pagina extends Component {
     const { columnas, idObjeto, entidades, objeto, options } = this.state;
     return (
       <>
-        <ActionsMenu cambiarModal={this.cambiarModal} titulo={titulo} />
+        <ActionsMenu
+          cambiarModal={this.cambiarModal}
+          titulo={titulo}
+          entidad={entidad}
+        />
         <Tabla
           entidades={entidades}
           editarEntidad={this.editarEntidad}
