@@ -158,6 +158,7 @@ class Pagina extends Component {
           manejarSearchInput={this.manejarSearchInput}
           buscar={this.listar}
           entidad={entidad}
+          options={options}
         />
         <Tabla
           entidades={entidades}
