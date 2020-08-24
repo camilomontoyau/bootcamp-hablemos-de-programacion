@@ -136,6 +136,10 @@ class Pagina extends Component {
   };
 
   componentDidMount() {
+    if (entidad === "consultas") {
+      this.obtenerOpcionesBackend({});
+      return;
+    }
     this.listar();
   }
 
