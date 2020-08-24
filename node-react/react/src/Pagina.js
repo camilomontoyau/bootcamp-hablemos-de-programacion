@@ -40,6 +40,8 @@ class Pagina extends Component {
       columnas: [],
       options: opcionesIniciales,
       search: "",
+      mascota: "",
+      veterinaria: "",
     };
   }
 
@@ -60,8 +62,14 @@ class Pagina extends Component {
       _evento.preventDefault();
     }
     const { entidad } = this.props;
-    const { search, columnas } = this.state;
-    const entidades = await listarEntidad({ entidad, search, columnas }); // TODO: agregar cambios para busqueda de consultas por mascota y veterinaria
+    const { search, columnas, mascota, veterinaria } = this.state;
+    const entidades = await listarEntidad({
+      entidad,
+      search,
+      columnas,
+      mascota,
+      veterinaria,
+    });
     let _columnas = [];
     if (Array.isArray(entidades) && entidades.length > 0) {
       _columnas = Object.keys(entidades[0]) || [];
@@ -128,11 +136,9 @@ class Pagina extends Component {
 
   manejarSearchInput = (evento) => {
     const {
-      target: { value },
+      target: { value, name },
     } = evento;
-    let { search } = this.state;
-    search = value;
-    this.setState({ search });
+    this.setState({ [name]: value });
   };
 
   componentDidMount() {
