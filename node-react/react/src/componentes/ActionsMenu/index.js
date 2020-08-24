@@ -8,6 +8,7 @@ function ActionsMenu({
   manejarSearchInput = () => {},
   buscar = () => {},
   entidad = null,
+  options = {},
 }) {
   return (
     <div className="actions-menu">
@@ -26,6 +27,7 @@ function ActionsMenu({
           manejarSearchInput={manejarSearchInput}
           buscar={buscar}
           entidad={entidad}
+          options={options}
         />
       </div>
     </div>
