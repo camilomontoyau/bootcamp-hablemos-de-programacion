@@ -1,7 +1,7 @@
 import React from "react";
 import "./ActionsMenu.css";
 
-function ActionsMenu({ cambiarModal = () => {}, titulo }) {
+function ActionsMenu({ cambiarModal = () => {}, titulo, entidad = null }) {
   return (
     <div className="actions-menu">
       <h1>{titulo}</h1>
