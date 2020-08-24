@@ -13,8 +13,19 @@ function Search({
         type="search"
         placeholder="Search"
         aria-label="Search"
+        name="search"
         onInput={manejarSearchInput}
       />
+      {entidad === "consultas" && (
+        <>
+          <select name="mascota">
+            <option value={undefined}>Mascota ...</option>
+          </select>
+          <select name="veterinaria">
+            <option value={undefined}>Veterinaria ...</option>
+          </select>
+        </>
+      )}
       <button
         className="btn btn-outline-primary"
         type="submit"
