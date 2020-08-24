@@ -31,7 +31,10 @@ module.exports = function consultasHandler({
               continue;
             }
 
-            if (llave === "diagnostico" || llave === "historia") {
+            if (
+              (llave === "diagnostico" || llave === "historia") &&
+              data.query[llave]
+            ) {
               const expresionRegular = new RegExp(data.query[llave], "ig");
               resultado = _consulta[llave].match(expresionRegular);
             }
