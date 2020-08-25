@@ -13,6 +13,7 @@ function Search({
       <input
         className="form-control mr-sm-2"
         type="search"
+        name="search"
         placeholder="Search"
         aria-label="Search"
         onInput={manejarSearchInput}
