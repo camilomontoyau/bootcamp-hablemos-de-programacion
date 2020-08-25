@@ -40,6 +40,8 @@ class Pagina extends Component {
       columnas: [],
       options: opcionesIniciales,
       search: "",
+      veterinaria: "",
+      mascota: "",
     };
   }
 
@@ -128,11 +130,10 @@ class Pagina extends Component {
 
   manejarSearchInput = (evento) => {
     const {
-      target: { value },
+      target: { value, name },
     } = evento;
-    let { search } = this.state;
-    search = value;
-    this.setState({ search });
+    console.log({ value, name });
+    this.setState({ [name]: value });
   };
 
   componentDidMount() {
