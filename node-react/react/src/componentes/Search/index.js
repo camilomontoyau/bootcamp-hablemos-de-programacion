@@ -1,7 +1,11 @@
 import React from "react";
 import "./Search.css";
 
-function Search({ manejarSearchInput = () => {}, buscar = () => {} }) {
+function Search({
+  manejarSearchInput = () => {},
+  buscar = () => {},
+  entidad = null,
+}) {
   return (
     <form className="form-inline">
       <input
@@ -11,6 +15,16 @@ function Search({ manejarSearchInput = () => {}, buscar = () => {} }) {
         aria-label="Search"
         onInput={manejarSearchInput}
       />
+      {entidad === "consultas" && (
+        <>
+          <select name="mascota">
+            <option value={undefined}> Mascota ... </option>
+          </select>
+          <select name="veterinaria">
+            <option value={undefined}> Veterinaria ... </option>
+          </select>
+        </>
+      )}
       <button
         className="btn btn-outline-primary"
         type="submit"
