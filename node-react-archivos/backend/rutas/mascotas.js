@@ -1,3 +1,6 @@
+const { crear } = require("../data-handler");
+const directorioEntidad = "mascotas";
+
 module.exports = function mascotasHandler(mascotas) {
   return {
     get: (data, callback) => {
@@ -61,8 +64,21 @@ module.exports = function mascotasHandler(mascotas) {
       callback(200, mascotas);
     },
     post: (data, callback) => {
-      mascotas.push(data.payload);
-      callback(201, data.payload);
+      if (data && data.payload && data.payload.id) {
+        crear(
+          {
+            directorioEntidad,
+            nombreArchivo: data.payload.id,
+            datosGuardar: data.payload,
+          },
+          (error) => {
+            if (error) {
+              return callback(500, { mensaje: error.message });
+            }
+            callback(201, data.payload);
+          }
+        );
+      }
     },
     put: (data, callback) => {
       if (typeof data.indice !== "undefined") {
