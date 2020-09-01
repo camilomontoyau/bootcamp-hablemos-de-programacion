@@ -1,6 +1,7 @@
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 const enrutador = require("./enrutador");
+const { numeroAleatorio } = require("./util");
 
 module.exports = (req, res) => {
   // 1. obtener url desde el objeto request // OK
@@ -58,7 +59,7 @@ module.exports = (req, res) => {
       var [rutaPrincipal, indice] = rutaLimpia.split("/");
     }
     //3.5 ordenar la data del request
-    const data = {
+    let data = {
       indice,
       ruta: rutaPrincipal || rutaLimpia,
       query,
@@ -66,6 +67,10 @@ module.exports = (req, res) => {
       headers,
       payload: buffer,
     };
+
+    if (metodo === "post" && data.payload) {
+      data.payload.id = numeroAleatorio();
+    }
 
     // 3.6 elegir el manejador dependiendo de la ruta y asignarle función que el enrutador tiene
     let handler;
