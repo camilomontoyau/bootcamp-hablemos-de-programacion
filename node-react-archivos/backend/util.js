@@ -7,6 +7,9 @@ const palabraSinAcentos = (palabra) =>
     .replace("ó", "o")
     .replace("ú", "u");
 
+const numeroAleatorio = () => Math.random().toString(36).split(".")[1];
+
 module.exports = {
   palabraSinAcentos,
+  numeroAleatorio,
 };
