@@ -34,6 +34,18 @@ const dataHandler = {
       }
     );
   },
+  obtenerUno: ({ directorioEntidad = "mascotas", nombreArchivo }, callback) => {
+    fs.readFile(
+      `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`,
+      "utf-8",
+      (error, dataArchivo) => {
+        if (error) {
+          return callback(new Error("No se pudo leer el archivo o no existe"));
+        }
+        return callback(false, dataArchivo);
+      }
+    );
+  },
 };
 
 module.exports = dataHandler;
