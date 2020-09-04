@@ -83,7 +83,13 @@ module.exports = (req, res) => {
     // 4. ejecutar handler (manejador) para enviar la respuesta
     if (typeof handler === "function") {
       handler(data, (statusCode = 200, mensaje) => {
-        const respuesta = JSON.stringify(mensaje);
+        let respuesta = null;
+        if (typeof mensaje === "string") {
+          respuesta = mensaje;
+        }
+        if (typeof mensaje === "object") {
+          respuesta = JSON.stringify(mensaje);
+        }
         res.setHeader("Content-Type", "application/json");
         res.writeHead(statusCode);
         // linea donde realmente ya estamos respondiendo a la aplicación cliente
