@@ -13,5 +13,14 @@
       ],
       "program": "${workspaceFolder}/node-react/backend/index.js"
     }
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Node react archivos launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/node-react-archivos/backend/index.js"
+    }
   ]
 }
