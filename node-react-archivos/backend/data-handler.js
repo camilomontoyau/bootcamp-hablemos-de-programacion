@@ -46,6 +46,31 @@ const dataHandler = {
       }
     );
   },
+  listar: ({ directorioEntidad = "mascotas" }, callback) => {
+    fs.readdir(`${directorioBase}/${directorioEntidad}/`, function (
+      err,
+      files
+    ) {
+      //handling error
+      if (err) {
+        return console.log("error leyendo directorio");
+      }
+      //listing all files using forEach
+      files = files.filter((file) => file != 0);
+      files.map(function (file) {
+        fs.readFile(file, "utf-8", (error, dataArchivo) => {
+          if (error) {
+            return callback(
+              new Error("No se pudo leer el archivo o no existe")
+            );
+          }
+          return callback(false, dataArchivo);
+        });
+      });
+    });
+  },
 };
+
+dataHandler.listar({});
 
 module.exports = dataHandler;
