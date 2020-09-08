@@ -46,6 +46,36 @@ const dataHandler = {
       }
     );
   },
+  listar: ({ directorioEntidad = "mascotas" }, callback) => {
+    fs.readdir(`${directorioBase}/${directorioEntidad}/`, (error, files) => {
+      if (error) {
+        return callback(new Error(`No se pude listar desde ${directorioBase}`));
+      }
+      files = files.filter((file) => file.includes(".json"));
+      console.log({ files });
+      files.map((file) => {
+        console.log({ file });
+        fs.readFile(
+          `${directorioBase}/${directorioEntidad}/${file}`,
+          "utf-8",
+          (error2, dataArchivo) => {
+            if (error2) {
+              console.log({ error2 });
+              return callback(
+                new Error(
+                  `No se pudo leer el archivo o no existe cuando listamos ${directorioBase}`
+                )
+              );
+            }
+            console.log(dataArchivo);
+            return callback(false, dataArchivo);
+          }
+        );
+      });
+    });
+  },
 };
+
+dataHandler.listar({}, () => {});
 
 module.exports = dataHandler;
