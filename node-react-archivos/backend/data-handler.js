@@ -47,32 +47,27 @@ const dataHandler = {
     );
   },
   listar: ({ directorioEntidad = "mascotas" }, callback) => {
-    fs.readdir(`${directorioBase}/${directorioEntidad}/`, (error, files) => {
-      if (error) {
-        return callback(new Error(`No se pude listar desde ${directorioBase}`));
+    fs.readdir(
+      `${directorioBase}/${directorioEntidad}/`,
+      async (error, files) => {
+        if (error) {
+          return callback(
+            new Error(`No se pude listar desde ${directorioBase}`)
+          );
+        }
+        files = files.filter((file) => file.includes(".json"));
+        console.log({ files });
+        const arrayPromesasLeerArchivo = files.map((file) => {
+          return fs.promises.readFile(
+            `${directorioBase}/${directorioEntidad}/${file}`,
+            { encoding: "utf-8" }
+          );
+        });
+        let datosArchivos = await Promise.all(arrayPromesasLeerArchivo);
+        datosArchivos = datosArchivos.map(JSON.parse);
+        return callback(false, datosArchivos);
       }
-      files = files.filter((file) => file.includes(".json"));
-      console.log({ files });
-      files.map((file) => {
-        console.log({ file });
-        fs.readFile(
-          `${directorioBase}/${directorioEntidad}/${file}`,
-          "utf-8",
-          (error2, dataArchivo) => {
-            if (error2) {
-              console.log({ error2 });
-              return callback(
-                new Error(
-                  `No se pudo leer el archivo o no existe cuando listamos ${directorioBase}`
-                )
-              );
-            }
-            console.log(dataArchivo);
-            return callback(false, dataArchivo);
-          }
-        );
-      });
-    });
+    );
   },
 };
 
