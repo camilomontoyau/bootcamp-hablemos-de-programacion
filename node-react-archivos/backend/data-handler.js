@@ -46,7 +46,7 @@ const dataHandler = {
       }
     );
   },
-  listar: async ({ directorioEntidad = "mascotas" }, callback) => {
+  listar: async ({ directorioEntidad = "mascotas" }) => {
     try {
       let archivos = await fs.promises.readdir(
         `${directorioBase}/${directorioEntidad}/`
@@ -60,9 +60,9 @@ const dataHandler = {
       });
       let datosArchivos = await Promise.all(arrayPromesasLeerArchivo);
       datosArchivos = datosArchivos.map(JSON.parse);
-      return callback(false, datosArchivos);
+      return datosArchivos;
     } catch (error) {
-      return callback(new Error(`No se pude listar desde ${directorioBase}`));
+      return new Error(`No se pude listar desde ${directorioBase}`);
     }
   },
 };
