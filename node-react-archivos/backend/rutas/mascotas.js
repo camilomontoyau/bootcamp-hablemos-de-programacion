@@ -1,4 +1,4 @@
-const { crear, obtenerUno } = require("../data-handler");
+const { crear, obtenerUno, listar } = require("../data-handler");
 const directorioEntidad = "mascotas";
 
 module.exports = function mascotasHandler(mascotas) {
@@ -69,7 +69,12 @@ module.exports = function mascotasHandler(mascotas) {
 
         return callback(200, respuestaMascotas);
       }
-      callback(200, mascotas);
+      listar({ directorioEntidad: "mascotas" }, (error, _mascotas) => {
+        if (error) {
+          return callback(500, { mensaje: error.message });
+        }
+        callback(200, _mascotas);
+      });
     },
     post: (data, callback) => {
       if (data && data.payload && data.payload.id) {

@@ -71,6 +71,4 @@ const dataHandler = {
   },
 };
 
-dataHandler.listar({}, () => {});
-
 module.exports = dataHandler;
