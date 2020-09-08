@@ -3,7 +3,7 @@ const directorioEntidad = "mascotas";
 
 module.exports = function mascotasHandler(mascotas) {
   return {
-    get: (data, callback) => {
+    get: async (data, callback) => {
       console.log("handler mascotas", { data });
       if (typeof data.indice !== "undefined") {
         return obtenerUno(
@@ -69,12 +69,15 @@ module.exports = function mascotasHandler(mascotas) {
 
         return callback(200, respuestaMascotas);
       }
-      listar({ directorioEntidad: "mascotas" }, (error, _mascotas) => {
+      try {
+        const _mascotas = await listar({ directorioEntidad: "mascotas" });
+        callback(200, _mascotas);
+      } catch (error) {
         if (error) {
+          console.log(error);
           return callback(500, { mensaje: error.message });
         }
-        callback(200, _mascotas);
-      });
+      }
     },
     post: (data, callback) => {
       if (data && data.payload && data.payload.id) {
