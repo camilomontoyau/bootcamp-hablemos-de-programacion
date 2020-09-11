@@ -6,20 +6,11 @@ module.exports = function mascotasHandler(mascotas) {
     get: async (data, callback) => {
       console.log("handler mascotas", { data });
       if (typeof data.indice !== "undefined") {
-        return obtenerUno(
-          {
-            directorioEntidad: "mascotas",
-            nombreArchivo: data.indice,
-          },
-          (error, _mascota) => {
-            if (error) {
-              return callback(500, {
-                mensaje: `mascota con indice ${data.indice} no fue encontrada o el archivo no puede ser abierto`,
-              });
-            }
-            return callback(200, _mascota);
-          }
-        );
+        const _mascota = await obtenerUno({
+          directorioEntidad: "mascotas",
+          nombreArchivo: data.indice,
+        });
+        return callback(200, _mascota);
       }
 
       // verifico que data.query traiga datos

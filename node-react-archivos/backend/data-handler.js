@@ -1,8 +1,17 @@
 const fs = require("fs");
 const path = require("path");
-const { dir } = require("console");
-
 const directorioBase = path.join(__dirname, "data");
+
+const readFilePromesa = ({ rutaArchivo }) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(rutaArchivo, "utf-8", (error, dataArchivo) => {
+      if (error) {
+        return reject(new Error("No se pudo leer el archivo o no existe"));
+      }
+      return resolve(dataArchivo);
+    });
+  });
+};
 
 const dataHandler = {
   crear: (
@@ -34,17 +43,15 @@ const dataHandler = {
       }
     );
   },
-  obtenerUno: ({ directorioEntidad = "mascotas", nombreArchivo }, callback) => {
-    fs.readFile(
-      `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`,
-      "utf-8",
-      (error, dataArchivo) => {
-        if (error) {
-          return callback(new Error("No se pudo leer el archivo o no existe"));
-        }
-        return callback(false, dataArchivo);
-      }
-    );
+  obtenerUno: async ({ directorioEntidad = "mascotas", nombreArchivo }) => {
+    try {
+      const resultado = await readFilePromesa({
+        rutaArchivo: `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`,
+      });
+      return resultado;
+    } catch (error) {
+      new Error("No se pudo leer el archivo o no existe");
+    }
   },
   listar: async ({ directorioEntidad = "mascotas" }) => {
     try {
