@@ -1,9 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const util = require("util");
 const directorioBase = path.join(__dirname, "data");
-
-const readFilePromesa = util.promisify(fs.readFile);
 
 const dataHandler = {
   crear: (
@@ -35,12 +32,21 @@ const dataHandler = {
       }
     );
   },
-  obtenerUno: async ({ directorioEntidad = "mascotas", nombreArchivo }) => {
+  obtenerUno: async ({
+    directorioEntidad = "mascotas",
+    nombreArchivo,
+    agregarExtension = true,
+  }) => {
     try {
-      const resultado = await readFilePromesa(
-        `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`,
-        "utf-8"
-      );
+      let archivo = null;
+      if (agregarExtension) {
+        archivo = `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`;
+      } else {
+        archivo = `${directorioBase}/${directorioEntidad}/${nombreArchivo}`;
+      }
+      const resultado = await fs.promises.readFile(archivo, {
+        encoding: "utf-8",
+      });
       return resultado;
     } catch (error) {
       return new Error("No se pudo leer el archivo o no existe");
@@ -53,10 +59,11 @@ const dataHandler = {
       );
       archivos = archivos.filter((file) => file.includes(".json"));
       const arrayPromesasLeerArchivo = archivos.map((archivo) => {
-        return fs.promises.readFile(
-          `${directorioBase}/${directorioEntidad}/${archivo}`,
-          { encoding: "utf-8" }
-        );
+        return dataHandler.obtenerUno({
+          directorioEntidad,
+          nombreArchivo: archivo,
+          agregarExtension: false,
+        });
       });
       let datosArchivos = await Promise.all(arrayPromesasLeerArchivo);
       datosArchivos = datosArchivos.map(JSON.parse);
