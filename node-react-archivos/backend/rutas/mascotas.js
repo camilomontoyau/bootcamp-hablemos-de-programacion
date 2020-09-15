@@ -70,22 +70,16 @@ module.exports = function mascotasHandler(mascotas) {
         }
       }
     },
-    post: (data, callback) => {
+    post: async (data, callback) => {
       if (data && data.payload && data.payload.id) {
-        crear(
-          {
+        const resultado = await crear({
             directorioEntidad,
             nombreArchivo: data.payload.id,
             datosGuardar: data.payload,
-          },
-          (error) => {
-            if (error) {
-              return callback(500, { mensaje: error.message });
-            }
-            callback(201, data.payload);
-          }
-        );
+        });
+        return callback(201, resultado);
       }
+      callback(400, {mensaje: 'hay un error porque no se envió el payload o no se creó el id'});
     },
     put: (data, callback) => {
       if (typeof data.indice !== "undefined") {
