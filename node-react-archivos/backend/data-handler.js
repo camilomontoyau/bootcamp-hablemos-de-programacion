@@ -3,15 +3,17 @@ const path = require("path");
 const directorioBase = path.join(__dirname, "data");
 
 const dataHandler = {
-  crear: async (
-    { directorioEntidad = "mascotas", nombreArchivo, datosGuardar }
-  ) => {
+  crear: async ({
+    directorioEntidad = "mascotas",
+    nombreArchivo,
+    datosGuardar,
+  }) => {
     try {
       const fileDescriptor = await fs.promises.open(
         `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`,
         "wx"
       );
-      const datosEnString = JSON.stringify(datosGuardar);  
+      const datosEnString = JSON.stringify(datosGuardar);
       await fs.promises.writeFile(fileDescriptor, datosEnString);
       return datosGuardar;
     } catch (error) {
@@ -56,6 +58,38 @@ const dataHandler = {
       return datosArchivos;
     } catch (error) {
       return new Error(`No se pude listar desde ${directorioBase}`);
+    }
+  },
+  actualizar: async ({
+    directorioEntidad = "mascotas",
+    nombreArchivo,
+    datosActuales,
+  }) => {
+    try {
+      const rutaCompleta = `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`;
+      const existeArchivo = fs.existsSync(rutaCompleta);
+      if(!existeArchivo) {
+        throw new Error(`La entidad con id = ${nombreArchivo} no existe`);
+      }
+      const datosAnterioresString = await dataHandler.obtenerUno({
+        directorioEntidad,
+        nombreArchivo
+      });
+      const datosAnterioresJSON = JSON.parse(datosAnterioresString);
+  
+      const resultadoEliminar = await fs.promises.unlink(rutaCompleta);
+      console.log({resultadoEliminar});
+
+      const fileDescriptor = await fs.promises.open(
+        rutaCompleta,
+        "wx"
+      );
+      const datosFinalesParaGuardar = {...datosAnterioresJSON, ...datosActuales};
+      const datosEnString = JSON.stringify(datosFinalesParaGuardar);
+      await fs.promises.writeFile(fileDescriptor, datosEnString);
+      return datosFinalesParaGuardar;
+    } catch (error) {
+      return error;
     }
   },
 };
