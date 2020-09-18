@@ -73,17 +73,25 @@ module.exports = function duenosHandler(duenos) {
           "hay un error porque no se envió el payload o no se creó el id",
       });
     },
-    put: (data, callback) => {
+    put: async (data, callback) => {
       if (typeof data.indice !== "undefined") {
-        if (duenos[data.indice]) {
-          duenos[data.indice] = data.payload;
-          return callback(200, duenos[data.indice]);
-        }
-        return callback(404, {
-          mensaje: `dueno con indice ${data.indice} no encontrado`,
+        const datosActuales = { ...data.payload, id: data.indice };
+        const resultado = await actualizar({
+          directorioEntidad,
+          nombreArchivo: data.indice,
+          datosActuales,
         });
+        if (resultado.id) {
+          return callback(200, resultado);
+        }
+
+        if (resultado.message) {
+          return callback(404, {
+            mensaje: `dueño con indice ${data.indice} no encontrada`,
+          });
+        }
       }
-      callback(400, { mensaje: "indice no enviado" });
+      callback(400, { mensaje: "falta id" });
     },
     delete: (data, callback) => {
       if (typeof data.indice !== "undefined") {
