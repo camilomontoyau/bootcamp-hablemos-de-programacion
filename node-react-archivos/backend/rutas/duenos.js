@@ -1,4 +1,5 @@
-const { obtenerUno } = require("../data-handler");
+const { obtenerUno, crear } = require("../data-handler");
+const directorioEntidad = "duenos";
 const { palabraSinAcentos } = require("../util");
 
 module.exports = function duenosHandler(duenos) {
@@ -8,14 +9,14 @@ module.exports = function duenosHandler(duenos) {
       try {
         if (typeof data.indice !== "undefined") {
           const _dueno = await obtenerUno({
-            directorioEntidad: "duenos", 
-            nombreArchivo: data.indice
-          });  
+            directorioEntidad: "duenos",
+            nombreArchivo: data.indice,
+          });
 
-          if  (_dueno && _dueno.id) {
+          if (_dueno && _dueno.id) {
             return callback(200, _dueno);
           }
-          
+
           return callback(404, {
             mensaje: `dueno con id ${data.indice} no encontrado`,
           });
@@ -49,9 +50,19 @@ module.exports = function duenosHandler(duenos) {
         }
       }
     },
-    post: (data, callback) => {
-      duenos.push(data.payload);
-      callback(201, data.payload);
+    post: async (data, callback) => {
+      if (data && data.payload && data.payload.id) {
+        const resultado = await crear({
+          directorioEntidad,
+          nombreArchivo: data.payload.id,
+          datosGuardar: data.payload,
+        });
+        return callback(201, resultado);
+      }
+      callback(400, {
+        mensaje:
+          "hay un error porque no se envió el payload o no se creó el id",
+      });
     },
     put: (data, callback) => {
       if (typeof data.indice !== "undefined") {
