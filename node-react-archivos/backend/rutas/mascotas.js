@@ -18,7 +18,12 @@ module.exports = function mascotasHandler() {
             directorioEntidad: "mascotas",
             nombreArchivo: data.indice,
           });
-          return callback(200, _mascota);
+          if  (_mascota && _mascota.id) {
+            return callback(200, _mascota);
+          }
+          return callback(404, {
+            mensaje: `mascota con id ${data.indice} no encontrada`,
+          });
         }
 
         const _mascotas = await listar({ directorioEntidad: "mascotas" });
