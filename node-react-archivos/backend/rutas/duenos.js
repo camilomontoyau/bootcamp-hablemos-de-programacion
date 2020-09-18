@@ -93,19 +93,25 @@ module.exports = function duenosHandler(duenos) {
       }
       callback(400, { mensaje: "falta id" });
     },
-    delete: (data, callback) => {
+    delete: async (data, callback) => {
       if (typeof data.indice !== "undefined") {
-        if (duenos[data.indice]) {
-          duenos = duenos.filter((_dueno, indice) => indice != data.indice);
-          return callback(204, {
-            mensaje: `elemento con indice ${data.indice} eliminado`,
+        const resultado = await eliminar({
+          directorioEntidad,
+          nombreArchivo: data.indice,
+        });
+        if (resultado.message) {
+          return callback(404, {
+            mensaje: `dueño con id ${data.indice} no encontrado`,
           });
         }
-        return callback(404, {
-          mensaje: `dueno con indice ${data.indice} no encontrado`,
-        });
+
+        if (resultado.mensaje) {
+          return callback(204);
+        }
+
+        return callback(500, { mensaje: "error al eliminar" });
       }
-      callback(400, { mensaje: "indice no enviado" });
+      callback(400, { mensaje: "falta id" });
     },
   };
 };
