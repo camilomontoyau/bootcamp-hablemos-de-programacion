@@ -54,8 +54,7 @@ const dataHandler = {
           agregarExtension: false,
         });
       });
-      let datosArchivos = await Promise.all(arrayPromesasLeerArchivo);
-      datosArchivos = datosArchivos.map(JSON.parse);
+      const datosArchivos = await Promise.all(arrayPromesasLeerArchivo);
       return datosArchivos;
     } catch (error) {
       return new Error(`No se pude listar desde ${directorioBase}`);
