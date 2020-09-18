@@ -9,7 +9,7 @@ module.exports = function duenosHandler(duenos) {
       try {
         if (typeof data.indice !== "undefined") {
           const _dueno = await obtenerUno({
-            directorioEntidad: "duenos",
+            directorioEntidad,
             nombreArchivo: data.indice,
           });
 
