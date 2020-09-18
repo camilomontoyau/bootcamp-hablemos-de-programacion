@@ -68,26 +68,39 @@ const dataHandler = {
     try {
       const rutaCompleta = `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`;
       const existeArchivo = fs.existsSync(rutaCompleta);
-      if(!existeArchivo) {
+      if (!existeArchivo) {
         throw new Error(`La entidad con id = ${nombreArchivo} no existe`);
       }
       const datosAnterioresString = await dataHandler.obtenerUno({
         directorioEntidad,
-        nombreArchivo
+        nombreArchivo,
       });
       const datosAnterioresJSON = JSON.parse(datosAnterioresString);
-  
-      const resultadoEliminar = await fs.promises.unlink(rutaCompleta);
-      console.log({resultadoEliminar});
 
-      const fileDescriptor = await fs.promises.open(
-        rutaCompleta,
-        "wx"
-      );
-      const datosFinalesParaGuardar = {...datosAnterioresJSON, ...datosActuales};
+      const resultadoEliminar = await fs.promises.unlink(rutaCompleta);
+      console.log({ resultadoEliminar });
+
+      const fileDescriptor = await fs.promises.open(rutaCompleta, "wx");
+      const datosFinalesParaGuardar = {
+        ...datosAnterioresJSON,
+        ...datosActuales,
+      };
       const datosEnString = JSON.stringify(datosFinalesParaGuardar);
       await fs.promises.writeFile(fileDescriptor, datosEnString);
       return datosFinalesParaGuardar;
+    } catch (error) {
+      return error;
+    }
+  },
+  eliminar: async ({ directorioEntidad = "mascotas", nombreArchivo }) => {
+    try {
+      const rutaCompleta = `${directorioBase}/${directorioEntidad}/${nombreArchivo}.json`;
+      const existeArchivo = fs.existsSync(rutaCompleta);
+      if (!existeArchivo) {
+        throw new Error(`La entidad con id = ${nombreArchivo} no existe`);
+      }
+      const resultadoEliminar = await fs.promises.unlink(rutaCompleta);
+      return { mensaje: true };
     } catch (error) {
       return error;
     }
