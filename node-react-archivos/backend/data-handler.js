@@ -35,7 +35,8 @@ const dataHandler = {
       const resultado = await fs.promises.readFile(archivo, {
         encoding: "utf-8",
       });
-      return resultado;
+      const resultadoJSON = JSON.parse(resultado);
+      return resultadoJSON;
     } catch (error) {
       return new Error("No se pudo leer el archivo o no existe");
     }
