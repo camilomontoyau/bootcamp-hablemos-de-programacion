@@ -71,12 +71,11 @@ const dataHandler = {
       if (!existeArchivo) {
         throw new Error(`La entidad con id = ${nombreArchivo} no existe`);
       }
-      const datosAnterioresString = await dataHandler.obtenerUno({
+      const datosAnterioresJSON = await dataHandler.obtenerUno({
         directorioEntidad,
         nombreArchivo,
       });
-      const datosAnterioresJSON = JSON.parse(datosAnterioresString);
-
+      
       const resultadoEliminar = await fs.promises.unlink(rutaCompleta);
       console.log({ resultadoEliminar });
 
