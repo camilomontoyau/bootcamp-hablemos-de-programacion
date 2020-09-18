@@ -1,4 +1,10 @@
-const { obtenerUno, crear } = require("../data-handler");
+const {
+  crear,
+  obtenerUno,
+  listar,
+  actualizar,
+  eliminar,
+} = require("../data-handler");
 const directorioEntidad = "duenos";
 const { palabraSinAcentos } = require("../util");
 
@@ -21,12 +27,15 @@ module.exports = function duenosHandler(duenos) {
             mensaje: `dueno con id ${data.indice} no encontrado`,
           });
         }
+
+        const _duenos = await listar({ directorioEntidad: "duenos" });
+
         if (
           data.query &&
           (data.query.nombre || data.query.apellido || data.query.documento)
         ) {
           const llavesQuery = Object.keys(data.query);
-          let respuestaDuenos = [...duenos];
+          let respuestaDuenos = [..._duenos];
           respuestaDuenos = respuestaDuenos.filter((_dueno) => {
             let resultado = false;
             for (const llave of llavesQuery) {
@@ -42,7 +51,7 @@ module.exports = function duenosHandler(duenos) {
           });
           return callback(200, respuestaDuenos);
         }
-        callback(200, duenos);
+        callback(200, _duenos);
       } catch (error) {
         if (error) {
           console.log(error);
