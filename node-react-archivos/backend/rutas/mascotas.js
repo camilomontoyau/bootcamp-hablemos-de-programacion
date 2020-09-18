@@ -7,13 +7,11 @@ const {
 } = require("../data-handler");
 const directorioEntidad = "mascotas";
 
-module.exports = function mascotasHandler(mascotas) {
+module.exports = function mascotasHandler() {
   return {
     get: async (data, callback) => {
       console.log("handler mascotas", { data });
-      
 
-      
       try {
         if (typeof data.indice !== "undefined") {
           const _mascota = await obtenerUno({
@@ -129,7 +127,7 @@ module.exports = function mascotasHandler(mascotas) {
         if (resultado.mensaje) {
           return callback(204);
         }
-        
+
         return callback(500, { mensaje: "error al eliminar" });
       }
       callback(400, { mensaje: "falta id" });
