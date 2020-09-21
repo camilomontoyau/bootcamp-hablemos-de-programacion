@@ -5,53 +5,57 @@ const {
   actualizar,
   eliminar,
 } = require("../data-handler");
-const directorioEntidad = "duenos";
+const directorioEntidad = "veterinarias";
 const { palabraSinAcentos } = require("../util");
 
-module.exports = function duenosHandler(duenos) {
+module.exports = function veterinariasHandler(veterinarias) {
   return {
     get: async (data, callback) => {
-      console.log("handler duenos", { data });
+      console.log("handler veterinarias", { data });
       try {
         if (typeof data.indice !== "undefined") {
-          const _dueno = await obtenerUno({
+          const _veterinaria = await obtenerUno({
             directorioEntidad,
             nombreArchivo: data.indice,
           });
 
-          if (_dueno && _dueno.id) {
-            return callback(200, _dueno);
+          if (_veterinaria && _veterinaria.id) {
+            return callback(200, _veterinaria);
           }
 
           return callback(404, {
-            mensaje: `dueno con id ${data.indice} no encontrado`,
+            mensaje: `veterinaria con id ${data.indice} no encontrado`,
           });
         }
 
-        const _duenos = await listar({ directorioEntidad: "duenos" });
+        const _veterinarias = await listar({directorioEntidad: "veterinarias"});
 
         if (
           data.query &&
           (data.query.nombre || data.query.apellido || data.query.documento)
         ) {
           const llavesQuery = Object.keys(data.query);
-          let respuestaDuenos = [..._duenos];
-          respuestaDuenos = respuestaDuenos.filter((_dueno) => {
-            let resultado = false;
-            for (const llave of llavesQuery) {
-              const busqueda = palabraSinAcentos(data.query[llave]);
-              const expresionRegular = new RegExp(busqueda, "ig");
-              const campoDuenoSinAcentos = palabraSinAcentos(_dueno[llave]);
-              resultado = campoDuenoSinAcentos.match(expresionRegular);
-              if (resultado) {
-                break;
+          let respuestaveterinarias = [..._veterinarias];
+          respuestaveterinarias = respuestaveterinarias.filter(
+            
+            (_veterinaria) => {
+                let resultado = false;
+                for (const llave of llavesQuery) {
+                  const busqueda = palabraSinAcentos(data.query[llave]);
+                  const expresionRegular = new RegExp(busqueda, "ig");
+                  const campoveterinariaSinAcentos = palabraSinAcentos(_veterinaria[llave]);
+                  resultado = campoveterinariaSinAcentos.match(expresionRegular);
+                  if (resultado) {
+                    break;
+                  }
+                }
+                return resultado;
               }
-            }
-            return resultado;
-          });
-          return callback(200, respuestaDuenos);
+          
+          );
+          return callback(200, respuestaveterinarias);
         }
-        callback(200, _duenos);
+        callback(200, _veterinarias);
       } catch (error) {
         if (error) {
           console.log(error);
