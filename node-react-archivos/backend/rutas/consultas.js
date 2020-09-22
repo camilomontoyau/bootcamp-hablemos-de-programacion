@@ -13,14 +13,20 @@ module.exports = function consultasHandler({
   mascotas,
 }) {
   return {
-    get: (data, callback) => {
+    get: async (data, callback) => {
       console.log("handler consultas", { data });
       if (typeof data.indice !== "undefined") {
-        if (consultas[data.indice]) {
-          return callback(200, consultas[data.indice]);
+        const _consulta = await obtenerUno({
+          directorioEntidad,
+          nombreArchivo: data.indice,
+        });
+
+        if (_consulta && _consulta.id) {
+          return callback(200, _consulta);
         }
+        
         return callback(404, {
-          mensaje: `consulta con indice ${data.indice} no encontrado`,
+          mensaje: `consulta con id ${data.indice} no fue encontrada`,
         });
       }
       let _consultas = [...consultas];
