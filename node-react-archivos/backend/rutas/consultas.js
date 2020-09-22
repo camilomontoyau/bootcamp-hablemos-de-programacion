@@ -27,7 +27,7 @@ module.exports = function consultasHandler({
           mensaje: `consulta con id ${data.indice} no fue encontrada`,
         });
       }
-      
+
       let _consultas = await listar({ directorioEntidad });
 
       if (
@@ -63,9 +63,9 @@ module.exports = function consultasHandler({
         });
       }
       let respuesta = [];
-      for(const consulta of _consultas) {
+      for (const consulta of _consultas) {
         respuesta = [
-          ...respuesta, 
+          ...respuesta,
           {
             ...consulta,
             mascota: await obtenerUno({
@@ -75,10 +75,11 @@ module.exports = function consultasHandler({
             veterinaria: await obtenerUno({
               directorioEntidad: "veterinarias",
               nombreArchivo: consulta.veterinaria,
-            })
-          }]
+            }),
+          },
+        ];
       }
-      
+
       callback(200, respuesta);
     },
     post: async (data, callback) => {
@@ -95,22 +96,24 @@ module.exports = function consultasHandler({
           "hay un error porque no se envió el payload o no se creó el id",
       });
     },
-    put: (data, callback) => {
+    put: async (data, callback) => {
       if (typeof data.indice !== "undefined") {
-        if (consultas[data.indice]) {
-          const { fechaCreacion } = consultas[data.indice];
-          consultas[data.indice] = {
-            ...data.payload,
-            fechaCreacion,
-            fechaEdicion: new Date(),
-          };
-          return callback(200, consultas[data.indice]);
-        }
-        return callback(404, {
-          mensaje: `consulta con indice ${data.indice} no encontrado`,
+        const datosActuales = { ...data.payload, id: data.indice };
+        const resultado = await actualizar({
+          directorioEntidad,
+          nombreArchivo: data.indice,
+          datosActuales,
         });
+        if (resultado.id) {
+          return callback(200, resultado);
+        }
+        if (resultado.message) {
+          return callback(404, {
+            mensaje: `dueño con indice ${data.indice} no encontrada`,
+          });
+        }
       }
-      callback(400, { mensaje: "indice no enviado" });
+      callback(400, { mensaje: "falta id" });
     },
     delete: (data, callback) => {
       if (typeof data.indice !== "undefined") {
