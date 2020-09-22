@@ -9,8 +9,6 @@ const {
 const directorioEntidad = "consultas";
 module.exports = function consultasHandler({
   consultas,
-  veterinarias,
-  mascotas,
 }) {
   return {
     get: async (data, callback) => {
@@ -24,12 +22,13 @@ module.exports = function consultasHandler({
         if (_consulta && _consulta.id) {
           return callback(200, _consulta);
         }
-        
+
         return callback(404, {
           mensaje: `consulta con id ${data.indice} no fue encontrada`,
         });
       }
-      let _consultas = [...consultas];
+      
+      let _consultas = await listar({ directorioEntidad });
 
       if (
         data.query &&
@@ -63,15 +62,24 @@ module.exports = function consultasHandler({
           return resultado;
         });
       }
-      _consultas = _consultas.map((consulta) => ({
-        ...consulta,
-        mascota: { ...mascotas[consulta.mascota], id: consulta.mascota },
-        veterinaria: {
-          ...veterinarias[consulta.veterinaria],
-          id: consulta.veterinaria,
-        },
-      }));
-      callback(200, _consultas);
+      let respuesta = [];
+      for(const consulta of _consultas) {
+        respuesta = [
+          ...respuesta, 
+          {
+            ...consulta,
+            mascota: await obtenerUno({
+              directorioEntidad: "mascotas",
+              nombreArchivo: consulta.mascota,
+            }),
+            veterinaria: await obtenerUno({
+              directorioEntidad: "veterinarias",
+              nombreArchivo: consulta.veterinaria,
+            })
+          }]
+      }
+      
+      callback(200, respuesta);
     },
     post: async (data, callback) => {
       if (data && data.payload && data.payload.id) {
