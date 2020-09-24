@@ -72,7 +72,7 @@ class Pagina extends Component {
     });
     let _columnas = [];
     if (Array.isArray(entidades) && entidades.length > 0) {
-      _columnas = Object.keys(entidades[0]) || [];
+      _columnas = Object.keys(entidades[0]).filter((col) => col !== "id") || [];
     }
     this.setState({ entidades, columnas: _columnas });
   };
