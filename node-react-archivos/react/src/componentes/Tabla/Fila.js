@@ -3,7 +3,7 @@ import BotonAccion from "../BotonAccion";
 import "./Fila.css";
 
 const evaluarCampo = ({ entidad, columna }) => {
-  if (columna === "veterinaria") {
+  if (columna === "veterinaria" || columna === "dueno") {
     return `${entidad[columna].nombre} ${entidad[columna].apellido}`;
   }
   if (columna === "mascota") {

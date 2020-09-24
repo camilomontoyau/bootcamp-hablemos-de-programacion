@@ -28,6 +28,8 @@ module.exports = function mascotasHandler() {
 
         const _mascotas = await listar({ directorioEntidad: "mascotas" });
 
+        let respuestaMascotas = [..._mascotas];
+
         // verifico que data.query traiga datos
         // en tipo o nombre o dueno, esto significa
         //que el request es una búsqueda
@@ -37,10 +39,6 @@ module.exports = function mascotasHandler() {
         ) {
           // creo un array con las llaves del objeto data query
           const llavesQuery = Object.keys(data.query);
-
-          //clono el array de mascotas que viene de recursos
-          // y este irá guardando los resultados
-          let respuestaMascotas = [..._mascotas];
 
           // filtro el array de mascotas según los datos que tenga data.query
           respuestaMascotas = respuestaMascotas.filter((_mascota) => {
@@ -72,10 +70,21 @@ module.exports = function mascotasHandler() {
             // y los que si tengan el criterio de búsqueda entran al array respuestaMascotas
             return resultado;
           });
-
-          return callback(200, respuestaMascotas);
         }
-        return callback(200, _mascotas);
+        let respuestaFinal = [];
+        for (const mascota of respuestaMascotas) {
+          respuestaFinal = [
+            ...respuestaFinal,
+            {
+              ...mascota,
+              dueno: await obtenerUno({
+                directorioEntidad: "duenos",
+                nombreArchivo: mascota.dueno,
+              }),
+            },
+          ];
+        }
+        return callback(200, respuestaFinal);
       } catch (error) {
         if (error) {
           console.log(error);
