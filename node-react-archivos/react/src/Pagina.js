@@ -104,15 +104,15 @@ class Pagina extends Component {
       duenosPromise,
     ]);
     mascota = mascota.map((_mascota, index) => ({
-      valor: index.toString(),
+      valor: _mascota.id,
       etiqueta: `${_mascota.nombre} (${_mascota.tipo})`,
     }));
     veterinaria = veterinaria.map((_veterinaria, index) => ({
-      valor: index.toString(),
+      valor: _veterinaria.id,
       etiqueta: `${_veterinaria.nombre} ${_veterinaria.apellido}`,
     }));
     dueno = dueno.map((_dueno, index) => ({
-      valor: index.toString(),
+      valor: _dueno.id,
       etiqueta: `${_dueno.nombre} ${_dueno.apellido}`,
     }));
     const nuevasOpciones = { ...options, mascota, veterinaria, dueno };
