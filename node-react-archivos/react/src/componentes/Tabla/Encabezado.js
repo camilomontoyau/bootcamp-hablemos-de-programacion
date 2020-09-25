@@ -6,7 +6,7 @@ function Encabezado(props) {
   return (
     <thead className="thead-dark">
       <tr>
-        <th scope="col">#</th>
+        <th scope="col">Identificador</th>
         {props.columnas.map((columna, index) => (
           <th key={`titulo-${index}`} scope="col">
             {columna}

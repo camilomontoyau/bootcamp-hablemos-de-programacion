@@ -79,7 +79,6 @@ module.exports = function consultasHandler({
           },
         ];
       }
-
       callback(200, respuesta);
     },
     post: async (data, callback) => {

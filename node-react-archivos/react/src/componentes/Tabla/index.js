@@ -16,7 +16,7 @@ function Tabla({
         {entidades.map((entidad, index) => (
           <Fila
             key={`fila-${index}`}
-            index={index}
+            index={entidad.id ? entidad.id : false}
             entidad={entidad}
             editarEntidad={editarEntidad}
             eliminarEntidad={eliminarEntidad}
