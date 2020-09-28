@@ -6,7 +6,7 @@ const consultas = require("./rutas/consultas");
 const fs = require("fs");
 const path = require("path");
 
-const primerNivel = (_data, callback) => {
+const handlerArchivos = (_data, callback) => {
   const rutaIndexHtml = path.join(__dirname, "publico", "index.html");
   const existeArchivo = fs.existsSync(rutaIndexHtml);
   console.log({ rutaIndexHtml, existeArchivo });
@@ -22,7 +22,7 @@ module.exports = {
   veterinarias: veterinarias(recursos.veterinarias),
   duenos: duenos(recursos.duenos),
   consultas: consultas(recursos),
-  index: {
+  "index.html": {
     get: primerNivel,
   },
   noEncontrado: (data, callback) => {

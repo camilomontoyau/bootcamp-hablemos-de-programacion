@@ -73,7 +73,7 @@ module.exports = (req, res) => {
     }
 
     if (metodo === "get" && data.ruta === "") {
-      data.ruta = "index";
+      data.ruta = "index.html";
     }
 
     // 3.6 elegir el manejador dependiendo de la ruta y asignarle función que el enrutador tiene
@@ -88,7 +88,7 @@ module.exports = (req, res) => {
     // 4. ejecutar handler (manejador) para enviar la respuesta
     if (typeof handler === "function") {
       handler(data, (statusCode = 200, mensaje) => {
-        if (data.ruta === "index") {
+        if (data.ruta === "index.html") {
           res.writeHead(statusCode, { "Content-Type": "text/html" });
           return mensaje.pipe(res);
         }
