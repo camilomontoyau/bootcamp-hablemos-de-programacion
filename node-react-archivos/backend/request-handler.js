@@ -92,12 +92,13 @@ module.exports = (req, res) => {
       ".ico": "image/x-icon",
     };
 
-    const archivos = ["index.html", "manifest.json", "favicon.ico"];
+    const archivos = ["index.html", "manifest.json", "favicon.ico", "static"];
+    let esArchivo = archivos.includes(data.ruta);
     
     // 4. ejecutar handler (manejador) para enviar la respuesta
     if (typeof handler === "function") {
       handler(data, (statusCode = 200, mensaje) => {
-        if (archivos.includes(data.ruta)) {
+        if (esArchivo) {
           const rutaArchivo = path.join(__dirname, "publico", data.ruta);
           const extensionArchivo = path.extname(rutaArchivo);
           const tipoMime = tiposMime[extensionArchivo];
