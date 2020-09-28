@@ -1,4 +1,5 @@
 const url = require("url");
+const path = require("path");
 const StringDecoder = require("string_decoder").StringDecoder;
 const enrutador = require("./enrutador");
 const { numeroAleatorio } = require("./util");
@@ -85,11 +86,22 @@ module.exports = (req, res) => {
       handler = enrutador.noEncontrado;
     }
 
+    const tiposMime = {
+      ".html": "text/html",
+      ".json": "application/json",
+      ".ico": "image/x-icon",
+    };
+
+    const archivos = ["index.html", "manifest.json", "favicon.ico"];
+    
     // 4. ejecutar handler (manejador) para enviar la respuesta
     if (typeof handler === "function") {
       handler(data, (statusCode = 200, mensaje) => {
-        if (data.ruta === "index.html") {
-          res.writeHead(statusCode, { "Content-Type": "text/html" });
+        if (archivos.includes(data.ruta)) {
+          const rutaArchivo = path.join(__dirname, "publico", data.ruta);
+          const extensionArchivo = path.extname(rutaArchivo);
+          const tipoMime = tiposMime[extensionArchivo];
+          res.writeHead(statusCode, { "Content-Type": tipoMime });
           return mensaje.pipe(res);
         }
 
