@@ -3,6 +3,8 @@ const mascotas = require("./rutas/mascotas");
 const veterinarias = require("./rutas/veterinarias");
 const duenos = require("./rutas/duenos");
 const consultas = require("./rutas/consultas");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   ruta: (data, callback) => {
@@ -12,6 +14,15 @@ module.exports = {
   veterinarias: veterinarias(recursos.veterinarias),
   duenos: duenos(recursos.duenos),
   consultas: consultas(recursos),
+  index: {
+    get: (_data, callback) => {
+      const rutaIndexHtml = path.join(__dirname, "publico", "index.html");
+      const existeArchivo = fs.existsSync(rutaIndexHtml);
+      console.log({ rutaIndexHtml, existeArchivo });
+      const respuesta = fs.createReadStream(rutaIndexHtml);
+      callback(200, respuesta);
+    },
+  },
   noEncontrado: (data, callback) => {
     callback(404, { mensaje: "no encontrado" });
   },

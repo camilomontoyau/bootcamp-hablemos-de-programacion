@@ -72,7 +72,12 @@ module.exports = (req, res) => {
       data.payload.id = numeroAleatorio();
     }
 
+    if (metodo === "get" && data.ruta === "") {
+      data.ruta = "index";
+    }
+
     // 3.6 elegir el manejador dependiendo de la ruta y asignarle función que el enrutador tiene
+    console.log({ data, enrutador });
     let handler;
     if (data.ruta && enrutador[data.ruta] && enrutador[data.ruta][metodo]) {
       handler = enrutador[data.ruta][metodo];
@@ -83,6 +88,11 @@ module.exports = (req, res) => {
     // 4. ejecutar handler (manejador) para enviar la respuesta
     if (typeof handler === "function") {
       handler(data, (statusCode = 200, mensaje) => {
+        if (data.ruta === "index") {
+          res.writeHead(statusCode, { "Content-Type": "text/html" });
+          return mensaje.pipe(res);
+        }
+
         let respuesta = null;
         if (typeof mensaje === "string") {
           respuesta = mensaje;
