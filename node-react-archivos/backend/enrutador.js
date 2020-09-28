@@ -6,11 +6,11 @@ const consultas = require("./rutas/consultas");
 const fs = require("fs");
 const path = require("path");
 
-const handlerArchivos = (_data, callback) => {
-  const rutaIndexHtml = path.join(__dirname, "publico", "index.html");
-  const existeArchivo = fs.existsSync(rutaIndexHtml);
-  console.log({ rutaIndexHtml, existeArchivo });
-  const respuesta = fs.createReadStream(rutaIndexHtml);
+const handlerArchivos = (data, callback) => {
+  const rutaArchivo = path.join(__dirname, "publico", data.ruta);
+  const existeArchivo = fs.existsSync(rutaArchivo);
+  console.log({ rutaArchivo, existeArchivo });
+  const respuesta = fs.createReadStream(rutaArchivo);
   callback(200, respuesta);
 };
 
@@ -23,6 +23,12 @@ module.exports = {
   duenos: duenos(recursos.duenos),
   consultas: consultas(recursos),
   "index.html": {
+    get: handlerArchivos,
+  },
+  "manifest.json": {
+    get: handlerArchivos,
+  },
+  "favicon.ico": {
     get: handlerArchivos,
   },
   noEncontrado: (data, callback) => {
