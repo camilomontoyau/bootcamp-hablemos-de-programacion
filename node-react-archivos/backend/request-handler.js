@@ -92,9 +92,17 @@ module.exports = (req, res) => {
       ".css": "text/css",
       ".js": "text/javascript",
       ".map": "application/octet-stream",
+      ".png": "image/png",
     };
 
-    const archivos = ["index.html", "manifest.json", "favicon.ico", "static"];
+    const archivos = [
+      "index.html",
+      "manifest.json",
+      "favicon.ico",
+      "static",
+      "logo192.png",
+      "logo512.png",
+    ];
     let esArchivo = archivos.includes(data.ruta);
     if (esArchivo && data.ruta === "static") {
       data.indice = rutaLimpia;

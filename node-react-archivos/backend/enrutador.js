@@ -34,6 +34,12 @@ module.exports = {
   "favicon.ico": {
     get: handlerArchivos,
   },
+  "logo192.png": {
+    get: handlerArchivos,
+  },
+  "logo512.png": {
+    get: handlerArchivos,
+  },
   static: {
     get: handlerArchivos,
   },
