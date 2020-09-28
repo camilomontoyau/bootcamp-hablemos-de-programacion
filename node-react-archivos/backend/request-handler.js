@@ -78,7 +78,6 @@ module.exports = (req, res) => {
     }
 
     // 3.6 elegir el manejador dependiendo de la ruta y asignarle función que el enrutador tiene
-    console.log({ data, enrutador });
     let handler;
     if (data.ruta && enrutador[data.ruta] && enrutador[data.ruta][metodo]) {
       handler = enrutador[data.ruta][metodo];
@@ -90,18 +89,30 @@ module.exports = (req, res) => {
       ".html": "text/html",
       ".json": "application/json",
       ".ico": "image/x-icon",
+      ".css": "text/css",
+      ".js": "text/javascript",
+      ".map": "application/octet-stream",
     };
 
     const archivos = ["index.html", "manifest.json", "favicon.ico", "static"];
     let esArchivo = archivos.includes(data.ruta);
-    
+    if (esArchivo && data.ruta === "static") {
+      data.indice = rutaLimpia;
+    }
+
+    console.log({ data, enrutador });
+
     // 4. ejecutar handler (manejador) para enviar la respuesta
     if (typeof handler === "function") {
       handler(data, (statusCode = 200, mensaje) => {
         if (esArchivo) {
-          const rutaArchivo = path.join(__dirname, "publico", data.ruta);
+          let rutaArchivo = path.join(__dirname, "publico", data.ruta);
+          if(data.ruta === "static") {
+            rutaArchivo = path.join(__dirname, "publico", data.indice);
+          }
           const extensionArchivo = path.extname(rutaArchivo);
           const tipoMime = tiposMime[extensionArchivo];
+          console.log({  tipoMime, extensionArchivo  });
           res.writeHead(statusCode, { "Content-Type": tipoMime });
           return mensaje.pipe(res);
         }

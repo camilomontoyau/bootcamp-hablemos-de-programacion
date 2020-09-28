@@ -7,7 +7,10 @@ const fs = require("fs");
 const path = require("path");
 
 const handlerArchivos = (data, callback) => {
-  const rutaArchivo = path.join(__dirname, "publico", data.ruta);
+  let rutaArchivo = path.join(__dirname, "publico", data.ruta);
+  if (data.ruta === "static") {
+    rutaArchivo = path.join(__dirname, "publico", data.indice);
+  }
   const existeArchivo = fs.existsSync(rutaArchivo);
   console.log({ rutaArchivo, existeArchivo });
   const respuesta = fs.createReadStream(rutaArchivo);
@@ -29,6 +32,9 @@ module.exports = {
     get: handlerArchivos,
   },
   "favicon.ico": {
+    get: handlerArchivos,
+  },
+  static: {
     get: handlerArchivos,
   },
   noEncontrado: (data, callback) => {
