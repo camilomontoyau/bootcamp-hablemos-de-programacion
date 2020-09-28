@@ -23,7 +23,7 @@ module.exports = {
   duenos: duenos(recursos.duenos),
   consultas: consultas(recursos),
   "index.html": {
-    get: primerNivel,
+    get: handlerArchivos,
   },
   noEncontrado: (data, callback) => {
     callback(404, { mensaje: "no encontrado" });
