@@ -85,6 +85,7 @@ module.exports = (req, res) => {
       ".css": "text/css",
       ".js": "text/javascript",
       ".map": "application/octet-stream",
+      ".png": "image/png",
     };
 
     const archivos = ["index.html", "manifest.json", "favicon.ico", "static"];

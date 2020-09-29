@@ -36,6 +36,12 @@ module.exports = {
   "manifest.json": {
     get: handlerArchivos,
   },
+  "logo192.png": {
+    get: handlerArchivos,
+  },
+  "logo512.png": {
+    get: handlerArchivos,
+  },
   static: {
     get: handlerArchivos,
   },
