@@ -7,10 +7,10 @@ const path = require("path");
 const fs = require("fs");
 
 const handlerArchivos = (data, callback) => {
-  const rutaIndexHtml = path.join(__dirname, "publico", data.ruta);
-  const existeArchivo = fs.existsSync(rutaIndexHtml);
+  const rutaArchivo = path.join(__dirname, "publico", data.ruta);
+  const existeArchivo = fs.existsSync(rutaArchivo);
   if (existeArchivo) {
-    const respuesta = fs.createReadStream(rutaIndexHtml);
+    const respuesta = fs.createReadStream(rutaArchivo);
     return callback(200, respuesta);
   }
   callback(404, { mensaje: "no encontrado" });
