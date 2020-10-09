@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/camilomontoyau/bootcamp-hablemos-de-programacion/issues"
   },
-  "homepage": "https://github.com/camilomontoyau/bootcamp-hablemos-de-programacion#readme"
+  "homepage": "https://github.com/camilomontoyau/bootcamp-hablemos-de-programacion#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
