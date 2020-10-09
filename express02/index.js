@@ -1,4 +1,5 @@
 const express = require("express");
+const { crear } = require("./data-handler");
 const app = express();
 const port = 5000;
 
@@ -15,6 +16,15 @@ app.get("/mascotas", (req, res) => {
     { tipo: "Perro", nombre: "Trosky4", dueno: "Camilo" },
   ];
   res.status(200).json(mascotas);
+});
+
+app.post("/mascotas", async (req, res) => {
+  const nuevaMascota = await crear({
+    directorioEntidad: "mascotas",
+    nombreArchivo: "mascota1",
+    datosGuardar: { tipo: "pájaro", nombre: "Robert", dueno: "Fernando" },
+  });
+  res.status(200).json(nuevaMascota);
 });
 
 app.listen(port, () => {
