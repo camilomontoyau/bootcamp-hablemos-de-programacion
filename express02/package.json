@@ -4,7 +4,7 @@
   "description": "proyecto de express para fullstack javascript dev en español de udemy",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/camilomontoyau/bootcamp-hablemos-de-programacion#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4"
   }
 }
