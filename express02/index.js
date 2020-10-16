@@ -3,6 +3,9 @@ const { crear } = require("./data-handler");
 const app = express();
 const port = 5000;
 
+app.use(express.json());
+app.use(express.urlencoded());
+
 app.get("/", (req, res) => {
   res.send("La api está corriendo sin problemas!");
 });
@@ -19,12 +22,13 @@ app.get("/mascotas", (req, res) => {
 });
 
 app.post("/mascotas", async (req, res) => {
-  const nuevaMascota = await crear({
+  console.log(req.body);
+  /* const nuevaMascota = await crear({
     directorioEntidad: "mascotas",
-    nombreArchivo: "mascota1",
-    datosGuardar: { tipo: "pájaro", nombre: "Robert", dueno: "Fernando" },
-  });
-  res.status(200).json(nuevaMascota);
+    nombreArchivo: "mascota2",
+    datosGuardar: { tipo: "perro", nombre: "Pepe", dueno: "Francisco" },
+  }); */
+  res.status(200).json({  mensaje:  "hola"  });
 });
 
 app.listen(port, () => {
