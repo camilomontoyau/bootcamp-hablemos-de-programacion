@@ -22,13 +22,15 @@ app.get("/mascotas", (req, res) => {
 });
 
 app.post("/mascotas", async (req, res) => {
-  console.log(req.body);
-  /* const nuevaMascota = await crear({
-    directorioEntidad: "mascotas",
-    nombreArchivo: "mascota2",
-    datosGuardar: { tipo: "perro", nombre: "Pepe", dueno: "Francisco" },
-  }); */
-  res.status(200).json({  mensaje:  "hola"  });
+  if  (req.body) {
+    const nuevaMascota = await crear({
+      directorioEntidad: "mascotas",
+      nombreArchivo: "mascota3",
+      datosGuardar: req.body,
+    });
+    return res.status(200).json(nuevaMascota);
+  }
+  
 });
 
 app.listen(port, () => {
