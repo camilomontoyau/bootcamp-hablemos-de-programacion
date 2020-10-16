@@ -1,4 +1,5 @@
 const express = require("express");
+const { v4: uuidv4 } = require("uuid");
 const { crear } = require("./data-handler");
 const app = express();
 const port = 5000;
@@ -23,10 +24,12 @@ app.get("/mascotas", (req, res) => {
 
 app.post("/mascotas", async (req, res) => {
   if (req.body && Object.keys(req.body).length > 0) {
+    const _id = uuidv4();
+    const datosMascotaNueva = { ...req.body, _id }; 
     const nuevaMascota = await crear({
       directorioEntidad: "mascotas",
-      nombreArchivo: "mascota3",
-      datosGuardar: req.body,
+      nombreArchivo: _id,
+      datosGuardar: datosMascotaNueva,
     });
     return res.status(200).json(nuevaMascota);
   }
