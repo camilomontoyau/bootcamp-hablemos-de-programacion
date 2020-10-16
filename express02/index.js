@@ -1,6 +1,6 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-const { crear } = require("./data-handler");
+const { crear, listar } = require("./data-handler");
 const app = express();
 const port = 5000;
 
@@ -11,14 +11,8 @@ app.get("/", (req, res) => {
   res.send("La api está corriendo sin problemas!");
 });
 
-app.get("/mascotas", (req, res) => {
-  const mascotas = [
-    { tipo: "Perro", nombre: "Trosky0", dueno: "Camilo" },
-    { tipo: "Perro", nombre: "Trosky1", dueno: "Camilo" },
-    { tipo: "Perro", nombre: "Trosky2", dueno: "Camilo" },
-    { tipo: "Perro", nombre: "Trosky3", dueno: "Camilo" },
-    { tipo: "Perro", nombre: "Trosky4", dueno: "Camilo" },
-  ];
+app.get("/mascotas", async (req, res) => {
+  const mascotas = await listar({ directorioEntidad: "mascotas" });
   res.status(200).json(mascotas);
 });
 
