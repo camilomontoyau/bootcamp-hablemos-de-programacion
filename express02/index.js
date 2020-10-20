@@ -1,6 +1,6 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-const { crear, listar } = require("./data-handler");
+const { crear, listar, actualizar } = require("./data-handler");
 const app = express();
 const port = 5000;
 
@@ -26,6 +26,23 @@ app.post("/mascotas", async (req, res) => {
       datosGuardar: datosMascotaNueva,
     });
     return res.status(200).json(nuevaMascota);
+  }
+  return res.status(400).json({ mensaje: "Falta el body" });
+});
+
+app.put("/mascotas/:_id", async (req, res) => {
+  const { _id = null } = req.params;
+  if (!_id) {
+    return res.status(400).json({ mensaje: "Falta el id" });
+  }
+  if (req.body && Object.keys(req.body).length > 0) {
+    const datosActuales = { ...req.body, _id };
+    const mascotaActualizada = await actualizar({
+      directorioEntidad: "mascotas",
+      nombreArchivo: _id,
+      datosActuales,
+    });
+    return res.status(200).json(mascotaActualizada);
   }
   return res.status(400).json({ mensaje: "Falta el body" });
 });
