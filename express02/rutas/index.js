@@ -1,5 +1,5 @@
-const rutas = require("./rutas");
+const mascotas = require("./mascotas");
 
 module.exports = (app) => {
-  app.use(rutas);
+  app.use("/mascotas", mascotas);
 };

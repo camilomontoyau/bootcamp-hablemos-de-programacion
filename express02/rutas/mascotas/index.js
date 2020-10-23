@@ -6,28 +6,19 @@ const {
   actualizar,
   eliminar,
   obtenerUno,
-} = require("../data-handler");
+} = require("../../data-handler");
+const entidad = "mascotas";
 
-const rutasRestringidas = "/:entidad(mascotas|veterinas|duenos|consultas)";
-
-router.get("/", (req, res) => {
-  res.send("La api está corriendo sin problemas!");
+router.get("/", async (req, res) => {
+  if (!entidad) {
+    res.status(404).status({ mensaje: "no encontrado" });
+  }
+  const mascotas = await listar({ directorioEntidad: entidad });
+  res.status(200).json(mascotas);
 });
 
-router.get(
-  rutasRestringidas,
-  async (req, res) => {
-    const { entidad = null } = req.params;
-    if (!entidad) {
-      res.status(404).status({ mensaje: "no encontrado" });
-    }
-    const mascotas = await listar({ directorioEntidad: entidad });
-    res.status(200).json(mascotas);
-  }
-);
-
-router.get(`${rutasRestringidas}/:_id`, async (req, res) => {
-  const { _id = null, entidad = null } = req.params;
+router.get("/:_id", async (req, res) => {
+  const { _id = null } = req.params;
   if (!_id) {
     return res.status(400).json({ mensaje: "Falta el id" });
   }
@@ -44,8 +35,7 @@ router.get(`${rutasRestringidas}/:_id`, async (req, res) => {
   res.status(404).json({ mensaje: "no encontrado" });
 });
 
-router.post(rutasRestringidas, async (req, res) => {
-  const { entidad = null } = req.params;
+router.post("/", async (req, res) => {
   if (!entidad) {
     res.status(404).status({ mensaje: "no encontrado" });
   }
@@ -62,8 +52,8 @@ router.post(rutasRestringidas, async (req, res) => {
   return res.status(400).json({ mensaje: "Falta el body" });
 });
 
-router.put(`${rutasRestringidas}/:_id`, async (req, res) => {
-  const { _id = null, entidad = null } = req.params;
+router.put("/:_id", async (req, res) => {
+  const { _id = null } = req.params;
   if (!_id) {
     return res.status(400).json({ mensaje: "Falta el id" });
   }
@@ -82,8 +72,8 @@ router.put(`${rutasRestringidas}/:_id`, async (req, res) => {
   return res.status(400).json({ mensaje: "Falta el body" });
 });
 
-router.delete(`${rutasRestringidas}/:_id`, async (req, res) => {
-  const { _id = null, entidad = null } = req.params;
+router.delete("/:_id", async (req, res) => {
+  const { _id = null } = req.params;
   if (!_id) {
     return res.status(400).json({ mensaje: "Falta el id" });
   }
