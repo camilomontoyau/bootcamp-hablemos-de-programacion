@@ -8,20 +8,25 @@ const {
   obtenerUno,
 } = require("../data-handler");
 
+const rutasRestringidas = "/:entidad(mascotas|veterinas|duenos|consultas)";
+
 router.get("/", (req, res) => {
   res.send("La api está corriendo sin problemas!");
 });
 
-router.get("/:entidad", async (req, res) => {
-  const { entidad = null } = req.params;
-  if (!entidad) {
-    res.status(404).status({ mensaje: "no encontrado" });
+router.get(
+  rutasRestringidas,
+  async (req, res) => {
+    const { entidad = null } = req.params;
+    if (!entidad) {
+      res.status(404).status({ mensaje: "no encontrado" });
+    }
+    const mascotas = await listar({ directorioEntidad: entidad });
+    res.status(200).json(mascotas);
   }
-  const mascotas = await listar({ directorioEntidad: entidad });
-  res.status(200).json(mascotas);
-});
+);
 
-router.get("/:entidad/:_id", async (req, res) => {
+router.get(`${rutasRestringidas}/:_id`, async (req, res) => {
   const { _id = null, entidad = null } = req.params;
   if (!_id) {
     return res.status(400).json({ mensaje: "Falta el id" });
@@ -39,7 +44,7 @@ router.get("/:entidad/:_id", async (req, res) => {
   res.status(404).json({ mensaje: "no encontrado" });
 });
 
-router.post("/:entidad", async (req, res) => {
+router.post(rutasRestringidas, async (req, res) => {
   const { entidad = null } = req.params;
   if (!entidad) {
     res.status(404).status({ mensaje: "no encontrado" });
@@ -57,7 +62,7 @@ router.post("/:entidad", async (req, res) => {
   return res.status(400).json({ mensaje: "Falta el body" });
 });
 
-router.put("/:entidad/:_id", async (req, res) => {
+router.put(`${rutasRestringidas}/:_id`, async (req, res) => {
   const { _id = null, entidad = null } = req.params;
   if (!_id) {
     return res.status(400).json({ mensaje: "Falta el id" });
@@ -77,7 +82,7 @@ router.put("/:entidad/:_id", async (req, res) => {
   return res.status(400).json({ mensaje: "Falta el body" });
 });
 
-router.delete("/:entidad/:_id", async (req, res) => {
+router.delete(`${rutasRestringidas}/:_id`, async (req, res) => {
   const { _id = null, entidad = null } = req.params;
   if (!_id) {
     return res.status(400).json({ mensaje: "Falta el id" });
