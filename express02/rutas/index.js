@@ -1,7 +1,7 @@
-const mascotas = require("./mascotas");
-const duenos = require("./duenos");
-const veterinarias = require("./veterinarias");
-const consultas = require("./consultas");
+const mascotas = require("./controllers/mascotas");
+const duenos = require("./controllers/duenos");
+const veterinarias = require("./controllers/veterinarias");
+const consultas = require("./controllers/consultas");
 
 module.exports = (app) => {
   app.use("/mascotas", mascotas);
