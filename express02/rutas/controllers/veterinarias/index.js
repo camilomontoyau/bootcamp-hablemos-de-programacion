@@ -6,7 +6,7 @@ const {
   actualizar,
   eliminar,
   obtenerUno,
-} = require("../../data-handler");
+} = require("../../../data-handler");
 const entidad = "veterinarias";
 
 router.get("/", async (req, res) => {
