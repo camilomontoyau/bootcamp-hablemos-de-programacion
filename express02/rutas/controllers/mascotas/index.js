@@ -1,35 +1,16 @@
 const router = require("express").Router();
 const { v4: uuidv4 } = require("uuid");
-const {
-  crear,
-  actualizar,
-  eliminar,
-  obtenerUno,
-} = require("../../../data-handler");
+const { crear, actualizar, eliminar } = require("../../../data-handler");
 
-const { listar } = require("../genericos");
+const { listar, obtenerUno } = require("../genericos");
 
-const listarHandler = listar("mascotas");
+const entidad = "mascotas";
 
+const listarHandler = listar(entidad);
 router.get("/", listarHandler);
 
-router.get("/:_id", async (req, res) => {
-  const { _id = null } = req.params;
-  if (!_id) {
-    return res.status(400).json({ mensaje: "Falta el id" });
-  }
-  if (!entidad) {
-    res.status(404).status({ mensaje: "no encontrado" });
-  }
-  const mascota = await obtenerUno({
-    directorioEntidad: entidad,
-    nombreArchivo: _id,
-  });
-  if (mascota) {
-    res.status(200).json(mascota);
-  }
-  res.status(404).json({ mensaje: "no encontrado" });
-});
+const obtenerUnoHandler = obtenerUno(entidad);
+router.get("/:_id", obtenerUnoHandler);
 
 router.post("/", async (req, res) => {
   if (!entidad) {
