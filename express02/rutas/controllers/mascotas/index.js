@@ -9,9 +9,9 @@ const {
 
 const { listar } = require("../genericos");
 
-const entidad = "mascotas";
+const listarHandler = listar("mascotas");
 
-router.get("/", async (req, res) => listar(entidad, req, res));
+router.get("/", listarHandler);
 
 router.get("/:_id", async (req, res) => {
   const { _id = null } = req.params;
