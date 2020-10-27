@@ -2,15 +2,20 @@ const router = require("express").Router();
 const { v4: uuidv4 } = require("uuid");
 const {
   crear,
+  listar,
   actualizar,
   eliminar,
   obtenerUno,
-} = require("../../../data-handler");
-
-const { listar } = require("../genericos");
+} = require("../../data-handler");
 const entidad = "duenos";
 
-router.get("/", async (req, res) => listar(entidad, req, res));
+router.get("/", async (req, res) => {
+  if (!entidad) {
+    res.status(404).status({ mensaje: "no encontrado" });
+  }
+  const mascotas = await listar({ directorioEntidad: entidad });
+  res.status(200).json(mascotas);
+});
 
 router.get("/:_id", async (req, res) => {
   const { _id = null } = req.params;
