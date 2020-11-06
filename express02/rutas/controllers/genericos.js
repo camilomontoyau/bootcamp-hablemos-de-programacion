@@ -1,4 +1,5 @@
-const { listar, obtenerUno } = require("../../data-handler");
+const { v4: uuidv4 } = require("uuid");
+const { listar, obtenerUno, crear } = require("../../data-handler");
 
 const listarEntidades = function closureListar(entidad) {
   return async function closureHandlerListar(req, res) {
@@ -30,7 +31,27 @@ const obtenerUnaEntidad = function closureObtenerUno(entidad) {
   };
 };
 
+const crearEntidad = function closureCrearEntidad(entidad) {
+  return async function closureHandlerCrearEntidad(req, res) {
+    if (!entidad) {
+      res.status(404).status({ mensaje: "no encontrado" });
+    }
+    if (req.body && Object.keys(req.body).length > 0) {
+      const _id = uuidv4();
+      const datosMascotaNueva = { ...req.body, _id };
+      const nuevaMascota = await crear({
+        directorioEntidad: entidad,
+        nombreArchivo: _id,
+        datosGuardar: datosMascotaNueva,
+      });
+      return res.status(200).json(nuevaMascota);
+    }
+    return res.status(400).json({ mensaje: "Falta el body" });
+  };
+};
+
 module.exports = {
   listar: listarEntidades,
   obtenerUno: obtenerUnaEntidad,
+  crear: crearEntidad,
 };
