@@ -1,5 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
-const { listar, obtenerUno, crear, actualizar } = require("../../data-handler");
+const {
+  listar,
+  obtenerUno,
+  crear,
+  actualizar,
+  eliminar,
+} = require("../../data-handler");
 
 const listarEntidades = function closureListar(entidad) {
   return async function closureHandlerListar(req, res) {
@@ -72,9 +78,24 @@ const editarEntidad = function closureEditarEntidad(entidad) {
   };
 };
 
+const eliminarEntidad = function closureEliminarEntidad(entidad) {
+  return async function closureHandlerEliminarEntidad(req, res) {
+    const { _id = null } = req.params;
+    if (!_id) {
+      return res.status(400).json({ mensaje: "Falta el id" });
+    }
+    if (!entidad) {
+      res.status(404).status({ mensaje: "no encontrado" });
+    }
+    await eliminar({ directorioEntidad: entidad, nombreArchivo: _id });
+    return res.status(204).send();
+  };
+};
+
 module.exports = {
   listar: listarEntidades,
   obtenerUno: obtenerUnaEntidad,
   crear: crearEntidad,
   actualizar: editarEntidad,
+  eliminar: eliminarEntidad,
 };
