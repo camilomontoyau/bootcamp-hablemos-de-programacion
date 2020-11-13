@@ -1,5 +1,7 @@
 require("dotenv").config();
 const express = require("express");
+const conexion = require("./db");
+conexion();
 const rutas = require("./rutas");
 const app = express();
 const port = 5000;

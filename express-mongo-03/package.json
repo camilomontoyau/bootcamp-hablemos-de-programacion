@@ -27,6 +27,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "mongoose": "^5.10.14",
     "nodemon": "^2.0.4",
     "uuid": "^8.3.1"
   }
