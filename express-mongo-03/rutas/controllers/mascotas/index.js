@@ -31,7 +31,7 @@ router.get("/:_id", async (req, res) => {
     if (mascota) {
       return res.status(200).json(mascota);
     }
-    return res.status(404).json({ mensaje: "mascota no encontrada" });
+    return res.status(404).json({ mensaje: "recurso no encontrado" });
   } catch (error) {
     console.log({ error });
     return res.status(500).json({ mensaje: error.message });
