@@ -75,8 +75,12 @@ router.delete("/:_id", async (req, res) => {
       return res.status(400).json({ mensaje: "falta id" });
     }
     const mascotaBorrada = await Mascota.remove({_id});
-    console.log({mascotaBorrada});
-    return res.status(204).send();
+    if  (mascotaBorrada.deletedCount === 1) {
+      return res.status(204).send();
+    }
+    return res
+      .status(500)
+      .json({ mensaje: "no se pudo eliminar el recurso, vuelva a intentar" });
   } catch (error) {
     console.log({ error });
     return res.status(500).json({ mensaje: error.message });
