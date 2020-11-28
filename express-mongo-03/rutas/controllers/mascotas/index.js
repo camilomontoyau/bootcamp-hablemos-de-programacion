@@ -23,8 +23,20 @@ router.get("/", async (req, res) => {
   }
 });
 
-const obtenerUnoHandler = obtenerUno(entidad);
-router.get("/:_id", obtenerUnoHandler);
+//const obtenerUnoHandler = obtenerUno(entidad);
+router.get("/:_id", async (req, res) => {
+  try {
+    const { _id } = req.params;
+    const mascota = await Mascota.findById(_id);
+    if (mascota) {
+      return res.status(200).json(mascota);
+    }
+    return res.status(404).json({ mensaje: "mascota no encontrada" });
+  } catch (error) {
+    console.log({ error });
+    return res.status(500).json({ mensaje: error.message });
+  }
+});
 
 //const crearHandler = crear(entidad);
 router.post("/", async (req, res)=>{
