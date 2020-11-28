@@ -67,7 +67,20 @@ router.put("/:_id", async (req, res) => {
   }
 });
 
-const eliminarHandler = eliminar(entidad);
-router.delete("/:_id", eliminarHandler);
+// const eliminarHandler = eliminar(entidad);
+router.delete("/:_id", async (req, res) => {
+  try {
+    const { _id = null } = req.params;
+    if (!_id) {
+      return res.status(400).json({ mensaje: "falta id" });
+    }
+    const mascotaBorrada = await Mascota.remove({_id});
+    console.log({mascotaBorrada});
+    return res.status(204).send();
+  } catch (error) {
+    console.log({ error });
+    return res.status(500).json({ mensaje: error.message });
+  }
+});
 
 module.exports = router;
