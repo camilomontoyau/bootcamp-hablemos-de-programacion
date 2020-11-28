@@ -3,17 +3,25 @@ const Mascota = require("./schema");
 
 
 const {
-  listar,
+  /* listar, */
   obtenerUno,
-  crear,
+  /* crear, */
   actualizar,
   eliminar,
 } = require("../genericos");
 
 const entidad = "mascotas";
 
-const listarHandler = listar(entidad);
-router.get("/", listarHandler);
+//const listarHandler = listar(entidad);
+router.get("/", async (req, res) => {
+  try {
+    const mascotas = await Mascota.find();
+    return res.status(200).json(mascotas);
+  } catch (error) {
+    console.log({ error });
+    return res.status(500).json({ mensaje: error.message });
+  }
+});
 
 const obtenerUnoHandler = obtenerUno(entidad);
 router.get("/:_id", obtenerUnoHandler);
