@@ -9,13 +9,24 @@ const {
   actualizar,
   eliminar,
 } = require("../genericos");
+const { Schema } = require("mongoose");
 
 const entidad = "mascotas";
 
 //const listarHandler = listar(entidad);
 router.get("/", async (req, res) => {
   try {
-    const mascotas = await Mascota.find().populate("dueno");
+    let { query } = req;
+    for (let llave of Object.keys(query)) {
+      if (
+        Mascota.schema.paths[llave].instance === "ObjectID" ||
+        Mascota.schema.paths[llave].instance === "Date"
+      ) {
+        continue;
+      }
+      query[llave] = { $regex: query[llave] };
+    }
+    const mascotas = await Mascota.find(query).populate("dueno");
     return res.status(200).json(mascotas);
   } catch (error) {
     console.log({ error });
