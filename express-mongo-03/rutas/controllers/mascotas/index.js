@@ -8,25 +8,17 @@ const {
   /* crear, */
   actualizar,
   eliminar,
+  filtrarEntidades,
 } = require("../genericos");
-const { Schema } = require("mongoose");
+const { query } = require("express");
 
 const entidad = "mascotas";
 
 //const listarHandler = listar(entidad);
 router.get("/", async (req, res) => {
   try {
-    let { query } = req;
-    for (let llave of Object.keys(query)) {
-      if (
-        Mascota.schema.paths[llave].instance === "ObjectID" ||
-        Mascota.schema.paths[llave].instance === "Date"
-      ) {
-        continue;
-      }
-      query[llave] = { $regex: query[llave] };
-    }
-    const mascotas = await Mascota.find(query).populate("dueno");
+    const filtro = filtrarEntidades(Mascota, req.query);
+    const mascotas = await Mascota.find(filtro).populate("dueno");
     return res.status(200).json(mascotas);
   } catch (error) {
     console.log({ error });
