@@ -8,6 +8,7 @@ const {
   /* crear, */
   actualizar,
   eliminar,
+  filtrarEntidades,
 } = require("../genericos");
 
 const entidad = "consultas";
@@ -15,7 +16,8 @@ const entidad = "consultas";
 //const listarHandler = listar(entidad);
 router.get("/", async (req, res) => {
   try {
-    const consultas = await Consulta.find()
+    const filtro = filtrarEntidades(Consulta, req.query);
+    const consultas = await Consulta.find(filtro)
       .populate("mascota")
       .populate("veterinaria");
     return res.status(200).json(consultas);
