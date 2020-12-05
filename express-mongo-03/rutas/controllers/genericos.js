@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const lodash = require("lodash");
 const {
   listar,
   obtenerUno,
@@ -92,10 +93,27 @@ const eliminarEntidad = function closureEliminarEntidad(entidad) {
   };
 };
 
+const filtrarEntidades = (model, query) => {
+  let queryResultado = lodash.cloneDeep(query);
+  for (let llave of Object.keys(queryResultado)) {
+    const instancia = lodash.get(model, `schema.paths.${llave}.instance`, null);
+    if (instancia === null) {
+      queryResultado[llave] = undefined;
+      continue;
+    }
+    if (instancia === "ObjectID" || instancia === "Date") {
+      continue;
+    }
+    queryResultado[llave] = { $regex: query[llave], $options: "i" };
+  }
+  return queryResultado;
+};
+
 module.exports = {
   listar: listarEntidades,
   obtenerUno: obtenerUnaEntidad,
   crear: crearEntidad,
   actualizar: editarEntidad,
   eliminar: eliminarEntidad,
+  filtrarEntidades,
 };
