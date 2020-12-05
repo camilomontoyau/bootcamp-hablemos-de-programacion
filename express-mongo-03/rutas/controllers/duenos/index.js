@@ -15,7 +15,17 @@ const entidad = "duenos";
 //const listarHandler = listar(entidad);
 router.get("/", async (req, res) => {
   try {
-    const duenos = await Dueno.find();
+    let { query } = req;
+    for (let llave of Object.keys(query)) {
+      if (
+        Dueno.schema.paths[llave].instance === "ObjectID" ||
+        Dueno.schema.paths[llave].instance === "Date"
+      ) {
+        continue;
+      }
+      query[llave] = { $regex: query[llave], $options: "i" };
+    }
+    const duenos = await Dueno.find(query);
     return res.status(200).json(duenos);
   } catch (error) {
     console.log({ error });
