@@ -2,3 +2,5 @@
 1) filtros de las entidades al listar, falta duenos, veterinarias y consultas
 3) revisar cuales de los handlers pueden ser genéricos
 4) no permitir crear dos o más duenos o veterinarias con el mismo documento
+5) verificar que la mascota exista antes de crear una consulta
+6) verificar que la veterinaria exista antes de crear una consulta
