@@ -101,7 +101,11 @@ const filtrarEntidades = (model, query) => {
       queryResultado[llave] = undefined;
       continue;
     }
-    if (instancia === "ObjectID" || instancia === "Date") {
+    if (
+      instancia === "ObjectID" ||
+      instancia === "Date" ||
+      instancia === "Number"
+    ) {
       continue;
     }
     queryResultado[llave] = { $regex: query[llave], $options: "i" };
