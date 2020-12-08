@@ -3,7 +3,7 @@ const Mascota = require("./schema");
 
 
 const {
-  /* listar, */
+  listar,
   obtenerUno,
   /* crear, */
   actualizar,
@@ -14,17 +14,8 @@ const { query } = require("express");
 
 const entidad = "mascotas";
 
-//const listarHandler = listar(entidad);
-router.get("/", async (req, res) => {
-  try {
-    const filtro = filtrarEntidades(Mascota, req.query);
-    const mascotas = await Mascota.find(filtro).populate("dueno");
-    return res.status(200).json(mascotas);
-  } catch (error) {
-    console.log({ error });
-    return res.status(500).json({ mensaje: error.message });
-  }
-});
+const listarHandler = listar({ Modelo: Mascota, populate: ["dueno"] });
+router.get("/", listarHandler);
 
 //const obtenerUnoHandler = obtenerUno(entidad);
 router.get("/:_id", async (req, res) => {
