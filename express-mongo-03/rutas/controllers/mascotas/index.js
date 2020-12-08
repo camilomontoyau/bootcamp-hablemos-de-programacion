@@ -12,7 +12,6 @@ const {
 } = require("../genericos");
 const { query } = require("express");
 
-const entidad = "mascotas";
 
 const listarHandler = listar({ Modelo: Mascota, populate: ["dueno"] });
 router.get("/", listarHandler);
