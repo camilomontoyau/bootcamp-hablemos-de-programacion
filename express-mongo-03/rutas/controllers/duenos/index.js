@@ -3,7 +3,7 @@ const Dueno = require("./schema");
 
 
 const {
-  /* listar, */
+  listar,
   obtenerUno,
   /* crear, */
   actualizar,
@@ -11,19 +11,8 @@ const {
   filtrarEntidades,
 } = require("../genericos");
 
-const entidad = "duenos";
-
-//const listarHandler = listar(entidad);
-router.get("/", async (req, res) => {
-  try {
-    const filtro = filtrarEntidades(Dueno, req.query);
-    const duenos = await Dueno.find(filtro);
-    return res.status(200).json(duenos);
-  } catch (error) {
-    console.log({ error });
-    return res.status(500).json({ mensaje: error.message });
-  }
-});
+const listarHandler = listar({ Modelo: Dueno });
+router.get("/", listarHandler);
 
 //const obtenerUnoHandler = obtenerUno(entidad);
 router.get("/:_id", async (req, res) => {
