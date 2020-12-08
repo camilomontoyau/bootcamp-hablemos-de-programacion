@@ -3,7 +3,7 @@ const Veterinaria = require("./schema");
 
 
 const {
-  /* listar, */
+  listar,
   obtenerUno,
   /* crear, */
   actualizar,
@@ -11,19 +11,8 @@ const {
   filtrarEntidades,
 } = require("../genericos");
 
-const entidad = "veterinarias";
-
-//const listarHandler = listar(entidad);
-router.get("/", async (req, res) => {
-  try {
-    const filtro = filtrarEntidades(Veterinaria, req.query);
-    const veterinarias = await Veterinaria.find(filtro);
-    return res.status(200).json(veterinarias);
-  } catch (error) {
-    console.log({ error });
-    return res.status(500).json({ mensaje: error.message });
-  }
-});
+const listarHandler = listar({ Modelo: Veterinaria });
+router.get("/", listarHandler);
 
 //const obtenerUnoHandler = obtenerUno(entidad);
 router.get("/:_id", async (req, res) => {
