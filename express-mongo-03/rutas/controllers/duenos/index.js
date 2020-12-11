@@ -5,7 +5,7 @@ const Dueno = require("./schema");
 const {
   listar,
   obtenerUno,
-  /* crear, */
+  crear,
   actualizar,
   eliminar,
   filtrarEntidades,
@@ -17,17 +17,8 @@ router.get("/", listarHandler);
 const obtenerUnoHandler = obtenerUno({ Modelo: Dueno });
 router.get("/:_id", obtenerUnoHandler);
 
-//const crearHandler = crear(entidad);
-router.post("/", async (req, res)=>{
-  try {
-    const dueno = new Dueno(req.body);
-    await dueno.save();
-    return res.status(200).json(dueno);  
-  } catch (error) {
-    console.log({error});
-    return res.status(500).json({ mensaje: error.message });
-  }
-});
+const crearHandler = crear({ Modelo: Dueno });
+router.post("/", crearHandler);
 
 //const editarHandler = actualizar(entidad);
 
