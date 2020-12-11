@@ -1,7 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const lodash = require("lodash");
 const {
-  crear,
   actualizar,
   eliminar,
 } = require("../../data-handler");
@@ -47,22 +46,26 @@ const obtenerUno = function closureObtenerUno({Modelo = null}) {
   };
 };
 
-const crearEntidad = function closureCrearEntidad(entidad) {
+const crear = function closureCrearEntidad({ Modelo = null }) {
   return async function closureHandlerCrearEntidad(req, res) {
-    if (!entidad) {
-      res.status(404).status({ mensaje: "no encontrado" });
+    try {
+      if(!Modelo) {
+        throw new Error('No se envió modelo');
+      }
+      if(!req.body) {
+        return res.status(400).json({ mensaje: "Falta el body" });
+      }
+      if(!Object.keys(req.body).length) {
+        return res.status(400).json({ mensaje: "Falta el body" });
+      }
+      const { _id, ...restoDatosEntidad } = req.body;
+      const entidad = new Modelo(restoDatosEntidad);
+      await entidad.save();
+      return res.status(200).json(entidad);
+    } catch (error) {
+      console.log({ error });
+      return res.status(500).json({ mensaje: error.message });
     }
-    if (req.body && Object.keys(req.body).length > 0) {
-      const _id = uuidv4();
-      const datosMascotaNueva = { ...req.body, _id };
-      const nuevaMascota = await crear({
-        directorioEntidad: entidad,
-        nombreArchivo: _id,
-        datosGuardar: datosMascotaNueva,
-      });
-      return res.status(200).json(nuevaMascota);
-    }
-    return res.status(400).json({ mensaje: "Falta el body" });
   };
 };
 
@@ -125,7 +128,7 @@ const filtrarEntidades = (model, query) => {
 module.exports = {
   listar,
   obtenerUno,
-  crear: crearEntidad,
+  crear,
   actualizar: editarEntidad,
   eliminar: eliminarEntidad,
   filtrarEntidades,
