@@ -5,7 +5,7 @@ const Veterinaria = require("./schema");
 const {
   listar,
   obtenerUno,
-  /* crear, */
+  crear,
   actualizar,
   eliminar,
   filtrarEntidades,
@@ -17,17 +17,8 @@ router.get("/", listarHandler);
 const obtenerUnoHandler = obtenerUno({ Modelo: Veterinaria });
 router.get("/:_id", obtenerUnoHandler);
 
-//const crearHandler = crear(entidad);
-router.post("/", async (req, res)=>{
-  try {
-    const veterinaria = new Veterinaria(req.body);
-    await veterinaria.save();
-    return res.status(200).json(veterinaria);  
-  } catch (error) {
-    console.log({error});
-    return res.status(500).json({ mensaje: error.message });
-  }
-});
+const crearHandler = crear({ Modelo: Veterinaria });
+router.post("/", crearHandler);
 
 //const editarHandler = actualizar(entidad);
 
