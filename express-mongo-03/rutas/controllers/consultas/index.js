@@ -4,7 +4,7 @@ const Consulta = require("./schema");
 const {
   listar,
   obtenerUno,
-  /* crear, */
+  crear,
   actualizar,
   eliminar,
   filtrarEntidades,
@@ -20,17 +20,8 @@ const obtenerUnoHandler = obtenerUno({ Modelo: Consulta });
 router.get("/:_id", obtenerUnoHandler);
 
 
-//const crearHandler = crear(entidad);
-router.post("/", async (req, res)=>{
-  try {
-    const consulta = new Consulta(req.body);
-    await consulta.save();
-    return res.status(200).json(consulta);  
-  } catch (error) {
-    console.log({error});
-    return res.status(500).json({ mensaje: error.message });
-  }
-});
+const crearHandler = crear({ Modelo: Consulta });
+router.post("/", crearHandler);
 
 //const editarHandler = actualizar(entidad);
 
