@@ -1,7 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const lodash = require("lodash");
 const {
-  obtenerUno,
   crear,
   actualizar,
   eliminar,
@@ -29,23 +28,22 @@ const listar = function closureListar({Modelo = null, populate = []}) {
   };
 };
 
-const obtenerUnaEntidad = function closureObtenerUno(entidad) {
+const obtenerUno = function closureObtenerUno({Modelo = null}) {
   return async function closureHandlerObtenerUno(req, res) {
-    const { _id = null } = req.params;
-    if (!_id) {
-      return res.status(400).json({ mensaje: "Falta el id" });
+    try {
+      if(!Modelo) {
+        throw new Error('No se envió modelo');
+      }
+      const { _id } = req.params;
+      const entidad = await Modelo.findById(_id);
+      if (entidad) {
+        return res.status(200).json(entidad);
+      }
+      return res.status(404).json({ mensaje: "recurso no encontrado" });
+    } catch (error) {
+      console.log({ error });
+      return res.status(500).json({ mensaje: error.message });
     }
-    if (!entidad) {
-      res.status(404).status({ mensaje: "no encontrado" });
-    }
-    const _entidad = await obtenerUno({
-      directorioEntidad: entidad,
-      nombreArchivo: _id,
-    });
-    if (_entidad) {
-      return res.status(200).json(_entidad);
-    }
-    res.status(404).json({ mensaje: "no encontrado" });
   };
 };
 
@@ -126,7 +124,7 @@ const filtrarEntidades = (model, query) => {
 
 module.exports = {
   listar,
-  obtenerUno: obtenerUnaEntidad,
+  obtenerUno,
   crear: crearEntidad,
   actualizar: editarEntidad,
   eliminar: eliminarEntidad,
