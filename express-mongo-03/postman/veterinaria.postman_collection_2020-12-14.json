@@ -1,0 +1,650 @@
+{
+	"info": {
+		"_postman_id": "0d4fe3b6-ed1a-4e58-b099-8bc16b669add",
+		"name": "veterinaria",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mascotas",
+			"item": [
+				{
+					"name": "Crear Mascota",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo\": \"perro\",\n    \"nombre\": \"Fifi\",\n    \"dueno\": \"5fc590a012de2c802267fc86\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/mascotas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar mascota",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_id\": \"5fc27e0ea83760b453471431\",\n    \"tipo\": \"Canguro\",\n    \"nombre\": \"Hernesto\",\n    \"dueno\": \"5fc27e24a83760b453471433\",\n    \"createdAt\": \"2020-11-28T16:42:54.621Z\",\n    \"updatedAt\": \"2020-12-05T16:13:17.461Z\",\n    \"__v\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/mascotas/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas",
+								":_id"
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fc27e0ea83760b453471431"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar mascotas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/mascotas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "fi",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener una sola mascota",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/mascotas/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fc58e5cc120487efa724234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar una sola mascota",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/mascotas/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fc58e5cc120487efa724234"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "veterinarias",
+			"item": [
+				{
+					"name": "Crear veterinaria",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Rosalia\",\n    \"apellido\": \"Velasquez\",\n    \"documento\": \"12345620202\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/veterinarias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"veterinarias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar veterinaria",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"_id\": \"5fc27e21a83760b453471432\",\n        \"nombre\": \"Pepita\",\n        \"apellido\": \"Ramírez\",\n        \"documento\": 777777,\n        \"createdAt\": \"2020-11-28T16:43:13.495Z\",\n        \"updatedAt\": \"2020-11-28T16:43:13.495Z\",\n        \"__v\": 0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/veterinarias/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"veterinarias",
+								":_id"
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fc27e21a83760b453471432"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar veterinarias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/veterinarias?updatedAt[$lte]=2020-12-04",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"veterinarias"
+							],
+							"query": [
+								{
+									"key": "updatedAt[$lte]",
+									"value": "2020-12-04"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener una sola veterinaria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/veterinarias/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"veterinarias",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fcbb4c579b37dd82312dec4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar una sola veterinaria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/veterinarias/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"veterinarias",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fcbb4c579b37dd82312dec4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "dueños",
+			"item": [
+				{
+					"name": "Crear dueño",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Juan Fernando\",\n    \"apellido\": \"Gonzalez\",\n    \"documento\": \"1234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/duenos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"duenos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar dueño",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"_id\": \"5fc27e24a83760b453471433\",\n        \"nombre\": \"Juan D\",\n        \"apellido\": \"Martínez\",\n        \"documento\": 1234567890,\n        \"createdAt\": \"2020-11-28T16:43:16.516Z\",\n        \"updatedAt\": \"2020-11-28T16:43:16.516Z\",\n        \"__v\": 0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/duenos/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"duenos",
+								":_id"
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fc27e24a83760b453471433"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar dueños",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/duenos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"duenos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener un solo dueño",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/duenos/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"duenos",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fc27e24a83760b453471433"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar un solo dueño",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/duenos/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"duenos",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fc27e24a83760b453471433"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "consultas",
+			"item": [
+				{
+					"name": "Crear consulta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mascota\": \"5fc58e5cc120487efa724234\",\n    \"veterinaria\": \"5fcbb4c579b37dd82312dec4\",\n    \"historia\": \"historia 2020-12-05 02\",\n    \"diagnostico\": \"Moquillo 02\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/consultas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar consulta",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"_id\": \"5fcbb6727a2107d928e3835c\",\n        \"mascota\": \"5fc27e0ea83760b453471431\",\n        \"veterinaria\": \"5fc27e21a83760b453471432\",\n        \"historia\": \"historia 2020-12-14\",\n        \"diagnostico\": \"Leucemia\",\n        \"createdAt\": \"2020-12-05T16:33:54.755Z\",\n        \"updatedAt\": \"2020-12-05T16:33:54.755Z\",\n        \"__v\": 0\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/consultas/:indice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas",
+								":indice"
+							],
+							"variable": [
+								{
+									"key": "indice",
+									"value": "5fcbb6727a2107d928e3835c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar consultas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/consultas?veterinaria=5fc27e21a83760b453471432",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas"
+							],
+							"query": [
+								{
+									"key": "veterinaria",
+									"value": "mnnqfn5slcd",
+									"disabled": true
+								},
+								{
+									"key": "veterinaria",
+									"value": "5fc27e21a83760b453471432"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener una sola consulta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/consultas/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fcbb6727a2107d928e3835c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar una sola consulta",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/consultas/:indice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas",
+								":indice"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "indice",
+									"value": "5fcbb6727a2107d928e3835c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
