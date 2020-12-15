@@ -10,7 +10,7 @@ const {
   eliminar,
   filtrarEntidades,
 } = require("../genericos");
-const { query } = require("express");
+
 
 
 const listarHandler = listar({ Modelo: Mascota, populate: ["dueno"] });
