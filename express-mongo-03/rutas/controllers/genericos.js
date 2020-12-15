@@ -1,9 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const lodash = require("lodash");
-const {
-  actualizar,
-  eliminar,
-} = require("../../data-handler");
+const { eliminar } = require("../../data-handler");
 
 const listar = function closureListar({Modelo = null, populate = []}) {
   return async function closureHandlerListar(req, res) {
@@ -69,25 +66,26 @@ const crear = function closureCrearEntidad({ Modelo = null }) {
   };
 };
 
-const editarEntidad = function closureEditarEntidad(entidad) {
+const actualizar = function closureEditarEntidad({ Modelo = null }) {
   return async function closureHandlerEditarEntidad(req, res) {
-    const { _id = null } = req.params;
-    if (!_id) {
-      return res.status(400).json({ mensaje: "Falta el id" });
+    try {
+      if(!Modelo) {
+        throw new Error('No se envió modelo');
+      }
+      const { _id = null } = req.params;
+      const {_id: id, ...datosNuevos } = req.body;
+      if(!_id) {
+        return res.status(400).json({ mensaje: 'falta id' });  
+      } 
+      const entidadActualizada = await Modelo.findOneAndUpdate({_id}, {$set : datosNuevos}, {new:true, runValidators:true});
+      if (!entidadActualizada) {
+        res.status(404).status({ mensaje: "no encontrado" });
+      }
+      return res.status(200).json(entidadActualizada);
+    } catch (error) {
+      console.log({ error });
+      return res.status(500).json({ mensaje: error.message });
     }
-    if (!entidad) {
-      res.status(404).status({ mensaje: "no encontrado" });
-    }
-    if (req.body && Object.keys(req.body).length > 0) {
-      const datosActuales = { ...req.body, _id };
-      const mascotaActualizada = await actualizar({
-        directorioEntidad: entidad,
-        nombreArchivo: _id,
-        datosActuales,
-      });
-      return res.status(200).json(mascotaActualizada);
-    }
-    return res.status(400).json({ mensaje: "Falta el body" });
   };
 };
 
@@ -129,7 +127,7 @@ module.exports = {
   listar,
   obtenerUno,
   crear,
-  actualizar: editarEntidad,
+  actualizar,
   eliminar: eliminarEntidad,
   filtrarEntidades,
 };
