@@ -22,22 +22,8 @@ router.get("/:_id", obtenerUnoHandler);
 const crearHandler = crear({ Modelo: Mascota });
 router.post("/", crearHandler);
 
-//const editarHandler = actualizar(entidad);
-
-router.put("/:_id", async (req, res) => {
-  try {
-    const { _id = null } = req.params;
-    const {_id: id, ...datosNuevos } = req.body;
-    if(!_id) {
-      return res.status(400).json({ mensaje: 'falta id' });  
-    } 
-    const mascotaActualizada = await Mascota.findOneAndUpdate({_id}, {$set : datosNuevos}, {new:true, runValidators:true});
-    return res.status(200).json(mascotaActualizada);
-  } catch (error) {
-    console.log({ error });
-    return res.status(500).json({ mensaje: error.message });
-  }
-});
+const editarHandler = actualizar({ Modelo: Mascota });
+router.put("/:_id", editarHandler);
 
 // const eliminarHandler = eliminar(entidad);
 router.delete("/:_id", async (req, res) => {
