@@ -83,7 +83,7 @@ const actualizar = function closureEditarEntidad({ Modelo = null }) {
       return res.status(200).json(entidadActualizada);
     } catch (error) {
       console.log({ error });
-      if (error.name === "MongoError" && error.code === 11000) {
+      if (error.code === 11000) {
         return res.status(400).json({
           mensaje: `ya existe otra entidad con el documento ${req.body.documento}!`,
         });
