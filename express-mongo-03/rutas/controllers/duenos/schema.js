@@ -15,6 +15,7 @@ const duenoSchema = new Schema(
     documento: {
       type: Number,
       required: true,
+      unique: true,
     },
   },
   {
