@@ -8,7 +8,7 @@ const {
   crear,
   actualizar,
   eliminar,
-  filtrarEntidades,
+  existeDocumento,
 } = require("../genericos");
 
 const listarHandler = listar({ Modelo: Dueno });
@@ -18,7 +18,8 @@ const obtenerUnoHandler = obtenerUno({ Modelo: Dueno });
 router.get("/:_id", obtenerUnoHandler);
 
 const crearHandler = crear({ Modelo: Dueno });
-router.post("/", crearHandler);
+const middlewareExisteDocumento = existeDocumento({ Modelo: Dueno });
+router.post("/", middlewareExisteDocumento, crearHandler);
 
 const editarHandler = actualizar({ Modelo: Dueno });
 router.put("/:_id", editarHandler);
