@@ -102,7 +102,7 @@ const eliminar = function closureEliminarEntidad({ Modelo = null }) {
       if (entidadBorrada.deletedCount === 1) {
         return res.status(204).send();
       } else {
-        res.status(404).status({ mensaje: "no encontrado" });
+        res.status(404).json({ mensaje: "no encontrado" });
       }
     } catch (error) {
       console.log({ error });
@@ -131,6 +131,30 @@ const filtrarEntidades = (model, query) => {
   return queryResultado;
 };
 
+const existeDocumento = function closureExisteDocumento({ Modelo = null }) {
+  return async function closureHandlerExisteDocumento(req, res, next) {
+    try {
+      if (!Modelo) {
+        throw new Error("No se envió modelo");
+      }
+      if (req.body && req.body.documento) {
+        const existenEntidadesConElMismoDocumento = await Modelo.exists({
+          documento: req.body.documento,
+        });
+        if (existenEntidadesConElMismoDocumento) {
+          return res.status(400).json({
+            mensaje: `entidad con documento ${req.body.documento} ya existe!`,
+          });
+        }
+      }
+      return next();
+    } catch (error) {
+      console.log({ error });
+      return res.status(500).json({ mensaje: error.message });
+    }
+  };
+};
+
 module.exports = {
   listar,
   obtenerUno,
@@ -138,4 +162,5 @@ module.exports = {
   actualizar,
   eliminar,
   filtrarEntidades,
+  existeDocumento,
 };
