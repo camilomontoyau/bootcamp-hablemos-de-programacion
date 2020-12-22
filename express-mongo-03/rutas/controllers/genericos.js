@@ -137,19 +137,43 @@ const filtrarEntidades = (model, query) => {
   return queryResultado;
 };
 
-const existeDocumento = function closureExisteDocumento({ Modelo = null }) {
+const existeDocumento = function closureExisteDocumento({
+  Modelo = null,
+  campos = [],
+}) {
   return async function closureHandlerExisteDocumento(req, res, next) {
     try {
       if (!Modelo) {
         throw new Error("No se envió modelo");
       }
-      if (req.body && req.body.documento) {
-        const existenEntidadesConElMismoDocumento = await Modelo.exists({
-          documento: req.body.documento,
-        });
+      if (req.body && Array.isArray(campos) && campos.length) {
+        const queryExiste = campos.reduce((acumulador, propiedadActual)  =>  {
+          if(typeof propiedadActual === "string") {
+            if(propiedadActual === "_id") {
+              acumulador = {...acumulador, [propiedadActual]: req.params[propiedadActual]}
+            } else {
+              acumulador = {...acumulador, [propiedadActual]: req.body[propiedadActual]}
+            }
+          }
+          if(typeof propiedadActual === "object" && !Array.isArray(propiedadActual)) {
+            const {operador = null, nombre = null} = propiedadActual;
+            if(operador && nombre) {
+              if(nombre === "_id") {
+                acumulador = {...acumulador, [nombre]: {[operador]: req.params[nombre]}}
+              } else {
+                acumulador = {...acumulador, [nombre]: {[operador]: req.body[nombre]}}
+              }
+            }
+          }
+          return acumulador;
+        }, {});
+
+        console.log({queryExiste});
+
+        const existenEntidadesConElMismoDocumento = await Modelo.exists(queryExiste);
         if (existenEntidadesConElMismoDocumento) {
           return res.status(400).json({
-            mensaje: `entidad con documento ${req.body.documento} ya existe!`,
+            mensaje: `entidad ${JSON.stringify(req.body)} tiene campos que no permiten duplicación!`,
           });
         }
       }
