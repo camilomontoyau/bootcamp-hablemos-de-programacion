@@ -17,6 +17,7 @@ router.get("/", listarHandler);
 const obtenerUnoHandler = obtenerUno({ Modelo: Veterinaria });
 router.get("/:_id", obtenerUnoHandler);
 
+const crearHandler = crear({ Modelo: Veterinaria });
 const middlewareExisteDocumento = existeDocumento({
   Modelo: Veterinaria,
   campos: ["documento"],
