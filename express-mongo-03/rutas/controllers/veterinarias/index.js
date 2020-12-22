@@ -26,7 +26,7 @@ router.post("/", middlewareExisteDocumento, crearHandler);
 
 const editarHandler = actualizar({ Modelo: Veterinaria });
 const middlewareExisteEntidadConMismoDocumentoyDiferenteId = existeDocumento({
-  Modelo: Dueno,
+  Modelo: Veterinaria,
   campos: ["documento", { operador: "$ne", nombre: "_id" }],
 });
 router.put(
