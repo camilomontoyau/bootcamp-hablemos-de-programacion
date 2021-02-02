@@ -1,8 +1,8 @@
 1) filtros de las entidades al listar, falta duenos, veterinarias y consultas OK
 2) refs faltantes OK
 3) revisar cuales de los handlers pueden ser genéricos OK
-4) no permitir crear dos o más duenos o veterinarias con el mismo documento
-5) verificar que la mascota exista antes de crear una consulta
+4) no permitir crear dos o más duenos (OK) o veterinarias con el mismo documento (OK)
+5) verificar que la mascota exista antes de crear una consulta OK
 6) verificar que la veterinaria exista antes de crear una consulta
 7) verificar que el dueño exista antes de crear una mascota
 8) CORREGIR RESPUESTA ERRADA: tratando de editar una veterinaria que no existe la respuesta fue null
