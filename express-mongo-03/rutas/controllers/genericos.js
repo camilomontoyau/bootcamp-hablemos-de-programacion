@@ -75,12 +75,15 @@ const actualizar = function closureEditarEntidad({ Modelo = null }) {
       const {_id: id, ...datosNuevos } = req.body;
       if(!_id) {
         return res.status(400).json({ mensaje: 'falta id' });  
-      } 
-      const entidadActualizada = await Modelo.findOneAndUpdate({_id}, {$set : datosNuevos}, {new:true, runValidators:true});
-      if (!entidadActualizada) {
-        res.status(404).status({ mensaje: "no encontrado" });
       }
-      return res.status(200).json(entidadActualizada);
+      const entidad = await Modelo.findById(_id);
+      console.log({ entidad });
+      if (!entidad) {
+        return res.status(404).json({ mensaje: "no encontrado" });
+      }
+      entidad.set(datosNuevos);
+      await entidad.save();
+      return res.status(200).json(entidad);
     } catch (error) {
       console.log({ error });
       if (error.code === 11000) {
