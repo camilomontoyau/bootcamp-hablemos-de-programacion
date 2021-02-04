@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Mascota = require("./schema");
+const Dueno = require("../duenos/schema");
 
 
 const {
@@ -20,7 +21,16 @@ const obtenerUnoHandler = obtenerUno({ Modelo: Mascota });
 router.get("/:_id", obtenerUnoHandler);
 
 const crearHandler = crear({ Modelo: Mascota });
-router.post("/", crearHandler);
+router.post("/", async (req, res) => {
+  const { dueno = null } = req.body;
+  const existeDueno = await Dueno.exists({ _id: dueno });
+  if (existeDueno) {
+    return crearHandler(req, res);
+  }
+  return res.status(400).json({
+    mensaje: `Dueno con _id ${dueno} no existe!`,
+  });
+});
 
 const editarHandler = actualizar({ Modelo: Mascota });
 router.put("/:_id", editarHandler);
