@@ -9,7 +9,6 @@ const {
   crear,
   actualizar,
   eliminar,
-  filtrarEntidades,
 } = require("../genericos");
 
 const listarHandler = listar({
@@ -31,14 +30,16 @@ router.post("/", async (req, res) => {
     return crearHandler(req, res);
   }
   if (!existeVeterinaria) {
-    return res.status(400).json({
-      mensaje: `Veterinari@ con _id ${JSON.stringify(veterinaria)} no existe!`,
-    });
+    const err = new createError[400](
+      `Veterinari@ con _id ${JSON.stringify(veterinaria)} no existe!`
+    );
+    return next(err);
   }
   if (!existeMascota) {
-    return res.status(400).json({
-      mensaje: `Mascota con _id ${JSON.stringify(veterinaria)} no existe!`,
-    });
+    const err = new createError[400](
+      `Mascota con _id ${JSON.stringify(veterinaria)} no existe!`
+    );
+    return next(err);
   }
 });
 
