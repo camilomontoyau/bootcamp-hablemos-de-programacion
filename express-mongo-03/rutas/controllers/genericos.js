@@ -1,57 +1,58 @@
-const { v4: uuidv4 } = require("uuid");
+const createError = require("http-errors");
 const lodash = require("lodash");
 
 const listar = function closureListar({Modelo = null, populate = []}) {
-  return async function closureHandlerListar(req, res) {
+  return async function closureHandlerListar(req, res, next) {
     try {
-      if(!Modelo) {
-        throw new Error('No se envió modelo');
+      if (!Modelo) {
+        throw new Error("No se envió modelo");
       }
       const filtro = filtrarEntidades(Modelo, req.query);
       let promesaLista = Modelo.find(filtro);
-      if(Array.isArray(populate) && populate.length > 0) {
+      if (Array.isArray(populate) && populate.length > 0) {
         for (const entidadAnidada of populate) {
-          promesaLista = promesaLista.populate(entidadAnidada);  
+          promesaLista = promesaLista.populate(entidadAnidada);
         }
       }
       const resultados = await promesaLista;
       return res.status(200).json(resultados);
     } catch (error) {
-      console.log({ error });
-      return res.status(500).json({ mensaje: error.message });
+      const err = new createError[500]();
+      return next(err);
     }
   };
 };
 
 const obtenerUno = function closureObtenerUno({Modelo = null}) {
-  return async function closureHandlerObtenerUno(req, res) {
+  return async function closureHandlerObtenerUno(req, res, next) {
     try {
-      if(!Modelo) {
-        throw new Error('No se envió modelo');
+      if (!Modelo) {
+        throw new Error("No se envió modelo");
       }
       const { _id } = req.params;
       const entidad = await Modelo.findById(_id);
       if (entidad) {
         return res.status(200).json(entidad);
       }
-      return res.status(404).json({ mensaje: "recurso no encontrado" });
+      const err = new createError[404]();
+      return next(err);
     } catch (error) {
-      console.log({ error });
-      return res.status(500).json({ mensaje: error.message });
+      const err = new createError[500]();
+      return next(err);
     }
   };
 };
 
 const crear = function closureCrearEntidad({ Modelo = null }) {
-  return async function closureHandlerCrearEntidad(req, res) {
+  return async function closureHandlerCrearEntidad(req, res, next) {
     try {
-      if(!Modelo) {
-        throw new Error('No se envió modelo');
+      if (!Modelo) {
+        throw new Error("No se envió modelo");
       }
-      if(!req.body) {
+      if (!req.body) {
         return res.status(400).json({ mensaje: "Falta el body" });
       }
-      if(!Object.keys(req.body).length) {
+      if (!Object.keys(req.body).length) {
         return res.status(400).json({ mensaje: "Falta el body" });
       }
       const { _id, ...restoDatosEntidad } = req.body;
@@ -59,22 +60,22 @@ const crear = function closureCrearEntidad({ Modelo = null }) {
       await entidad.save();
       return res.status(200).json(entidad);
     } catch (error) {
-      console.log({ error });
-      return res.status(500).json({ mensaje: error.message });
+      const err = new createError[500]();
+      return next(err);
     }
   };
 };
 
 const actualizar = function closureEditarEntidad({ Modelo = null }) {
-  return async function closureHandlerEditarEntidad(req, res) {
+  return async function closureHandlerEditarEntidad(req, res, next) {
     try {
-      if(!Modelo) {
-        throw new Error('No se envió modelo');
+      if (!Modelo) {
+        throw new Error("No se envió modelo");
       }
       const { _id = null } = req.params;
-      const {_id: id, ...datosNuevos } = req.body;
-      if(!_id) {
-        return res.status(400).json({ mensaje: 'falta id' });  
+      const { _id: id, ...datosNuevos } = req.body;
+      if (!_id) {
+        return res.status(400).json({ mensaje: "falta id" });
       }
       const entidad = await Modelo.findById(_id);
       console.log({ entidad });
@@ -85,23 +86,21 @@ const actualizar = function closureEditarEntidad({ Modelo = null }) {
       await entidad.save();
       return res.status(200).json(entidad);
     } catch (error) {
-      console.log({ error });
       if (error.code === 11000) {
-        return res.status(400).json({
-          mensaje: `ya existe otra entidad con el documento ${req.body.documento}!`,
-        });
+        const err = new createError[400]();
+        return next(err);
       }
-    
-      return res.status(500).json({ mensaje: error.message });
+      const err = new createError[500]();
+      return next(err);
     }
   };
 };
 
 const eliminar = function closureEliminarEntidad({ Modelo = null }) {
-  return async function closureHandlerEliminarEntidad(req, res) {
+  return async function closureHandlerEliminarEntidad(req, res, next) {
     try {
-      if(!Modelo) {
-        throw new Error('No se envió modelo');
+      if (!Modelo) {
+        throw new Error("No se envió modelo");
       }
       const { _id = null } = req.params;
       if (!_id) {
@@ -114,8 +113,8 @@ const eliminar = function closureEliminarEntidad({ Modelo = null }) {
         res.status(404).json({ mensaje: "no encontrado" });
       }
     } catch (error) {
-      console.log({ error });
-      return res.status(500).json({ mensaje: error.message });
+      const err = new createError[500]();
+      return next(err);
     }
   };
 };
@@ -182,8 +181,8 @@ const existeDocumento = function closureExisteDocumento({
       }
       return next();
     } catch (error) {
-      console.log({ error });
-      return res.status(500).json({ mensaje: error.message });
+      const err = new createError[500]();
+      return next(err);
     }
   };
 };
