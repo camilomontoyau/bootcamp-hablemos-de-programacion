@@ -7,3 +7,4 @@
 7) verificar que el dueño exista antes de crear una mascota OK
 8) CORREGIR RESPUESTA ERRADA: tratando de editar una veterinaria, dueño, consulta, mascota que no existe la respuesta fue null OK
 9) Unificar las respuesta que contienen mensajes de error OK
+10) autenticación con JWT
