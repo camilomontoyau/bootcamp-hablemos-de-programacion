@@ -49,11 +49,9 @@ const crear = function closureCrearEntidad({ Modelo = null }) {
       if (!Modelo) {
         throw new Error("No se envió modelo");
       }
-      if (!req.body) {
-        return res.status(400).json({ mensaje: "Falta el body" });
-      }
-      if (!Object.keys(req.body).length) {
-        return res.status(400).json({ mensaje: "Falta el body" });
+      if (!req.body || !Object.keys(req.body).length) {
+        const err = new createError[400]("Falta el body");
+        return next(err);
       }
       const { _id, ...restoDatosEntidad } = req.body;
       const entidad = new Modelo(restoDatosEntidad);
@@ -75,19 +73,25 @@ const actualizar = function closureEditarEntidad({ Modelo = null }) {
       const { _id = null } = req.params;
       const { _id: id, ...datosNuevos } = req.body;
       if (!_id) {
-        return res.status(400).json({ mensaje: "falta id" });
+        const err = new createError[400]("Falta el _id");
+        return next(err);
       }
       const entidad = await Modelo.findById(_id);
       console.log({ entidad });
       if (!entidad) {
-        return res.status(404).json({ mensaje: "no encontrado" });
+        const err = new createError[404]();
+        return next(err);
       }
       entidad.set(datosNuevos);
       await entidad.save();
       return res.status(200).json(entidad);
     } catch (error) {
       if (error.code === 11000) {
-        const err = new createError[400]();
+        const err = new createError[409](
+          `entidad ${JSON.stringify(
+            req.body
+          )} tiene campos que no permiten duplicación!`
+        );
         return next(err);
       }
       const err = new createError[500]();
@@ -104,13 +108,15 @@ const eliminar = function closureEliminarEntidad({ Modelo = null }) {
       }
       const { _id = null } = req.params;
       if (!_id) {
-        return res.status(400).json({ mensaje: "falta id" });
+        const err = new createError[400]("Falta el _id");
+        return next(err);
       }
       const entidadBorrada = await Modelo.remove({ _id });
       if (entidadBorrada.deletedCount === 1) {
         return res.status(204).send();
       } else {
-        res.status(404).json({ mensaje: "no encontrado" });
+        const err = new createError[404]();
+        return next(err);
       }
     } catch (error) {
       const err = new createError[500]();
@@ -174,9 +180,12 @@ const existeDocumento = function closureExisteDocumento({
 
         const existenEntidadesConElMismoDocumento = await Modelo.exists(queryExiste);
         if (existenEntidadesConElMismoDocumento) {
-          return res.status(400).json({
-            mensaje: `entidad ${JSON.stringify(req.body)} tiene campos que no permiten duplicación!`,
-          });
+          const err = new createError[409](
+            `entidad ${JSON.stringify(
+              req.body
+            )} tiene campos que no permiten duplicación!`
+          );
+          return next(err);
         }
       }
       return next();
