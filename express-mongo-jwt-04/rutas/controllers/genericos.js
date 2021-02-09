@@ -58,7 +58,20 @@ const crear = function closureCrearEntidad({ Modelo = null }) {
       await entidad.save();
       return res.status(200).json(entidad);
     } catch (error) {
-      const err = new createError[500]();
+      let err = null;
+      switch (error.name) {
+        case "ValidationError":
+          const errors = Object.entries(error.errors)
+            .map((elementoError) => {
+              const mensaje = lodash.get(elementoError, "1.message", "");
+              return mensaje;
+            })
+            .join(" ");
+          err = new createError[400](errors);
+          break;
+        default:
+          err = new createError[500](error.message);
+      }
       return next(err);
     }
   };
