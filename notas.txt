@@ -8,4 +8,7 @@
 8) CORREGIR RESPUESTA ERRADA: tratando de editar una veterinaria, dueño, consulta, mascota que no existe la respuesta fue null OK
 9) Unificar las respuesta que contienen mensajes de error OK
 10) autenticación con JWT
-11) util mensajes error catch
+11) util mensajes error catch OK
+12) remover password de las respuestas de usuarios
+13) encriptar el password
+
