@@ -3,7 +3,6 @@ const { Schema } = mongoose;
 
 const usuarioSchema = new Schema(
   {
-    tipo: String,
     nombre: {
       type: String,
       required: true,
@@ -19,8 +18,24 @@ const usuarioSchema = new Schema(
     tipo: {
       type: String,
       required: true,
-      enum: ["dueno", "veterinaria"],
+      enum: ["dueno", "veterinaria", "administrador"],
     },
+    email: {
+      type: String,
+      required: true,
+      validate: {
+        validator: (mail) => {
+          if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail)) {
+            console.log("correcto");
+            return (true);
+          }
+          console.log("incorrecto");
+          return (false);
+        },
+        message: "El formato del email es errado"
+      },
+    },
+    password: String
   },
   {
     timestamps: true,
