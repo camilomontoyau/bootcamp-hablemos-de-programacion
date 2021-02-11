@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const Dueno = require("./schema");
+const Usuario = require("./schema");
+const { manejadorDeErrores } = require("../../../util");
 
 
 const {
@@ -11,22 +12,38 @@ const {
   existeDocumento,
 } = require("../genericos");
 
-const listarHandler = listar({ Modelo: Dueno });
+const listarHandler = listar({ Modelo: Usuario });
 router.get("/", listarHandler);
 
-const obtenerUnoHandler = obtenerUno({ Modelo: Dueno });
+const obtenerUnoHandler = obtenerUno({ Modelo: Usuario });
 router.get("/:_id", obtenerUnoHandler);
 
-const crearHandler = crear({ Modelo: Dueno });
+const crearHandler = crear({ Modelo: Usuario });
 const middlewareExisteDocumento = existeDocumento({
-  Modelo: Dueno,
+  Modelo: Usuario,
   campos: ["documento"],
 });
-router.post("/", middlewareExisteDocumento, crearHandler);
+router.post("/", middlewareExisteDocumento, async (req, res, next) => {
+  try {
+    if (!req.body || !Object.keys(req.body).length) {
+      const err = new createError[400]("Falta el body");
+      return next(err);
+    }
+    const { _id, ...restoDatosEntidad } = req.body;
+    let usuario = new Usuario(restoDatosEntidad);
+    await usuario.save();
+    usuario = usuario.toJSON();
+    const { password, ...restoUsuario } = usuario;
+    console.log({ restoUsuario });
+    return res.status(200).json(restoUsuario);
+  } catch (error) {
+    return manejadorDeErrores({ error, next });
+  }
+});
 
-const editarHandler = actualizar({ Modelo: Dueno });
+const editarHandler = actualizar({ Modelo: Usuario });
 const middlewareExisteEntidadConMismoDocumentoyDiferenteId = existeDocumento({
-  Modelo: Dueno,
+  Modelo: Usuario,
   campos: ["documento", { operador: "$ne", nombre: "_id" }],
 });
 router.put(
@@ -35,7 +52,7 @@ router.put(
   editarHandler
 );
 
-const eliminarHandler = eliminar({ Modelo: Dueno });
+const eliminarHandler = eliminar({ Modelo: Usuario });
 router.delete("/:_id", eliminarHandler);
 
 module.exports = router;
