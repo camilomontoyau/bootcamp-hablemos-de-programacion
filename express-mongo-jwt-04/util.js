@@ -19,6 +19,15 @@ const manejadorDeErrores = ({ error, next }) => {
   return next(err);
 };
 
+const removerPaswordDeRespuestas = (objeto) => {
+  if (!(typeof objeto.toJSON === "function"))
+    throw new Error("no es instancia de mongoose");
+  objeto = objeto.toJSON();
+  const { password, ...resto } = objeto;
+  return resto;
+};
+
 module.exports = {
   manejadorDeErrores,
+  removerPaswordDeRespuestas,
 };

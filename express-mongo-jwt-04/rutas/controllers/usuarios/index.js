@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const Usuario = require("./schema");
-const { manejadorDeErrores } = require("../../../util");
+const {
+  manejadorDeErrores,
+  removerPaswordDeRespuestas,
+} = require("../../../util");
 
 
 const {
@@ -38,14 +41,6 @@ router.post("/", middlewareExisteDocumento, async (req, res, next) => {
     return manejadorDeErrores({ error, next });
   }
 });
-
-const removerPaswordDeRespuestas = (objeto) => {
-  if (!(typeof objeto.toJSON === "function"))
-    throw new Error("no es instancia de mongoose");
-  objeto = objeto.toJSON();
-  const { password, ...resto } = objeto;
-  return resto;
-};
 
 const editarHandler = actualizar({ Modelo: Usuario });
 const middlewareExisteEntidadConMismoDocumentoyDiferenteId = existeDocumento({
