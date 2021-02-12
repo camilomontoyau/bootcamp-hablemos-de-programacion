@@ -21,7 +21,6 @@ router.get("/", listarHandler);
 const obtenerUnoHandler = obtenerUno({ Modelo: Usuario });
 router.get("/:_id", obtenerUnoHandler);
 
-const crearHandler = crear({ Modelo: Usuario });
 const middlewareExisteDocumento = existeDocumento({
   Modelo: Usuario,
   campos: ["documento"],
@@ -50,7 +49,36 @@ const middlewareExisteEntidadConMismoDocumentoyDiferenteId = existeDocumento({
 router.put(
   "/:_id",
   middlewareExisteEntidadConMismoDocumentoyDiferenteId,
-  editarHandler
+  async (req, res, next) => {
+    try {
+      const { _id = null } = req.params;
+      const { _id: id, ...datosNuevos } = req.body;
+      if (!_id) {
+        const err = new createError[400]("Falta el _id");
+        return next(err);
+      }
+      let usuario = await Usuario.findById(_id);
+      if (!usuario) {
+        const err = new createError[404]();
+        return next(err);
+      }
+      usuario.set(datosNuevos);
+      await usuario.save();
+      usuario = removerPaswordDeRespuestas(usuario);
+      return res.status(200).json(usuario);
+    } catch (error) {
+      if (error.code === 11000) {
+        const err = new createError[409](
+          `entidad ${JSON.stringify(
+            req.body
+          )} tiene campos que no permiten duplicación!`
+        );
+        return next(err);
+      }
+      const err = new createError[500]();
+      return next(err);
+    }
+  }
 );
 
 const eliminarHandler = eliminar({ Modelo: Usuario });

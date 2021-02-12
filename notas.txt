@@ -9,7 +9,7 @@
 9) Unificar las respuesta que contienen mensajes de error OK
 10) autenticación con JWT
 11) util mensajes error catch OK
-12) remover password de las respuestas de usuarios (crear OK) (falta: listar, actualizar, obtener uno);
+12) remover password de las respuestas de usuarios (crear OK) (falta: listar, actualizar (OK), obtener uno);
 13) encriptar el password
 
 
