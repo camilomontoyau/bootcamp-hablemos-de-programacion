@@ -32,14 +32,20 @@ router.post("/", middlewareExisteDocumento, async (req, res, next) => {
     const { _id, ...restoDatosEntidad } = req.body;
     let usuario = new Usuario(restoDatosEntidad);
     await usuario.save();
-    usuario = usuario.toJSON();
-    const { password, ...restoUsuario } = usuario;
-    console.log({ restoUsuario });
-    return res.status(200).json(restoUsuario);
+    usuario = removerPaswordDeRespuestas(usuario);
+    return res.status(200).json(usuario);
   } catch (error) {
     return manejadorDeErrores({ error, next });
   }
 });
+
+const removerPaswordDeRespuestas = (objeto) => {
+  if (!(typeof objeto.toJSON === "function"))
+    throw new Error("no es instancia de mongoose");
+  objeto = objeto.toJSON();
+  const { password, ...resto } = objeto;
+  return resto;
+};
 
 const editarHandler = actualizar({ Modelo: Usuario });
 const middlewareExisteEntidadConMismoDocumentoyDiferenteId = existeDocumento({
