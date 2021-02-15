@@ -15,7 +15,10 @@ const {
 
 
 
-const listarHandler = listar({ Modelo: Mascota, populate: ["dueno"] });
+const listarHandler = listar({
+  Modelo: Mascota,
+  populate: [{ path: "dueno", select: "nombre apellido documento tipo email" }],
+});
 router.get("/", listarHandler);
 
 const obtenerUnoHandler = obtenerUno({ Modelo: Mascota });
