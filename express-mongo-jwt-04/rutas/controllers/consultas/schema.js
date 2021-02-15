@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const consultaSchema = new Schema(
   {
     mascota: { type: "ObjectId", ref: "mascotas" },
-    veterinaria: { type: "ObjectId", ref: "veterinarias" },
+    veterinaria: { type: "ObjectId", ref: "usuarios" },
     historia: {
       type: String,
       required: true,
