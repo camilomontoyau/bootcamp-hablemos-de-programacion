@@ -1,7 +1,7 @@
 const createError = require("http-errors");
 const router = require("express").Router();
 const Mascota = require("./schema");
-const Dueno = require("../duenos/schema");
+const Usuario = require("../usuarios/schema");
 
 
 const {
@@ -24,7 +24,7 @@ router.get("/:_id", obtenerUnoHandler);
 const crearHandler = crear({ Modelo: Mascota });
 router.post("/", async (req, res, next) => {
   const { dueno = null } = req.body;
-  const existeDueno = await Dueno.exists({ _id: dueno });
+  const existeDueno = await Usuario.exists({ _id: dueno, tipo: "dueno" });
   if (existeDueno) {
     return crearHandler(req, res);
   }
