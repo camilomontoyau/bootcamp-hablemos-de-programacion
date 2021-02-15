@@ -13,7 +13,10 @@ const {
 
 const listarHandler = listar({
   Modelo: Consulta,
-  populate: ["mascota", "veterinaria"],
+  populate: [
+    "mascota",
+    { path: "veterinaria", select: "nombre apellido documento tipo email" },
+  ],
 });
 router.get("/", listarHandler);
 
