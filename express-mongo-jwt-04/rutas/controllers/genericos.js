@@ -155,52 +155,22 @@ const existeDocumento = function closureExisteDocumento({
         throw new Error("No se envió modelo");
       }
       if (req.body && Array.isArray(campos) && campos.length) {
-        const queryExiste = campos.reduce((acumulador, propiedadActual) => {
-          if (typeof propiedadActual === "string") {
-            if (propiedadActual === "_id") {
-              acumulador = {
-                ...acumulador,
-                [propiedadActual]: req.params[propiedadActual],
-              };
-            } else {
-              acumulador = {
-                ...acumulador,
-                [propiedadActual]: req.body[propiedadActual],
-              };
-            }
+        let existenEntidadesConElMismoCampo = false;
+        let campo = null;
+        for(campo of campos) {
+          existenEntidadesConElMismoCampo = await Modelo.exists(
+            {[campo]: req.body[campo]}
+          );
+          if(existenEntidadesConElMismoCampo) {
+            break;
           }
-          if (
-            typeof propiedadActual === "object" &&
-            !Array.isArray(propiedadActual)
-          ) {
-            const { operador = null, nombre = null } = propiedadActual;
-            if (operador && nombre) {
-              if (nombre === "_id") {
-                acumulador = {
-                  ...acumulador,
-                  [nombre]: { [operador]: req.params[nombre] },
-                };
-              } else {
-                acumulador = {
-                  ...acumulador,
-                  [nombre]: { [operador]: req.body[nombre] },
-                };
-              }
-            }
-          }
-          return acumulador;
-        }, {});
+        }
 
-        console.log({ queryExiste });
+        console.log({ campo, existenEntidadesConElMismoCampo, value: req.body[campo] });
 
-        const existenEntidadesConElMismoDocumento = await Modelo.exists(
-          queryExiste
-        );
-        if (existenEntidadesConElMismoDocumento) {
+        if (existenEntidadesConElMismoCampo) {
           const err = new createError[409](
-            `entidad ${JSON.stringify(
-              req.body
-            )} tiene campos que no permiten duplicación!`
+            `el campo ${campo} con valor ${req.body[campo]} ya existe!`
           );
           return next(err);
         }
