@@ -12,8 +12,9 @@
 12) autenticación con JWT OK
 13) comentario sesión anterior: el registro del usuario no debería pedir token 
 14) encriptar el password
-15) registro publico de dueños de mascotas
-16) roles de usuario
+15) funciones de jwt y bcrypt asíncronas
+16) registro publico de dueños de mascotas
+17) roles de usuario
 
 
 Para el futuro:
