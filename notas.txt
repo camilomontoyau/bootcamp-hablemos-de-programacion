@@ -10,7 +10,10 @@
 10) util mensajes error catch OK
 11) remover password de las respuestas de usuarios (crear OK) (falta: listar (OK), actualizar (OK), obtener uno (OK)), remover del populate de consultas (OK) y de mascotas (OK);
 12) autenticación con JWT OK
-13) encriptar el password
+13) comentario sesión anterior: el registro del usuario no debería pedir token 
+14) encriptar el password
+15) registro publico de dueños de mascotas
+16) roles de usuario
 
 
 Para el futuro:
