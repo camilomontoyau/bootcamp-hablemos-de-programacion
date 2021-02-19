@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const bcrypt = require("bcrypt");
 const Usuario = require("./schema");
 const {
   manejadorDeErrores,
@@ -46,7 +47,12 @@ router.post("/", middlewareExisteDocumento, async (req, res, next) => {
       const err = new createError[400]("Falta el body");
       return next(err);
     }
-    const { _id, ...restoDatosEntidad } = req.body;
+    let { _id, password = null, ...restoDatosEntidad } = req.body;
+    if (password && password.length) {
+      password = bcrypt.hashSync(password, 8);
+      restoDatosEntidad = { ...restoDatosEntidad, password };
+    }
+    console.log(JSON.stringify({ restoDatosEntidad }, null, 2));
     let usuario = new Usuario(restoDatosEntidad);
     await usuario.save();
     usuario = removerPaswordDeRespuestas(usuario);
