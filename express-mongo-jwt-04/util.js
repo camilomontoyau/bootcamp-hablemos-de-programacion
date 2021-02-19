@@ -5,6 +5,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 const manejadorDeErrores = ({ error, next }) => {
   let err = null;
+  console.error(JSON.stringify({ error }, null, 2));
   switch (error.name) {
     case "ValidationError":
       const errors = Object.entries(error.errors)
@@ -14,6 +15,9 @@ const manejadorDeErrores = ({ error, next }) => {
         })
         .join(" ");
       err = new createError[400](errors);
+      break;
+    case "TokenExpiredError":
+      err = new createError.Unauthorized(error.message);
       break;
     default:
       err = new createError[500](error.message);
@@ -39,9 +43,7 @@ const estaAutenticado = (req, res, next) => {
   console.log({ auth, _bearer, token });
   jwt.verify(token, SECRET_KEY, (error, decoded) => {
     if (error) {
-      console.log(JSON.stringify({ error }, null, 2));
-      const err = new createError[500]("error al verificar token");
-      return next(err);
+      return manejadorDeErrores({ error, next });
     }
     if (decoded) {
       console.log({ decoded });
