@@ -46,7 +46,7 @@ const estaAutenticado = (req, res, next) => {
       return manejadorDeErrores({ error, next });
     }
     if (decoded) {
-      console.log({ decoded });
+      req.user = decoded;
       next();
     }
   });
