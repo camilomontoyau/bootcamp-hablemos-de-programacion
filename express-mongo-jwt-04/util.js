@@ -35,7 +35,7 @@ const removerPaswordDeRespuestas = (objeto) => {
 
 const estaAutenticado = (req, res, next) => {
   let auth = lodash.get(req, "headers.authorization", null);
-  if (!auth && auth.length) {
+  if (!auth || !auth.length) {
     const err = new createError.Unauthorized("Falta el token");
     return next(err);
   }
