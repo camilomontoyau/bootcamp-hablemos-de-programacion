@@ -15,6 +15,7 @@
 15) funciones de jwt y bcrypt asíncronas
 16) registro publico de dueños de mascotas
 17) roles de usuario
+18) verificar middleware existe documento de PUT /usuarios
 
 
 Para el futuro:
