@@ -17,7 +17,9 @@ router.post("/", async (req, res, next) => {
       if (usuario.password === password) {
         usuario = usuario.toJSON();
         const { password, ...datosUsuario } = usuario;
-        const token = jwt.sign(datosUsuario, SECRET_KEY, { expiresIn: 5 * 60 });
+        const token = jwt.sign(datosUsuario, SECRET_KEY, {
+          expiresIn: 60 * 60,
+        });
         const respuesta = { token, usuario: datosUsuario };
         return res.status(200).json(respuesta);
       }
