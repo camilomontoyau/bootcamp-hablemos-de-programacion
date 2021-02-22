@@ -15,6 +15,7 @@ router.post("/", async (req, res, next) => {
         return next(err);
       }
       if (usuario.password === password) {
+        // TODO comparar password encriptado
         usuario = usuario.toJSON();
         const { password, ...datosUsuario } = usuario;
         const token = jwt.sign(datosUsuario, SECRET_KEY, {
