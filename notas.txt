@@ -12,10 +12,10 @@
 12) autenticación con JWT OK
 13) comentario sesión anterior: el registro del usuario no debería pedir token OK
 14) encriptar el password OK
-15) funciones de jwt y bcrypt asíncronas
-16) registro publico de dueños de mascotas
-17) roles de usuario
-18) verificar middleware existe documento de PUT /usuarios
+15) funciones de jwt y bcrypt asíncronas OK
+16) roles de usuario
+17) verificar middleware existe documento de PUT /usuarios
+18) registro publico de dueños de mascotas, passport login con facebook (solo con fines académicos)
 
 
 Para el futuro:
