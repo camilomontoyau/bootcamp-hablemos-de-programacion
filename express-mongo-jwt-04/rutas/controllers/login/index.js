@@ -1,4 +1,5 @@
 const createError = require("http-errors");
+const bcrypt = require("bcrypt");
 const router = require("express").Router();
 const Usuario = require("../usuarios/schema");
 const jwt = require("jsonwebtoken");
@@ -14,8 +15,8 @@ router.post("/", async (req, res, next) => {
       if (!usuario) {
         return next(err);
       }
-      if (usuario.password === password) {
-        // TODO comparar password encriptado
+      const esPasswordValido = bcrypt.compareSync(password, usuario.password);
+      if (esPasswordValido === true) {
         usuario = usuario.toJSON();
         const { password, ...datosUsuario } = usuario;
         const token = jwt.sign(datosUsuario, SECRET_KEY, {
