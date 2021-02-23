@@ -49,7 +49,7 @@ router.post("/", middlewareExisteDocumento, async (req, res, next) => {
     }
     let { _id, password = null, ...restoDatosEntidad } = req.body;
     if (password && password.length) {
-      password = bcrypt.hashSync(password, 8);
+      password = await bcrypt.hash(password, 8);
       restoDatosEntidad = { ...restoDatosEntidad, password };
     }
     console.log(JSON.stringify({ restoDatosEntidad }, null, 2));
@@ -80,7 +80,7 @@ router.put("/:_id", async (req, res, next) => {
       return next(err);
     }
     if (password && password.length) {
-      password = bcrypt.hashSync(password, 8);
+      password = await bcrypt.hash(password, 8);
       datosNuevos = { ...datosNuevos, password, _id };
     }
     usuario.set(datosNuevos);
