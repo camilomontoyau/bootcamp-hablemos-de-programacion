@@ -15,7 +15,7 @@ router.post("/", async (req, res, next) => {
       if (!usuario) {
         return next(err);
       }
-      const esPasswordValido = bcrypt.compareSync(password, usuario.password);
+      const esPasswordValido = await bcrypt.compare(password, usuario.password);
       if (esPasswordValido === true) {
         usuario = usuario.toJSON();
         const { password, ...datosUsuario } = usuario;

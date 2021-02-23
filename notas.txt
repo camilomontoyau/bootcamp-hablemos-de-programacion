@@ -11,7 +11,7 @@
 11) remover password de las respuestas de usuarios (crear OK) (falta: listar (OK), actualizar (OK), obtener uno (OK)), remover del populate de consultas (OK) y de mascotas (OK);
 12) autenticación con JWT OK
 13) comentario sesión anterior: el registro del usuario no debería pedir token OK
-14) encriptar el password
+14) encriptar el password OK
 15) funciones de jwt y bcrypt asíncronas
 16) registro publico de dueños de mascotas
 17) roles de usuario
