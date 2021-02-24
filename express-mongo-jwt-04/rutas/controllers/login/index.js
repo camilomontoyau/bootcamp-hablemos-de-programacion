@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const router = require("express").Router();
 const Usuario = require("../usuarios/schema");
 const jwt = require("jsonwebtoken");
-const { manejadorDeErrores } = require("../../../util");
+const { manejadorDeErrores, jwtSignPromise } = require("../../../util");
 const SECRET_KEY = process.env.SECRET_KEY;
 
 router.post("/", async (req, res, next) => {
@@ -19,17 +19,13 @@ router.post("/", async (req, res, next) => {
       if (esPasswordValido === true) {
         usuario = usuario.toJSON();
         const { password, ...datosUsuario } = usuario;
-        return jwt.sign(
-          datosUsuario,
-          SECRET_KEY,
-          { expiresIn: 60 * 60 },
-          (err, token) => {
-            console.error(err);
-            if  (err) throw err;
-            const respuesta = { token, usuario: datosUsuario };
-            return res.status(200).json(respuesta);
-          }
-        );
+        const token = await jwtSignPromise({
+          data: datosUsuario,
+          secret: SECRET_KEY,
+          options: {  expiresIn: 60 * 60  },
+        });
+        const respuesta = { token, usuario: datosUsuario };
+        return res.status(200).json(respuesta);
       }
       return next(err);
     }

@@ -52,8 +52,20 @@ const estaAutenticado = (req, res, next) => {
   });
 };
 
+const jwtSignPromise = ({ data = null, secret = null, options = {} }) =>
+  new Promise((resolve, reject) => {
+    if (!data || !secret) return reject(new Error("jwt incompleto"));
+    jwt.sign(data, secret, options, (err, token) => {
+      if (err) return reject(err);
+      return resolve(token);
+    });
+  });
+
+
+
 module.exports = {
   manejadorDeErrores,
   removerPaswordDeRespuestas,
   estaAutenticado,
+  jwtSignPromise,
 };
