@@ -33,24 +33,33 @@ const removerPaswordDeRespuestas = (objeto) => {
   return resto;
 };
 
-const estaAutenticado = (req, res, next) => {
-  let auth = lodash.get(req, "headers.authorization", null);
-  if (!auth || !auth.length) {
-    const err = new createError.Unauthorized("Falta el token");
-    return next(err);
+const estaAutenticado = async (req, res, next) => {
+  try {
+    let auth = lodash.get(req, "headers.authorization", null);
+    if (!auth || !auth.length) {
+      const err = new createError.Unauthorized("Falta el token");
+      return next(err);
+    }
+    const [_bearer, token] = auth.split(" ");
+    console.log({ auth, _bearer, token });
+    const decoded = await jwtVerifyPromise({   token, secret: SECRET_KEY   });
+    req.user = decoded;
+    next();  
+  } catch (error) {
+    manejadorDeErrores({error, next});
   }
-  const [_bearer, token] = auth.split(" ");
-  console.log({ auth, _bearer, token });
-  jwt.verify(token, SECRET_KEY, (error, decoded) => {
-    if (error) {
-      return manejadorDeErrores({ error, next });
-    }
-    if (decoded) {
-      req.user = decoded;
-      next();
-    }
-  });
 };
+
+const jwtVerifyPromise = ({ token = null, secret = null, options = {} }) =>
+  new Promise((resolve, reject) => {
+    if (!token || !secret)
+      return reject(new Error("token no se puede verificar"));
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) return reject(err);
+      if (decoded) return resolve(decoded);
+      reject(new Error("no se decofica token"));
+    });
+  });
 
 const jwtSignPromise = ({ data = null, secret = null, options = {} }) =>
   new Promise((resolve, reject) => {
