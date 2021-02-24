@@ -4,5 +4,6 @@
     "markdown"
   ],
   "editor.defaultFormatter": "vscode.emmet",
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true
 }

@@ -19,11 +19,17 @@ router.post("/", async (req, res, next) => {
       if (esPasswordValido === true) {
         usuario = usuario.toJSON();
         const { password, ...datosUsuario } = usuario;
-        const token = jwt.sign(datosUsuario, SECRET_KEY, {
-          expiresIn: 60 * 60,
-        });
-        const respuesta = { token, usuario: datosUsuario };
-        return res.status(200).json(respuesta);
+        return jwt.sign(
+          datosUsuario,
+          SECRET_KEY,
+          { expiresIn: 60 * 60 },
+          (err, token) => {
+            console.error(err);
+            if  (err) throw err;
+            const respuesta = { token, usuario: datosUsuario };
+            return res.status(200).json(respuesta);
+          }
+        );
       }
       return next(err);
     }
