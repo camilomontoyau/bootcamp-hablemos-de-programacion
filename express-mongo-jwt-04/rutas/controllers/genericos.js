@@ -183,6 +183,22 @@ const existeDocumento = function closureExisteDocumento({
   };
 };
 
+
+const middlewareEstaAutorizado = function closureEstaAutorizado({
+  tipoUsuario = [],
+}) {
+  function metodoEstaAutorizado(req, res, next) {
+    const { user = null } = req;
+    try {
+      next();
+    } catch (error) {
+      manejadorDeErrores({ error, next });
+    }
+  }
+};
+
+
+
 module.exports = {
   listar,
   obtenerUno,
