@@ -18,6 +18,7 @@
 17) verificar middleware existe documento de PUT /usuarios
 18) registro publico de dueños de mascotas, passport login con facebook (solo con fines académicos)
 19) crear notas aclaratorias
+20) crear archivo con todos los middlewares
 
 
 Para el futuro:
