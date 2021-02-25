@@ -19,23 +19,37 @@ const usuarioSchema = new Schema(
       type: String,
       required: true,
       enum: ["dueno", "veterinaria", "administrador"],
+      /* 
+        - administrador:  puede loguearse
+                          puede hacer cualquier cosa en la API
+        - veterinaria:    puede loguearse
+                          puede crear, editar, eliminar, leer mascotas
+                          puede crear, leer, crear notas aclaratorias consultas
+        - dueno:          puede loguearse
+                          puede leer y editar sus propias mascotas
+                          puede leer consultas solo de sus propias mascotas
+      */
     },
     email: {
       type: String,
       required: true,
       validate: {
         validator: (mail) => {
-          if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail)) {
+          if (
+            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+              mail
+            )
+          ) {
             console.log("correcto");
-            return (true);
+            return true;
           }
           console.log("incorrecto");
-          return (false);
+          return false;
         },
-        message: "El formato del email es errado"
+        message: "El formato del email es errado",
       },
     },
-    password: String
+    password: String,
   },
   {
     timestamps: true,
