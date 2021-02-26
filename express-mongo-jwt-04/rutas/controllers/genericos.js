@@ -185,15 +185,23 @@ const existeDocumento = function closureExisteDocumento({
 
 
 const middlewareEstaAutorizado = function closureEstaAutorizado({
-  tipoUsuario = [],
+  tiposUsuario = [],
 }) {
-  function metodoEstaAutorizado(req, res, next) {
+  return function metodoEstaAutorizado(req, res, next) {
     const { user = null } = req;
-    try {
-      next();
-    } catch (error) {
-      manejadorDeErrores({ error, next });
+    if  (!user) {
+      const err = new createError[403]("no hay un usuario asociados");
+      return next(err);
     }
+    if(!tiposUsuario || tiposUsuario.length === 0) {
+      const err = new createError[403]("no hay un role asociado");
+      return next(err);
+    }
+    if(Array.isArray(tiposUsuario) && tiposUsuario.includes(user.tipo)) {
+      return next();
+    }
+    const err = new createError[403]("no está autorizado");
+    return next(err);
   }
 };
 
@@ -207,4 +215,5 @@ module.exports = {
   eliminar,
   filtrarEntidades,
   existeDocumento,
+  middlewareEstaAutorizado,
 };
