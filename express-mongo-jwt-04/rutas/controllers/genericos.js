@@ -185,24 +185,24 @@ const existeDocumento = function closureExisteDocumento({
 
 
 const middlewareEstaAutorizado = function closureEstaAutorizado({
-  tiposUsuario = [],
+  tiposUsuario = [], // TODO leer objetos para dar permisos específicos
 }) {
   return function metodoEstaAutorizado(req, res, next) {
     const { user = null } = req;
-    if  (!user) {
+    if (!user) {
       const err = new createError[403]("no hay un usuario asociados");
       return next(err);
     }
-    if(!tiposUsuario || tiposUsuario.length === 0) {
+    if (!tiposUsuario || tiposUsuario.length === 0) {
       const err = new createError[403]("no hay un role asociado");
       return next(err);
     }
-    if(Array.isArray(tiposUsuario) && tiposUsuario.includes(user.tipo)) {
+    if (Array.isArray(tiposUsuario) && tiposUsuario.includes(user.tipo)) {
       return next();
     }
     const err = new createError[403]("no está autorizado");
     return next(err);
-  }
+  };
 };
 
 
