@@ -11,7 +11,15 @@ const { eliminar, existeDocumento, filtrarEntidades } = require("../genericos");
 
 router.get("/", async (req, res, next) => {
   try {
-    const filtro = filtrarEntidades(Usuario, req.query);
+    let filtro = filtrarEntidades(Usuario, req.query);
+    const { user } = req;
+    let queryAuxiliar = {};
+    if (user.tipo === "veterinaria") {
+      queryAuxiliar = {
+        $and: [{ $or: [{ _id: user._id }, { tipo: "dueno" }] }],
+      };
+    }
+    filtro = { ...filtro, ...queryAuxiliar };
     let resultados = await Usuario.find(filtro);
     resultados = resultados.map(removerPaswordDeRespuestas);
     return res.status(200).json(resultados);
