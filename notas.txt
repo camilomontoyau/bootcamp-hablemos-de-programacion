@@ -14,7 +14,8 @@
 14) encriptar el password OK
 15) bcrypt asíncronas OK
 15.1) funciones de jwt asíncronas, mostrar el ejemplo de verifyPromise OK
-16) roles de usuario
+16) roles de usuario OK
+16.1) permisos de usuario
 17) verificar middleware existe documento de PUT /usuarios
 18) registro publico de dueños de mascotas, passport login con facebook (solo con fines académicos)
 19) crear notas aclaratorias
