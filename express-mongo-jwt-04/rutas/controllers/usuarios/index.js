@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
+const createError = require("http-errors");
 const Usuario = require("./schema");
 const {
   manejadorDeErrores,
@@ -24,20 +25,36 @@ router.get("/", async (req, res, next) => {
     resultados = resultados.map(removerPaswordDeRespuestas);
     return res.status(200).json(resultados);
   } catch (error) {
-    const err = new createError[500]();
-    return next(err);
+    return manejadorDeErrores({ error, next });
   }
 });
 
 router.get("/:_id", async (req, res, next) => {
   try {
     const { _id } = req.params;
-    let usuario = await Usuario.findById(_id);
+    const { user } = req;
+    let usuario = null;
+    switch (user.tipo) {
+      case "administrador":
+        console.log("aqui 1");
+        usuario = await Usuario.findById(_id);
+        break;
+
+      case "veterinaria":
+        console.log("aqui 2");
+        usuario = await Usuario.findOne({
+          _id,
+          $and: [{ $or: [{ _id: user._id }, { tipo: "dueno" }] }],
+        });
+        break;
+    }
     if (usuario) {
+      console.log("aqui 3", { usuario });
       usuario = removerPaswordDeRespuestas(usuario);
       return res.status(200).json(usuario);
     }
     const err = new createError[404]();
+    console.log("aqui 4");
     return next(err);
   } catch (error) {
     const err = new createError[500]();
