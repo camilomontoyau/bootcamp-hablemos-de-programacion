@@ -24,13 +24,7 @@ module.exports = (app) => {
   app.use(
     "/usuarios",
     middlewareEstaAutorizado({
-      tiposUsuario: [
-        "administrador",
-        {
-          rol: "veterinaria",
-          permisos: ["self", "dueno"],
-        },
-      ],
+      tiposUsuario: ["administrador", "veterinaria"],
     }),
     usuarios
   );
