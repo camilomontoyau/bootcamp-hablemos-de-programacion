@@ -97,11 +97,27 @@ router.put("/:_id", async (req, res, next) => {
   try {
     const { _id = null } = req.params;
     let { _id: id, password = null, ...datosNuevos } = req.body;
+    const { user } = req;
     if (!_id) {
       const err = new createError[400]("Falta el _id");
       return next(err);
     }
     let usuario = await Usuario.findById(_id);
+
+    const esVeterinaria = user.tipo === "veterinaria";
+    const seEstaModificandoAsiMisma = user._id === _id;
+    const puedeModificarElUsuario =
+      esVeterinaria &&
+      (seEstaModificandoAsiMisma ||
+        (usuario.tipo === "dueno" && datosNuevos.tipo === "dueno"));
+
+    if (esVeterinaria && !puedeModificarElUsuario) {
+      const err = new createError[403](
+        "No está autorizado a modificar este usuario"
+      );
+      return next(err);
+    }
+
     if (!usuario) {
       const err = new createError[404]();
       return next(err);

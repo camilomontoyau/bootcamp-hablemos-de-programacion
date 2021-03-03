@@ -24,7 +24,7 @@ const usuarioSchema = new Schema(
                           puede hacer cualquier cosa en la API
         - veterinaria:    puede loguearse OK
                           puede crear, editar, eliminar, leer mascotas OK
-                          puede crear OK, editar, eliminar, leer duenos
+                          puede crear OK, editar OK, eliminar, leer OK duenos
                           puede crear, leer, crear notas aclaratorias consultas
         - dueno:          puede loguearse
                           puede leer y editar sus propias mascotas
