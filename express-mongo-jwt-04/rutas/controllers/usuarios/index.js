@@ -7,7 +7,6 @@ const {
   removerPaswordDeRespuestas,
 } = require("../../../util");
 
-
 const { eliminar, existeDocumento, filtrarEntidades } = require("../genericos");
 
 router.get("/", async (req, res, next) => {
@@ -36,12 +35,10 @@ router.get("/:_id", async (req, res, next) => {
     let usuario = null;
     switch (user.tipo) {
       case "administrador":
-        console.log("aqui 1");
         usuario = await Usuario.findById(_id);
         break;
 
       case "veterinaria":
-        console.log("aqui 2");
         usuario = await Usuario.findOne({
           _id,
           $and: [{ $or: [{ _id: user._id }, { tipo: "dueno" }] }],
@@ -49,12 +46,10 @@ router.get("/:_id", async (req, res, next) => {
         break;
     }
     if (usuario) {
-      console.log("aqui 3", { usuario });
       usuario = removerPaswordDeRespuestas(usuario);
       return res.status(200).json(usuario);
     }
     const err = new createError[404]();
-    console.log("aqui 4");
     return next(err);
   } catch (error) {
     const err = new createError[500]();
@@ -73,11 +68,18 @@ router.post("/", middlewareExisteDocumento, async (req, res, next) => {
       return next(err);
     }
     let { _id, password = null, ...restoDatosEntidad } = req.body;
+    const { user } = req;
+    if (user.tipo === "veterinaria" && restoDatosEntidad.tipo !== "dueno") {
+      const err = new createError[403](
+        "No está autorizado a crear este tipo de usuario"
+      );
+      return next(err);
+    }
+
     if (password && password.length) {
       password = await bcrypt.hash(password, 8);
       restoDatosEntidad = { ...restoDatosEntidad, password };
     }
-    console.log(JSON.stringify({ restoDatosEntidad }, null, 2));
     let usuario = new Usuario(restoDatosEntidad);
     await usuario.save();
     usuario = removerPaswordDeRespuestas(usuario);

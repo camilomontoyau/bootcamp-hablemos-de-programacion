@@ -22,9 +22,9 @@ const usuarioSchema = new Schema(
       /* 
         - administrador:  puede loguearse
                           puede hacer cualquier cosa en la API
-        - veterinaria:    puede loguearse
-                          puede crear, editar, eliminar, leer mascotas
-                          puede crear, editar, eliminar, leer duenos
+        - veterinaria:    puede loguearse OK
+                          puede crear, editar, eliminar, leer mascotas OK
+                          puede crear OK, editar, eliminar, leer duenos
                           puede crear, leer, crear notas aclaratorias consultas
         - dueno:          puede loguearse
                           puede leer y editar sus propias mascotas
