@@ -145,6 +145,33 @@ router.put("/:_id", async (req, res, next) => {
 });
 
 const eliminarHandler = eliminar({ Modelo: Usuario });
-router.delete("/:_id", eliminarHandler);
+router.delete("/:_id", async (req, res, next) => {
+  try {
+    const { _id = null } = req.params;
+    if (!_id) {
+      const err = new createError[400]("Falta el _id");
+      return next(err);
+    }
+    const usuarioABorrar = await Usuario.findById(_id);
+    if (!usuarioABorrar) {
+      const err = new createError[404]();
+      return next(err);
+    }
+    const { user } = req;
+    if (user.tipo === "veterinaria" && usuarioABorrar.tipo !== "dueno") {
+      const err = new createError[403]();
+      return next(err);
+    }
+    const resultado = await usuarioABorrar.deleteOne();
+    if (resultado._id === usuarioABorrar._id) {
+      return res.status(204).send();
+    }
+    const err = new createError[500]();
+    return next(err);
+  } catch (error) {
+    const err = new createError[500]();
+    return next(err);
+  }
+});
 
 module.exports = router;
