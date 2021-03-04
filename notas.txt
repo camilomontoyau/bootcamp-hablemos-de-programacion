@@ -16,6 +16,7 @@
 15.1) funciones de jwt asíncronas, mostrar el ejemplo de verifyPromise OK
 16) roles de usuario OK
 16.1) permisos de usuario
+16.2) agregar el token automaticamente en los requests de postman
 17) verificar middleware existe documento de PUT /usuarios
 18) registro publico de dueños de mascotas, passport login con facebook (solo con fines académicos)
 19) crear notas aclaratorias
