@@ -25,7 +25,7 @@ const usuarioSchema = new Schema(
         - veterinaria:    puede loguearse OK
                           puede crear, editar, eliminar, leer mascotas OK
                           puede crear OK, editar OK, eliminar OK, leer OK duenos
-                          puede crear, leer, crear notas aclaratorias consultas
+                          puede crear OK, leer OK, crear notas aclaratorias consultas
         - dueno:          puede loguearse
                           puede leer y editar sus propias mascotas
                           puede leer consultas solo de sus propias mascotas
