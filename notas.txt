@@ -21,10 +21,13 @@
 18) registro publico de dueños de mascotas, passport login con facebook (solo con fines académicos)
 19) crear notas aclaratorias
 20) crear archivo con todos los middlewares
+21) embeber objetos completos en las referencias
 
 
 Para el futuro:
 - paginación
+
+Empezamos en un momento
 
 
 
