@@ -1,0 +1,674 @@
+{
+	"info": {
+		"_postman_id": "ba3c1871-9028-4f14-859b-35ddbf16f432",
+		"name": "veterinaria",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mascotas",
+			"item": [
+				{
+					"name": "Crear Mascota",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo\": \"gato\",\n    \"nombre\": \"Garfield\",\n    \"dueno\": \"6038e7a2e6cdefe9e8e85d9a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/mascotas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar mascota",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tipo\": \"perro\",\n    \"nombre\": \"Fifi 2\",\n    \"dueno\": \"6038e7a2e6cdefe9e8e85d9a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/mascotas/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas",
+								":_id"
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "603cddf3240a391022ffb892"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar mascotas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/mascotas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas"
+							],
+							"query": [
+								{
+									"key": "nombre",
+									"value": "fi",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener una sola mascota",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/mascotas/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "5fc58e5cc120487efa724234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar una sola mascota",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDNjZGI5NDU4ZDQxODBlZTI1NWMzZDgiLCJub21icmUiOiJCbGFjayBXaWRvdyIsImFwZWxsaWRvIjoiU2FuY2hleiIsImRvY3VtZW50byI6NTU1NTU1NTU1NTUsInRpcG8iOiJ2ZXRlcmluYXJpYSIsImVtYWlsIjoidmV0ZXJpbmFyaWFAdGVzdC5jb20iLCJjcmVhdGVkQXQiOiIyMDIxLTAzLTAxVDEyOjE4OjI4Ljk2NVoiLCJ1cGRhdGVkQXQiOiIyMDIxLTAzLTAxVDEyOjE4OjI4Ljk2NVoiLCJfX3YiOjAsImlhdCI6MTYxNDYwMTU2MCwiZXhwIjoxNjE0NjA1MTYwfQ.cc8gkXDTvnzYH4d5L9ligN1ybseSO82CCWMzMxivXz8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/mascotas/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"mascotas",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "602a6631f0e3341210e94eda"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "usuarios",
+			"item": [
+				{
+					"name": "Crear usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDNjZGI5NDU4ZDQxODBlZTI1NWMzZDgiLCJub21icmUiOiJCbGFjayBXaWRvdyIsImFwZWxsaWRvIjoiU2FuY2hleiIsImRvY3VtZW50byI6NTU1NTU1NTU1NTUsInRpcG8iOiJ2ZXRlcmluYXJpYSIsImVtYWlsIjoidmV0ZXJpbmFyaWFAdGVzdC5jb20iLCJjcmVhdGVkQXQiOiIyMDIxLTAzLTAxVDEyOjE4OjI4Ljk2NVoiLCJ1cGRhdGVkQXQiOiIyMDIxLTAzLTAxVDEyOjE4OjI4Ljk2NVoiLCJfX3YiOjAsImlhdCI6MTYxNDc3NDc3MCwiZXhwIjoxNjE0Nzc4MzcwfQ.H6YQR04r1lFEyE8FQSYzXl3MLqFDJTL-3dcPYQc66_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"dueno\",\n    \"apellido\": \"puede crearse\",\n    \"documento\": 77777777777,\n    \"tipo\": \"dueno\",\n    \"email\": \"dueno7@test.com\",\n    \"password\": \"abcd1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDNjZGI5NDU4ZDQxODBlZTI1NWMzZDgiLCJub21icmUiOiJCbGFjayBXaWRvdyIsImFwZWxsaWRvIjoiU2FuY2hleiIsImRvY3VtZW50byI6NTU1NTU1NTU1NTUsInRpcG8iOiJ2ZXRlcmluYXJpYSIsImVtYWlsIjoidmV0ZXJpbmFyaWFAdGVzdC5jb20iLCJjcmVhdGVkQXQiOiIyMDIxLTAzLTAxVDEyOjE4OjI4Ljk2NVoiLCJ1cGRhdGVkQXQiOiIyMDIxLTAzLTAxVDEyOjE4OjI4Ljk2NVoiLCJfX3YiOjAsImlhdCI6MTYxNDc3NDc3MCwiZXhwIjoxNjE0Nzc4MzcwfQ.H6YQR04r1lFEyE8FQSYzXl3MLqFDJTL-3dcPYQc66_Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Black Widow Modificada\",\n    \"apellido\": \"Sanchez\",\n    \"documento\": 55555555555,\n    \"tipo\": \"veterinaria\",\n    \"email\": \"veterinaria@test.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/usuarios/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								":_id"
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "603cdb9458d4180ee255c3d8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar usuarios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDJiYjk5ZDVhMjE5NjQ3N2YxMTcyOTMiLCJub21icmUiOiJWaXVkYSBOZWdyYSIsImFwZWxsaWRvIjoiR29uemFsZXoiLCJkb2N1bWVudG8iOjg4ODg4ODg5LCJ0aXBvIjoiZHVlbm8iLCJlbWFpbCI6ImhlbGxvMkB0ZXN0My5jb20iLCJjcmVhdGVkQXQiOiIyMDIxLTAyLTE2VDEyOjI1OjAxLjc0N1oiLCJ1cGRhdGVkQXQiOiIyMDIxLTAyLTE2VDEyOjI1OjAxLjc0N1oiLCJfX3YiOjAsImlhdCI6MTYxMzY1MDU0NCwiZXhwIjoxNjEzNjUwODQ0fQ.7MPPgi3tRTyKfe42uCW-CMJRqPZsnm7zi_8XgC5OMqI",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener un solo usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/usuarios/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "6038e7a2e6cdefe9e8e85d9a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar un solo usuario",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDNjZGI5NDU4ZDQxODBlZTI1NWMzZDgiLCJub21icmUiOiJCbGFjayBXaWRvdyBNb2RpZmljYWRhIiwiYXBlbGxpZG8iOiJTYW5jaGV6IiwiZG9jdW1lbnRvIjo1NTU1NTU1NTU1NSwidGlwbyI6InZldGVyaW5hcmlhIiwiZW1haWwiOiJ2ZXRlcmluYXJpYUB0ZXN0LmNvbSIsImNyZWF0ZWRBdCI6IjIwMjEtMDMtMDFUMTI6MTg6MjguOTY1WiIsInVwZGF0ZWRBdCI6IjIwMjEtMDMtMDNUMTI6NDQ6MDIuMzk3WiIsIl9fdiI6MCwiaWF0IjoxNjE0ODYwMTAzLCJleHAiOjE2MTQ4NjM3MDN9.hG-MCOB45Jno0hfxjbbSOBXzLRKCgkKd5uRE3XmlYq4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/usuarios/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"usuarios",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "6034f445d8a59717eeb766cd"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "consultas",
+			"item": [
+				{
+					"name": "Crear consulta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mascota\": \"603cddf3240a391022ffb892\",\n    \"historia\": \"historia 2021-03-09 01\",\n    \"diagnostico\": \"Moquillo 01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/consultas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar consulta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mascota\": \"60476aff022bfc6009f2fdd7\",\n    \"historia\": \"historia editada\",\n    \"diagnostico\": \"Leucemia\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/consultas/:indice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas",
+								":indice"
+							],
+							"variable": [
+								{
+									"key": "indice",
+									"value": "602a672e290182147df4050e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar consultas",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/consultas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas"
+							],
+							"query": [
+								{
+									"key": "veterinaria",
+									"value": "mnnqfn5slcd",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener una sola consulta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/consultas/:_id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas",
+								":_id"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "_id",
+									"value": "602a672e290182147df4050e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar una sola consulta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/consultas/:indice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"consultas",
+								":indice"
+							],
+							"query": [
+								{
+									"key": "0",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "indice",
+									"value": "602a672e290182147df4050e"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set('token', jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"veterinaria@test.com\",\n    \"password\": \"abcd1234\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
