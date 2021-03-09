@@ -16,11 +16,7 @@ module.exports = (app) => {
     }),
     mascotas
   );
-  app.use(
-    "/consultas",
-    middlewareEstaAutorizado({ tiposUsuario: ["administrador"] }),
-    consultas
-  );
+  app.use("/consultas", consultas);
   app.use(
     "/usuarios",
     middlewareEstaAutorizado({
