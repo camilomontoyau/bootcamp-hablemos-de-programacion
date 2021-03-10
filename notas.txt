@@ -21,7 +21,7 @@
 18) registro publico de dueños de mascotas, passport login con facebook (solo con fines académicos)
 19) crear notas aclaratorias
 20) crear archivo con todos los middlewares
-21) embeber objetos completos en las referencias
+21) cambiar referencias por objetos completos en los schemas/modelos
 
 
 Para el futuro:
