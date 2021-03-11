@@ -25,9 +25,14 @@ router.get(
       let mascotasDueno = null;
       if (user.tipo === "dueno") {
         mascotasDueno = await Mascota.find({ dueno: user._id }).select("_id");
+        if  (Array.isArray(mascotasDueno)) {
+          mascotasDueno = mascotasDueno.map((ele) => ele._id);
+          if(req.query.mascota) {
+            mascotasDueno = mascotasDueno.filter(id=>id == req.query.mascota)
+          }
+        }
       }
-      mascotasDueno = mascotasDueno.map((ele) => ele._id);
-
+      
       const populate = [
         "mascota",
         { path: "veterinaria", select: "nombre apellido documento tipo email" },

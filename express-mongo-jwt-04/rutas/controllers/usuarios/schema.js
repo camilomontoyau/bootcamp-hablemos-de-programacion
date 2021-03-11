@@ -28,7 +28,7 @@ const usuarioSchema = new Schema(
                           puede crear OK, leer OK, crear notas aclaratorias consultas
         - dueno:          puede loguearse
                           puede leer y editar sus propias mascotas
-                          puede leer consultas solo de sus propias mascotas
+                          puede listar consultas OK, puede leer una sola, solo de sus propias mascotas
       */
     },
     email: {
