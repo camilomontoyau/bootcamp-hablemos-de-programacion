@@ -12,7 +12,7 @@ module.exports = (app) => {
   app.use(
     "/mascotas",
     middlewareEstaAutorizado({
-      tiposUsuario: ["veterinaria", "administrador"],
+      tiposUsuario: ["veterinaria", "administrador", "dueno"],
     }),
     mascotas
   );
