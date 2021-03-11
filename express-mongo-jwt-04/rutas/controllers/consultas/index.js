@@ -7,25 +7,47 @@ const Mascota = require("../mascotas/schema");
 const {
   listar,
   obtenerUno,
-  crear,
   actualizar,
   eliminar,
   middlewareEstaAutorizado,
+  filtrarEntidades,
 } = require("../genericos");
+const {manejadorDeErrores} = require('../../../util');
 
-const listarHandler = listar({
-  Modelo: Consulta,
-  populate: [
-    "mascota",
-    { path: "veterinaria", select: "nombre apellido documento tipo email" },
-  ],
-});
 router.get(
   "/",
   middlewareEstaAutorizado({
-    tiposUsuario: ["veterinaria", "administrador"],
+    tiposUsuario: ["veterinaria", "administrador", "dueno"],
   }),
-  listarHandler
+  async (req, res, next) => {
+    try {
+      const { user } = req;
+      let mascotasDueno = null;
+      if (user.tipo === "dueno") {
+        mascotasDueno = await Mascota.find({ dueno: user._id }).select("_id");
+      }
+      mascotasDueno = mascotasDueno.map((ele) => ele._id);
+
+      const populate = [
+        "mascota",
+        { path: "veterinaria", select: "nombre apellido documento tipo email" },
+      ];
+      const filtro = filtrarEntidades(Consulta, req.query);
+      if  (Array.isArray(mascotasDueno) && mascotasDueno.length > 0) {
+        filtro.mascota = { $in: mascotasDueno };
+      }
+      let promesaLista = Consulta.find(filtro);
+      if (Array.isArray(populate) && populate.length > 0) {
+        for (const entidadAnidada of populate) {
+          promesaLista = promesaLista.populate(entidadAnidada);
+        }
+      }
+      const resultados = await promesaLista;
+      return res.status(200).json(resultados);
+    } catch (error) {
+      manejadorDeErrores({error, next});
+    }
+  }
 );
 
 const obtenerUnoHandler = obtenerUno({ Modelo: Consulta });
