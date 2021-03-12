@@ -59,9 +59,34 @@ const obtenerUnoHandler = obtenerUno({ Modelo: Consulta });
 router.get(
   "/:_id",
   middlewareEstaAutorizado({
-    tiposUsuario: ["veterinaria", "administrador"],
+    tiposUsuario: ["veterinaria", "administrador", "dueno"],
   }),
-  obtenerUnoHandler
+  async (req, res, next) => {
+    try {
+      const { _id } = req.params;
+      const { user } = req;
+      let consulta = null;
+      consulta = await Consulta.findById(_id);
+      if  (consulta && user.tipo === "dueno") {
+        const mascota = await Mascota.findOne({
+          _id: consulta.mascota,
+          dueno: user._id
+        });
+        if(!mascota) {
+          const err = new createError[403]();
+          return next(err);
+        } 
+      }
+      if (consulta) {
+        return res.status(200).json(consulta);
+      }
+      const err = new createError[404]();
+      return next(err);
+    } catch (error) {
+      const err = new createError[500]();
+      return next(err);
+    }
+  }
 );
 
 
