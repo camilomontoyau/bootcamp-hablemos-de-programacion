@@ -9,13 +9,7 @@ const { middlewareEstaAutorizado } = require("./controllers/genericos");
 module.exports = (app) => {
   app.use("/login", login);
   app.use(estaAutenticado);
-  app.use(
-    "/mascotas",
-    middlewareEstaAutorizado({
-      tiposUsuario: ["veterinaria", "administrador", "dueno"],
-    }),
-    mascotas
-  );
+  app.use("/mascotas", mascotas);
   app.use("/consultas", consultas);
   app.use(
     "/usuarios",

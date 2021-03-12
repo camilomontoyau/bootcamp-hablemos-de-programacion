@@ -11,21 +11,52 @@ const {
   actualizar,
   eliminar,
   filtrarEntidades,
+  middlewareEstaAutorizado,
 } = require("../genericos");
 
-
-
-const listarHandler = listar({
-  Modelo: Mascota,
-  populate: [{ path: "dueno", select: "nombre apellido documento tipo email" }],
+router.get(
+  "/", 
+  middlewareEstaAutorizado({
+    tiposUsuario: ["veterinaria", "administrador", "dueno"],
+  }),
+  async (req, res, next) => {
+  try {
+    const { user } = req;
+    const filtro = filtrarEntidades(Mascota, req.query);
+    if(user.tipo === "dueno") {
+      filtro.dueno = user._id;
+    }
+    let promesaLista = Mascota.find(filtro);
+    const populate = [{ path: "dueno", select: "nombre apellido documento tipo email" }];
+    if (Array.isArray(populate) && populate.length > 0) {
+      for (const entidadAnidada of populate) {
+        promesaLista = promesaLista.populate(entidadAnidada);
+      }
+    }
+    const resultados = await promesaLista;
+    return res.status(200).json(resultados);
+  } catch (error) {
+    const err = new createError[500]();
+    return next(err);
+  }
 });
-router.get("/", listarHandler);
 
 const obtenerUnoHandler = obtenerUno({ Modelo: Mascota });
-router.get("/:_id", obtenerUnoHandler);
+router.get(
+  "/:_id",
+  middlewareEstaAutorizado({
+    tiposUsuario: ["veterinaria", "administrador", "dueno"],
+  }),
+  obtenerUnoHandler
+);
 
 const crearHandler = crear({ Modelo: Mascota });
-router.post("/", async (req, res, next) => {
+router.post(
+  "/",
+  middlewareEstaAutorizado({
+    tiposUsuario: ["veterinaria", "administrador"],
+  }),
+  async (req, res, next) => {
   const { dueno = null } = req.body;
   const existeDueno = await Usuario.exists({ _id: dueno, tipo: "dueno" });
   if (existeDueno) {
@@ -36,9 +67,20 @@ router.post("/", async (req, res, next) => {
 });
 
 const editarHandler = actualizar({ Modelo: Mascota });
-router.put("/:_id", editarHandler);
+router.put(
+  "/:_id", 
+  middlewareEstaAutorizado({
+  tiposUsuario: ["veterinaria", "administrador", "dueno"],
+  }),
+editarHandler);
 
 const eliminarHandler = eliminar({ Modelo: Mascota });
-router.delete("/:_id", eliminarHandler);
+router.delete(
+  "/:_id", 
+  middlewareEstaAutorizado({
+    tiposUsuario: [],
+  }), 
+  eliminarHandler
+);
 
 module.exports = router;
