@@ -41,13 +41,35 @@ router.get(
   }
 });
 
-const obtenerUnoHandler = obtenerUno({ Modelo: Mascota });
 router.get(
   "/:_id",
   middlewareEstaAutorizado({
     tiposUsuario: ["veterinaria", "administrador", "dueno"],
   }),
-  obtenerUnoHandler
+  async (req, res, next) => {
+    try {
+      const { _id } = req.params;
+      const { user } = req;
+      let mascota = null;
+      if (user.tipo === "dueno") {
+        mascota = await Mascota.findOne({ _id, dueno: user._id });
+        if (!mascota) {
+          const err = new createError[403]();
+          return next(err);
+        }
+      } else {
+        mascota = await Mascota.findById(_id);
+      }
+      if (!mascota) {
+        const err = new createError[404]();
+        return next(err);
+      }
+      return res.status(200).json(mascota);
+    } catch (error) {
+      const err = new createError[500]();
+      return next(err);
+    }
+  }
 );
 
 const crearHandler = crear({ Modelo: Mascota });
