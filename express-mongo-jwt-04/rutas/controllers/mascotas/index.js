@@ -2,6 +2,7 @@ const createError = require("http-errors");
 const router = require("express").Router();
 const Mascota = require("./schema");
 const Usuario = require("../usuarios/schema");
+const { manejadorDeErrores } = require("../../../util");
 
 
 const {
@@ -36,8 +37,7 @@ router.get(
     const resultados = await promesaLista;
     return res.status(200).json(resultados);
   } catch (error) {
-    const err = new createError[500]();
-    return next(err);
+    manejadorDeErrores({ error, next });
   }
 });
 
@@ -66,8 +66,7 @@ router.get(
       }
       return res.status(200).json(mascota);
     } catch (error) {
-      const err = new createError[500]();
-      return next(err);
+      manejadorDeErrores({ error, next });
     }
   }
 );
@@ -88,13 +87,51 @@ router.post(
   next(err);
 });
 
-const editarHandler = actualizar({ Modelo: Mascota });
 router.put(
-  "/:_id", 
+  "/:_id",
   middlewareEstaAutorizado({
-  tiposUsuario: ["veterinaria", "administrador", "dueno"],
+    tiposUsuario: ["veterinaria", "administrador", "dueno"],
   }),
-editarHandler);
+  async (req, res, next) => {
+    try {
+      const { _id = null } = req.params;
+      const { _id: id, ...datosNuevos } = req.body;
+      const { user } = req;
+      if (!_id) {
+        const err = new createError[400]("Falta el _id");
+        return next(err);
+      }
+      let mascota = null;
+      if (user.tipo === "dueno") {
+        mascota = await Mascota.findOne({ _id, dueno: user._id });
+        if (!mascota) {
+          const err = new createError[403]();
+          return next(err);
+        }
+        datosNuevos.dueno = user._id;
+      } else {
+        mascota = await Mascota.findById(_id);
+      }
+      if (!mascota) {
+        const err = new createError[404]();
+        return next(err);
+      }
+      mascota.set(datosNuevos);
+      await mascota.save();
+      return res.status(200).json(mascota);
+    } catch (error) {
+      if (error.code === 11000) {
+        const err = new createError[409](
+          `entidad ${JSON.stringify(
+            req.body
+          )} tiene campos que no permiten duplicación!`
+        );
+        return next(err);
+      }
+      manejadorDeErrores({ error, next });
+    }
+  }
+);
 
 const eliminarHandler = eliminar({ Modelo: Mascota });
 router.delete(
