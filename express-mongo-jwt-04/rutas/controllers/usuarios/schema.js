@@ -21,14 +21,14 @@ const usuarioSchema = new Schema(
       enum: ["dueno", "veterinaria", "administrador"],
       /* 
         - administrador:  puede loguearse
-                          puede hacer cualquier cosa en la API
+                          puede hacer cualquier cosa en la API OK
         - veterinaria:    puede loguearse OK
                           puede crear, editar, eliminar, leer mascotas OK
                           puede crear OK, editar OK, eliminar OK, leer OK duenos
                           puede crear OK, leer OK, crear notas aclaratorias consultas
         - dueno:          puede loguearse
                           puede listar consultas OK, puede leer una sola que sea de una mascota propia OK, solo de sus propias mascotas
-                          puede listar sus mascotas OK, leer una sola mascota que se propia y editar sus propias mascotas
+                          puede listar sus mascotas OK, leer una sola mascota que se propia OK y editar sus propias mascotas OK
       */
     },
     email: {
