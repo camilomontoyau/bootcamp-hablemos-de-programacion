@@ -7,7 +7,7 @@ const {
   removerPaswordDeRespuestas,
 } = require("../../../util");
 
-const { eliminar, existeDocumento, filtrarEntidades } = require("../genericos");
+const { existeDocumento, filtrarEntidades } = require("../genericos");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -52,8 +52,7 @@ router.get("/:_id", async (req, res, next) => {
     const err = new createError[404]();
     return next(err);
   } catch (error) {
-    const err = new createError[500]();
-    return next(err);
+    return manejadorDeErrores({ error, next });
   }
 });
 
@@ -89,10 +88,6 @@ router.post("/", middlewareExisteDocumento, async (req, res, next) => {
   }
 });
 
-const middlewareExisteEntidadConMismoDocumentoyDiferenteId = existeDocumento({
-  Modelo: Usuario,
-  campos: ["documento", { operador: "$ne", nombre: "_id" }],
-});
 router.put("/:_id", async (req, res, next) => {
   try {
     const { _id = null } = req.params;
@@ -104,6 +99,22 @@ router.put("/:_id", async (req, res, next) => {
     }
     let usuario = await Usuario.findById(_id);
 
+    if (datosNuevos.documento && usuario.documento != datosNuevos.documento) {
+      const existeUsuarioConElMismoDocumento = await Usuario.findOne({
+        _id: { $ne: _id },
+        documento: datosNuevos.documento,
+      });
+      if (
+        existeUsuarioConElMismoDocumento &&
+        existeUsuarioConElMismoDocumento._id
+      ) {
+        const err = new createError[409](
+          `ya existe un usuario con documento ${datosNuevos.documento}!`
+        );
+        return next(err);
+      }
+    }
+    
     const esVeterinaria = user.tipo === "veterinaria";
     const seEstaModificandoAsiMisma = user._id === _id;
     const puedeModificarElUsuario =
@@ -139,12 +150,10 @@ router.put("/:_id", async (req, res, next) => {
       );
       return next(err);
     }
-    const err = new createError[500]();
-    return next(err);
+    return manejadorDeErrores({ error, next });
   }
 });
 
-const eliminarHandler = eliminar({ Modelo: Usuario });
 router.delete("/:_id", async (req, res, next) => {
   try {
     const { _id = null } = req.params;
@@ -169,8 +178,7 @@ router.delete("/:_id", async (req, res, next) => {
     const err = new createError[500]();
     return next(err);
   } catch (error) {
-    const err = new createError[500]();
-    return next(err);
+    return manejadorDeErrores({ error, next });
   }
 });
 
