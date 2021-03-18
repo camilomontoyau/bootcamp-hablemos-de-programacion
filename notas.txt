@@ -26,3 +26,5 @@
 
 Para el futuro:
 - paginación
+
+https://stackoverflow.com/questions/19948816/passport-js-error-failed-to-serialize-user-into-session
