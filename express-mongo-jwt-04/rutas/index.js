@@ -14,10 +14,16 @@ passport.use(
       clientID: FACEBOOK_APP_ID,
       clientSecret: FACEBOOK_APP_SECRET,
       callbackURL: FACEBOOK_CALLBACK_URL,
+      profileFields: [
+        //"id",
+        "displayName",
+        //"photos",
+        "email",
+      ],
     },
     function (accessToken, refreshToken, profile, cb) {
       console.log("callback del passport.use");
-      console.log({ accessToken, refreshToken, profile });
+      console.log(JSON.stringify({accessToken, refreshToken, profile }, null, '  '));
       return cb(false, {
         firstName: "Camilo",
         lastName: "Montoya",
@@ -34,15 +40,19 @@ module.exports = (app) => {
   app.use("/login", login);
   app.use(passport.initialize());
   app.use(passport.session());
-  app.get('/auth/facebook', passport.authenticate('facebook'));
+  app.get("/auth/facebook", passport.authenticate("facebook"));
   app.get(
-    '/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
-    function(req, res) {
+    "/auth/facebook/callback",
+    passport.authenticate("facebook", {
+      successRedirect: "/existoso",
+      failureRdirect: "/fallo",
+      session: false,
+    }),
+    function (req, res) {
       console.log("autenticacióon FB exitosa");
       console.log(req);
       // Successful authentication, redirect home.
-      res.redirect('/');
+      res.redirect("/redirecthandler");
     }
   );
   app.use(estaAutenticado);
