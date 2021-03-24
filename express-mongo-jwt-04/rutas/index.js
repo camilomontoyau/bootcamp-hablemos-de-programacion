@@ -1,12 +1,14 @@
 const passport = require("passport");
+const _get = require("lodash/get");
 const FacebookStrategy = require("passport-facebook");
 const mascotas = require("./controllers/mascotas");
 const consultas = require("./controllers/consultas");
 const usuarios = require("./controllers/usuarios");
+const Usuario = require("./controllers/usuarios/schema");
 const login = require("./controllers/login");
-const { estaAutenticado } = require("./../util");
+const { estaAutenticado, jwtSignPromise } = require("./../util");
 const { middlewareEstaAutorizado } = require("./controllers/genericos");
-const {FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, FACEBOOK_CALLBACK_URL} = process.env;
+const {FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, FACEBOOK_CALLBACK_URL, SECRET_KEY} = process.env;
 
 passport.use(
   new FacebookStrategy(
@@ -16,22 +18,42 @@ passport.use(
       callbackURL: FACEBOOK_CALLBACK_URL,
       profileFields: [
         //"id",
-        "displayName",
+        //"displayName",
+        "first_name",
+        "last_name",
         //"photos",
         "email",
       ],
     },
-    function (accessToken, refreshToken, profile, cb) {
-      console.log("callback del passport.use");
-      console.log(JSON.stringify({accessToken, refreshToken, profile }, null, '  '));
-      return cb(false, {
-        firstName: "Camilo",
-        lastName: "Montoya",
-        email: "camilomontoya2@gmail.com",
-      });
-      /* User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-        return cb(err, user);
-      }); */
+    async (_accessToken, _refreshToken, profile, cb) => {
+      try {
+        const email = _get(profile, "_json.email", null);
+        const nombre = _get(profile, "_json.first_name", null);
+        const apellido = _get(profile, "_json.last_name", null);
+        const id = _get(profile, "_json.id", null);
+        let usuario = Usuario.findOne({email, tipo: "dueno"});
+        if(!usuario || !usuario._id) {
+          usuario = new Usuario({
+            email, 
+            nombre, 
+            apellido, 
+            tipo: "dueno", 
+            documento: id ? `fb_${id}`: '' 
+          });
+          await usuario.save();
+        }
+        usuario = usuario.toJSON();
+        const { password, ...datosUsuario } = usuario;
+        const token = await jwtSignPromise({
+          data: datosUsuario,
+          secret: SECRET_KEY,
+          options: {  expiresIn: 60 * 60  },
+        });
+        const respuesta = { token, usuario: datosUsuario };
+        return cb(false, respuesta);
+      } catch (error) {
+        return cb(error);
+      }
     }
   )
 );
@@ -44,15 +66,12 @@ module.exports = (app) => {
   app.get(
     "/auth/facebook/callback",
     passport.authenticate("facebook", {
-      successRedirect: "/existoso",
-      failureRdirect: "/fallo",
+      // successRedirect: "/existoso",
+      failureRedirect: "/fallo",
       session: false,
     }),
     function (req, res) {
-      console.log("autenticacióon FB exitosa");
-      console.log(req);
-      // Successful authentication, redirect home.
-      res.redirect("/redirecthandler");
+      return res.status(200).json(req.user);
     }
   );
   app.use(estaAutenticado);

@@ -12,7 +12,7 @@ const usuarioSchema = new Schema(
       required: true,
     },
     documento: {
-      type: Number,
+      type: String,
       required: true,
     },
     tipo: {
