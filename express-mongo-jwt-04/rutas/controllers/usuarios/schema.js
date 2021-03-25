@@ -41,10 +41,8 @@ const usuarioSchema = new Schema(
               mail
             )
           ) {
-            console.log("correcto");
             return true;
           }
-          console.log("incorrecto");
           return false;
         },
         message: "El formato del email es errado",
