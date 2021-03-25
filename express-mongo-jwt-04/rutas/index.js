@@ -31,7 +31,7 @@ passport.use(
         const nombre = _get(profile, "_json.first_name", null);
         const apellido = _get(profile, "_json.last_name", null);
         const id = _get(profile, "_json.id", null);
-        let usuario = Usuario.findOne({email, tipo: "dueno"});
+        let usuario = await Usuario.findOne({ email, tipo: "dueno" });
         if(!usuario || !usuario._id) {
           usuario = new Usuario({
             email, 
