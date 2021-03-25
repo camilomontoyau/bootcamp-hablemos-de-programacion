@@ -18,7 +18,7 @@
 16.1) permisos de usuario
 16.2) agregar el token automaticamente en los requests de postman OK
 17) verificar middleware existe documento de PUT /usuarios OK
-18) registro publico de dueños de mascotas, passport login con facebook (solo con fines académicos)
+18) registro publico de dueños de mascotas OK, passport login con facebook (solo con fines académicos) OK
 19) crear notas aclaratorias
 20) crear archivo con todos los middlewares
 21) cambiar referencias por objetos completos en los schemas/modelos
