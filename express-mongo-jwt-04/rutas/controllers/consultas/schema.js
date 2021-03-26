@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
+const notaSchema = new Schema(
+  {
+    mensaje: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const consultaSchema = new Schema(
   {
     mascota: { type: "ObjectId", ref: "mascotas" },
@@ -13,6 +22,7 @@ const consultaSchema = new Schema(
       type: String,
       required: true,
     },
+    nota: [notaSchema],
   },
   {
     timestamps: true,
