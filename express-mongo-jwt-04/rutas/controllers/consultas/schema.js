@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const notaSchema = new Schema(
   {
     mensaje: { type: String, required: true },
+    veterinaria: { type: "ObjectId", ref: "usuarios" },
   },
   {
     timestamps: true,
@@ -22,7 +23,7 @@ const consultaSchema = new Schema(
       type: String,
       required: true,
     },
-    nota: [notaSchema],
+    notas: [notaSchema],
   },
   {
     timestamps: true,

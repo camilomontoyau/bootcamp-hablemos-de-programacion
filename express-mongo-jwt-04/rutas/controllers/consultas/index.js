@@ -147,4 +147,37 @@ router.delete(
   eliminarHandler
 );
 
+router.post(
+  "/:_id/notas",
+  middlewareEstaAutorizado({
+    tiposUsuario: ["veterinaria", "administrador"],
+  }),
+  async (req, res, next) => {
+    if (!req.body || !req.body.mensaje) {
+      const err = new createError[400]("Falta el body o el mensaje");
+      return next(err);
+    }
+    const { mensaje = null } = req.body;
+    const { _id } = req.params;
+    const { user } = req;
+    const existeVeterinaria = await Usuario.exists({
+      _id: user._id,
+      tipo: "veterinaria",
+    });
+    const consulta = await Consulta.findById(_id);
+    if (existeVeterinaria && consulta && consulta._id) {
+      const nota = { veterinaria: user._id, mensaje };
+      consulta.notas.push(nota);
+      await consulta.save();
+      return res.status(200).json(consulta.notas);
+    }
+    if (!existeVeterinaria) {
+      const err = new createError[400](
+        `Veterinari@ con _id ${veterinaria} no existe!`
+      );
+      return next(err);
+    }
+  }
+);
+
 module.exports = router;
