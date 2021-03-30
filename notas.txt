@@ -26,6 +26,7 @@
 
 Para el futuro:
 - paginación
+- dueno está listando consultas que no debería de ver
 
 
 
