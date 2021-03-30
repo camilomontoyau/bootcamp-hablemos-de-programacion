@@ -20,7 +20,7 @@
 17) verificar middleware existe documento de PUT /usuarios OK
 18) registro publico de dueños de mascotas OK, passport login con facebook (solo con fines académicos) OK
 19) crear notas aclaratorias OK
-20) crear archivo con todos los middlewares
+20) crear archivo con todos los middlewares OK
 21) cambiar referencias por objetos completos en los schemas/modelos
 
 
