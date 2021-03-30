@@ -33,22 +33,6 @@ const removerPaswordDeRespuestas = (objeto) => {
   return resto;
 };
 
-const estaAutenticado = async (req, res, next) => {
-  try {
-    let auth = lodash.get(req, "headers.authorization", null);
-    if (!auth || !auth.length) {
-      const err = new createError.Unauthorized("Falta el token");
-      return next(err);
-    }
-    const [_bearer, token] = auth.split(" ");
-    console.log({ auth, _bearer, token });
-    const decoded = await jwtVerifyPromise({   token, secret: SECRET_KEY   });
-    req.user = decoded;
-    next();  
-  } catch (error) {
-    manejadorDeErrores({error, next});
-  }
-};
 
 const jwtVerifyPromise = ({ token = null, secret = null, options = {} }) =>
   new Promise((resolve, reject) => {
@@ -75,6 +59,6 @@ const jwtSignPromise = ({ data = null, secret = null, options = {} }) =>
 module.exports = {
   manejadorDeErrores,
   removerPaswordDeRespuestas,
-  estaAutenticado,
   jwtSignPromise,
+  jwtVerifyPromise,
 };

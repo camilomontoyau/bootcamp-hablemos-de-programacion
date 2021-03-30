@@ -6,8 +6,11 @@ const consultas = require("./controllers/consultas");
 const usuarios = require("./controllers/usuarios");
 const Usuario = require("./controllers/usuarios/schema");
 const login = require("./controllers/login");
-const { estaAutenticado, jwtSignPromise } = require("./../util");
-const { middlewareEstaAutorizado } = require("./controllers/genericos");
+const { jwtSignPromise } = require("./../util");
+const {
+  middlewareEstaAutorizado,
+  estaAutenticado,
+} = require("./controllers/genericos");
 const {FACEBOOK_APP_ID, FACEBOOK_APP_SECRET, FACEBOOK_CALLBACK_URL, SECRET_KEY} = process.env;
 
 passport.use(

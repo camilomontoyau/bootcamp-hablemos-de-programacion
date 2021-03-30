@@ -1,6 +1,7 @@
 const createError = require("http-errors");
 const lodash = require("lodash");
-const { manejadorDeErrores } = require("../../util");
+const { manejadorDeErrores, jwtVerifyPromise } = require("../../util");
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const listar = function closureListar({Modelo = null, populate = []}) {
   return async function closureHandlerListar(req, res, next) {
@@ -205,7 +206,22 @@ const middlewareEstaAutorizado = function closureEstaAutorizado({
   };
 };
 
-
+const estaAutenticado = async (req, res, next) => {
+  try {
+    let auth = lodash.get(req, "headers.authorization", null);
+    if (!auth || !auth.length) {
+      const err = new createError.Unauthorized("Falta el token");
+      return next(err);
+    }
+    const [_bearer, token] = auth.split(" ");
+    console.log({ auth, _bearer, token });
+    const decoded = await jwtVerifyPromise({ token, secret: SECRET_KEY });
+    req.user = decoded;
+    next();
+  } catch (error) {
+    manejadorDeErrores({ error, next });
+  }
+};
 
 module.exports = {
   listar,
@@ -216,4 +232,5 @@ module.exports = {
   filtrarEntidades,
   existeDocumento,
   middlewareEstaAutorizado,
+  estaAutenticado,
 };
