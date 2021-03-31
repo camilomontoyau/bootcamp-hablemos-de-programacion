@@ -34,7 +34,6 @@ router.get(
       }
       
       const populate = [
-        "mascota",
         { path: "veterinaria", select: "nombre apellido documento tipo email" },
       ];
       const filtro = filtrarEntidades(Consulta, req.query);
@@ -100,16 +99,17 @@ router.post(
       const err = new createError[400]("Falta el body");
       return next(err);
     }
-    const { mascota = null, veterinaria = null } = req.body;
+    const { mascota: mascotaId, veterinaria = null } = req.body;
     const { user } = req;
     const existeVeterinaria = await Usuario.exists({
       _id: user._id,
       tipo: "veterinaria",
     });
-    const existeMascota = await Mascota.exists({ _id: mascota });
-    if (existeVeterinaria && existeMascota) {
+    const mascota = await Mascota.findById(mascotaId);
+    if (existeVeterinaria && mascota && mascota._id) {
       const { _id, veterinaria, ...restoDatosEntidad } = req.body;
       restoDatosEntidad.veterinaria = user._id;
+      restoDatosEntidad.mascota = mascota;
       const consulta = new Consulta(restoDatosEntidad);
       await consulta.save();
       return res.status(200).json(consulta);
