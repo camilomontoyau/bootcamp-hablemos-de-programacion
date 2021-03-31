@@ -22,6 +22,9 @@
 19) crear notas aclaratorias OK
 20) crear archivo con todos los middlewares OK
 21) cambiar referencias por objetos completos en los schemas/modelos
+ - consultas: mascota OK, veterinaria
+ - notas: veterinaria
+ - mascotas: dueno
 
 
 Para el futuro:
