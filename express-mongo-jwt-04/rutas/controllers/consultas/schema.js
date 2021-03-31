@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const Mascota = require("../mascotas/schema");
+const mascotaSchema = Mascota.schema;
 
 const notaSchema = new Schema(
   {
@@ -13,7 +15,7 @@ const notaSchema = new Schema(
 
 const consultaSchema = new Schema(
   {
-    mascota: { type: "ObjectId", ref: "mascotas" },
+    mascota: mascotaSchema,
     veterinaria: { type: "ObjectId", ref: "usuarios" },
     historia: {
       type: String,
