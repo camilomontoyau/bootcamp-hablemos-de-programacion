@@ -25,27 +25,20 @@ router.get(
       let mascotasDueno = null;
       if (user.tipo === "dueno") {
         mascotasDueno = await Mascota.find({ dueno: user._id }).select("_id");
-        if  (Array.isArray(mascotasDueno)) {
+        if (Array.isArray(mascotasDueno)) {
           mascotasDueno = mascotasDueno.map((ele) => ele._id);
-          if(req.query.mascota) {
-            mascotasDueno = mascotasDueno.filter(id=>id == req.query.mascota)
+          if (req.query.mascota) {
+            mascotasDueno = mascotasDueno.filter(
+              (id) => id == req.query.mascota
+            );
           }
         }
       }
-      
-      const populate = [
-        { path: "veterinaria", select: "nombre apellido documento tipo email" },
-      ];
       const filtro = filtrarEntidades(Consulta, req.query);
       if  (Array.isArray(mascotasDueno) && mascotasDueno.length > 0) {
         filtro.mascota = { $in: mascotasDueno };
       }
       let promesaLista = Consulta.find(filtro);
-      if (Array.isArray(populate) && populate.length > 0) {
-        for (const entidadAnidada of populate) {
-          promesaLista = promesaLista.populate(entidadAnidada);
-        }
-      }
       const resultados = await promesaLista;
       return res.status(200).json(resultados);
     } catch (error) {
@@ -99,16 +92,19 @@ router.post(
       const err = new createError[400]("Falta el body");
       return next(err);
     }
-    const { mascota: mascotaId, veterinaria = null } = req.body;
+    const {
+      mascota: mascotaId,
+      veterinaria: _veterinariaBody,
+      ...restoDatosEntidad
+    } = req.body;
     const { user } = req;
-    const existeVeterinaria = await Usuario.exists({
+    const veterinaria = await Usuario.findOne({
       _id: user._id,
       tipo: "veterinaria",
-    });
+    }).select("-password");
     const mascota = await Mascota.findById(mascotaId);
-    if (existeVeterinaria && mascota && mascota._id) {
-      const { _id, veterinaria, ...restoDatosEntidad } = req.body;
-      restoDatosEntidad.veterinaria = user._id;
+    if (veterinaria && veterinaria._id && mascota && mascota._id) {
+      restoDatosEntidad.veterinaria = veterinaria;
       restoDatosEntidad.mascota = mascota;
       const consulta = new Consulta(restoDatosEntidad);
       await consulta.save();

@@ -2,11 +2,13 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const Mascota = require("../mascotas/schema");
 const mascotaSchema = Mascota.schema;
+const Veterinaria = require("../usuarios/schema");
+const veterinariaSchema = Veterinaria.schema;
 
 const notaSchema = new Schema(
   {
     mensaje: { type: String, required: true },
-    veterinaria: { type: "ObjectId", ref: "usuarios" },
+    veterinaria: veterinariaSchema,
   },
   {
     timestamps: true,
@@ -16,7 +18,7 @@ const notaSchema = new Schema(
 const consultaSchema = new Schema(
   {
     mascota: mascotaSchema,
-    veterinaria: { type: "ObjectId", ref: "usuarios" },
+    veterinaria: veterinariaSchema,
     historia: {
       type: String,
       required: true,
