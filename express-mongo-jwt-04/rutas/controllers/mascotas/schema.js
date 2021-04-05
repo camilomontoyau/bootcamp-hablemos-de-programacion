@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const Usuario = require("../usuarios/schema");
+const usuarioSchema = Usuario.schema;
 
 const mascotaSchema = new Schema(
   {
@@ -8,7 +10,7 @@ const mascotaSchema = new Schema(
       type: String,
       required: true,
     },
-    dueno: { type: "ObjectId", ref: "usuarios" },
+    dueno: usuarioSchema,
   },
   {
     timestamps: true,

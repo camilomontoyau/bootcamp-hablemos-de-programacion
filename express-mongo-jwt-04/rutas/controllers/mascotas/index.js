@@ -71,20 +71,30 @@ router.get(
   }
 );
 
-const crearHandler = crear({ Modelo: Mascota });
 router.post(
   "/",
   middlewareEstaAutorizado({
     tiposUsuario: ["veterinaria", "administrador"],
   }),
   async (req, res, next) => {
-  const { dueno = null } = req.body;
-  const existeDueno = await Usuario.exists({ _id: dueno, tipo: "dueno" });
-  if (existeDueno) {
-    return crearHandler(req, res);
-  }
-  const err = new createError[404]();
-  next(err);
+    try {
+      if (!req.body || !Object.keys(req.body).length) {
+        const err = new createError[400]("Falta el body");
+        return next(err);
+      }
+      const { dueno: duenoId, _id, ...restoDatosEntidad } = req.body;
+      const dueno = await Usuario.findById(duenoId).select("-password");
+      if (dueno && dueno._id) {
+        restoDatosEntidad.dueno = dueno;
+        const mascota = new Mascota(restoDatosEntidad);
+        await mascota.save();
+        return res.status(200).json(mascota);
+      }
+      const err = new createError[404]("Dueno no encontrado");
+      return next(err);      
+    } catch (error) {
+      manejadorDeErrores({next, error});
+    }
 });
 
 router.put(
