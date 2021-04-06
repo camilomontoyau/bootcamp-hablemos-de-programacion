@@ -27,7 +27,6 @@ router.get(
           ["mascota.dueno._id"]: user._id,
         };
       }
-      console.log(JSON.stringify({ filtro }, null, "  "));
       const resultados = await Consulta.find(filtro);
       return res.status(200).json(resultados);
     } catch (error) {

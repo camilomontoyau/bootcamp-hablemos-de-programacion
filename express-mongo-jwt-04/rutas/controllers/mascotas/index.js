@@ -23,9 +23,9 @@ router.get(
   async (req, res, next) => {
   try {
     const { user } = req;
-    const filtro = { ...req.query };
+    let filtro = { ...req.query };
     if (user.tipo === "dueno") {
-      filtro.dueno = user._id;
+      filtro = { ...filtro, ["dueno._id"]: user._id };
     }
     const resultados = await Mascota.find(filtro);
     return res.status(200).json(resultados);
