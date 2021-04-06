@@ -5,12 +5,10 @@ const Usuario = require("../usuarios/schema");
 const Mascota = require("../mascotas/schema");
 
 const {
-  listar,
   obtenerUno,
   actualizar,
   eliminar,
   middlewareEstaAutorizado,
-  filtrarEntidades,
 } = require("../genericos");
 const {manejadorDeErrores} = require('../../../util');
 
@@ -22,24 +20,15 @@ router.get(
   async (req, res, next) => {
     try {
       const { user } = req;
-      let mascotasDueno = null;
+      let filtro = { ...req.query };
       if (user.tipo === "dueno") {
-        mascotasDueno = await Mascota.find({ dueno: user._id }).select("_id");
-        if (Array.isArray(mascotasDueno)) {
-          mascotasDueno = mascotasDueno.map((ele) => ele._id);
-          if (req.query.mascota) {
-            mascotasDueno = mascotasDueno.filter(
-              (id) => id == req.query.mascota
-            );
-          }
-        }
+        filtro = {
+          ...filtro,
+          ["mascota.dueno._id"]: user._id,
+        };
       }
-      const filtro = filtrarEntidades(Consulta, req.query);
-      if  (Array.isArray(mascotasDueno) && mascotasDueno.length > 0) {
-        filtro.mascota = { $in: mascotasDueno };
-      }
-      let promesaLista = Consulta.find(filtro);
-      const resultados = await promesaLista;
+      console.log(JSON.stringify({ filtro }, null, "  "));
+      const resultados = await Consulta.find(filtro);
       return res.status(200).json(resultados);
     } catch (error) {
       manejadorDeErrores({error, next});
