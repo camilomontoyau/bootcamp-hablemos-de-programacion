@@ -23,18 +23,11 @@ router.get(
   async (req, res, next) => {
   try {
     const { user } = req;
-    const filtro = filtrarEntidades(Mascota, req.query);
-    if(user.tipo === "dueno") {
+    const filtro = { ...req.query };
+    if (user.tipo === "dueno") {
       filtro.dueno = user._id;
     }
-    let promesaLista = Mascota.find(filtro);
-    const populate = [{ path: "dueno", select: "nombre apellido documento tipo email" }];
-    if (Array.isArray(populate) && populate.length > 0) {
-      for (const entidadAnidada of populate) {
-        promesaLista = promesaLista.populate(entidadAnidada);
-      }
-    }
-    const resultados = await promesaLista;
+    const resultados = await Mascota.find(filtro);
     return res.status(200).json(resultados);
   } catch (error) {
     manejadorDeErrores({ error, next });
