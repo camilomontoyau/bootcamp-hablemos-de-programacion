@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/camilomontoyau/bootcamp-hablemos-de-programacion#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "nodemon": "^2.0.4",
     "uuid": "^8.3.1"
   }
